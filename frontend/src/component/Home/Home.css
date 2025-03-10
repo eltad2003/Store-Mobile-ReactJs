@@ -1,0 +1,38 @@
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.up-to-top {
+    position: fixed;
+    bottom: 120px;
+    right: 70px;
+}
+
+.respond {
+    position: fixed;
+    bottom: 60px;
+    right: 70px;
+    animation: glow 1.5s infinite alternate;
+    box-shadow: 0 0 10px #ebedef;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #c6daef, 0 0 10px #9cc3ec, 0 0 15px #acc5df, 0 0 20px #accff3;
+    }
+
+    0% {
+        box-shadow: 0 0 10px #bdd3f0, 0 0 10px #b2d1f3, 0 0 15px #a2bfde, 0 0 20px #bad4f4;
+    }
+
+    100% {
+        box-shadow: 0 0 20px #c5daf0, 0 0 25px #b5d3f4, 0 0 30px #afc9e2, 0 0 35px #589ee9;
+    }
+}
+
+.bg {
+    background: linear-gradient(to right, #fecede, #fbcbae)
+}

@@ -1,0 +1,6 @@
+.box-more-promotion-list li::before {
+    content: "✅";
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 8px;
+}
