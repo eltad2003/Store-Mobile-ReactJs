@@ -45,9 +45,9 @@ function Product() {
     }
 
     return (
-        <div className='p-4'>
+        <div className='mt-3'>
             {/* Breadcrumb */}
-            <div className='container mt-5 p-3'>
+            <div className='container p-3'>
                 <ol className="breadcrumb mt-3">
                     <li className="breadcrumb-item fw-semibold" ><HomeIcon /><Link to={"/"} className='text-decoration-none text-black '>Trang chủ</Link></li>
                     <li className="breadcrumb-item fw-semibold"><Link to={`/${product.category}`} className='text-decoration-none text-black text-uppercase'>{product.category}</Link ></li>

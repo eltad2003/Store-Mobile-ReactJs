@@ -11,7 +11,7 @@ function Cart() {
 
 
     return (
-        <div className='container mt-5 p-3'>
+        <div className='container mt-3 p-3'>
 
             {cartItems.length === 0 ? (
                 <div className=" d-grid justify-content-center align-items-center mt-3 p-3 text-center">

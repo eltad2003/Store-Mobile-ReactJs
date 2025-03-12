@@ -41,9 +41,9 @@ function Home() {
    // }, []);
 
    return (
-      <div className="bg mt-3">
+      <div className="bg">
 
-         <div class="position-relative my-5">
+         <div class="position-relative">
             <img src="https://i.ytimg.com/vi/fekvDICqknA/maxresdefault.jpg" alt="" class=" w-100 img-fluid " />
             <div class="position-absolute start-50 translate-middle mb-5">
                <Link to={"/products/15"}><button class="btn btn-dark btn-outline-light fs-4 rounded-5">Xem chi tiết</button></Link>
@@ -67,7 +67,7 @@ function Home() {
          </div> */}
 
          {/* sản phảm hot */}
-         <div className=" p-5 w-100">
+         <div className="p-5 w-100">
             <Popular products={products} />
          </div>
 
@@ -75,7 +75,7 @@ function Home() {
 
 
          {/* Tất cả sản phẩm */}
-         <div className="p-5 " id="top">
+         <div className="p-5" id="top">
             <div>
                <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
                <div className="row">

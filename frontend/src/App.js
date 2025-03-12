@@ -27,7 +27,7 @@ function App() {
       <BrowserRouter>
         <CartProvider>
           <Routes>
-            {/* Các route có Navbar */}
+            {/* Các route của User */}
             <Route path="/" element={<Navbar />}>
               <Route index element={<Home />} />
               <Route path='/products/:productId' element={<Product />} />
@@ -44,7 +44,7 @@ function App() {
               <Route path='/popular' element={<Popular />} />
             </Route>
 
-            {/* Các route của Admin (Không có Navbar) */}
+            {/* Các route của Admin  */}
             <Route path="/admin/*" element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="users" element={<ManageUsers />} />
