@@ -69,7 +69,7 @@ const Dashboard = () => {
 
 
                 <div className="col-md-10 mt-4">
-                    <div className="d-flex mt-5">
+                    <div className="d-flex mt-5 me-3">
                         <div className="flex-col-1 p-2">
 
                             {/* Bar Chart */}
@@ -214,7 +214,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    <div className="d-flex">
+                    <div className="d-flex me-3">
                         <div className="flex-col-1 w-100 my-5">
                             <div className="card shadow-lg p-3">
 

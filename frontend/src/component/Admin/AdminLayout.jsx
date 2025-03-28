@@ -1,4 +1,4 @@
-import { Logout } from '@mui/icons-material'
+import { Dashboard, LocalShipping, Logout, People, Report, ShoppingCart } from '@mui/icons-material'
 import React from 'react'
 import { useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
@@ -22,26 +22,29 @@ function AdminLayout() {
         </nav> */}
                 <div className="z-1 bg-dark text-white p-3 top-0 h-100 position-fixed">
                     <div className='text-center my-3 rounded-5'>
-                        <img src="https://png.pngtree.com/png-vector/20190114/ourlarge/pngtree-vector-avatar-icon-png-image_313572.jpg" alt="" className='img-fluid ' width={100} height={100} />
+                        <img src="https://png.pngtree.com/png-vector/20190114/ourlarge/pngtree-vector-avatar-icon-png-image_313572.jpg" alt="" className='img-fluid rounded-circle' width={100} height={100} />
                         <p className='fw-semibold mt-3'>{user.name.firstname} {user.name.lastname}</p>
                     </div>
                     <h3 className='mt-5'>Quản lý</h3>
-                    <ul className="list-unstyled fw-semibold m-3 mt-5">
+                    <ul className="list-unstyled fw-semibold p-2 mt-2">
                         <li className=" my-4">
+                            <Dashboard />
                             <Link className="text-decoration-none text-white ms-2" to="/admin" >DashBoard</Link>
                         </li>
                         <li className=" my-4">
+                            <People />
                             <Link className="text-decoration-none text-white ms-2" to="/admin/users" >Quản lý người dùng</Link>
                         </li>
                         <li className=" my-4">
+                            <ShoppingCart />
                             <Link className="text-decoration-none text-white ms-2" to="/admin/products" >Quản lý Sản Phẩm</Link>
                         </li>
                         <li className=" my-4">
-
-                            <Link className="text-decoration-none text-white ms-2" to="/admin/orders" >Quản lý đơn hàng</Link>
+                            <LocalShipping />
+                            <Link className="text-decoration-none text-white ms-2" to="/admin/orders" >Quản lý Đơn Hàng</Link>
                         </li>
                         <li className=" my-4">
-
+                            <Report />
                             <Link className="text-decoration-none text-white ms-2" to="/admin/reports" >Báo cáo</Link>
                         </li>
                     </ul>

@@ -12,7 +12,7 @@ function Order() {
 
         <div className=''>
             {user ? (
-                <div className='container w-50 mt-5 p-4'>
+                <div className='container w-50'>
                     <div className='mt-3'>
                         <Link to={'/cart'} className=''><ArrowBack /></Link>
                     </div>

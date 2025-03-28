@@ -16,7 +16,7 @@ function ManageOrders() {
       <div className='col-md-10 mt-5'>
 
         <h3 className='fw-bold'>Quản lý Đơn hàng</h3>
-        <div className='card shadow p-3 mt-3'>
+        <div className='card shadow p-3 mt-3 me-5'>
           <table class="table">
             <thead>
               <tr>

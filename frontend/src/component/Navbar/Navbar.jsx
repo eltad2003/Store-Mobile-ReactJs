@@ -30,7 +30,7 @@ function Navbar() {
 
     return (
         <>
-            <div className='bg-danger p-2 position-sticky top-0 z-1'>
+            <div className='bg p-2 position-sticky top-0 z-2 shadow'>
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand ms-3 fw-bold text-white" href="/"><ComputerIcon style={{ color: 'yellow' }} /> SHOP888</a>
                     <div className="navbar-collapse d-flex justify-content-between" id="navbarNav">

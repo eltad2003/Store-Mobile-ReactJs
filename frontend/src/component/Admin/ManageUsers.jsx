@@ -29,8 +29,8 @@ function ManageUsers() {
       <div className='col-md-10'>
         <div className="container p-3 mt-3">
           <h3 className='fw-bold'>Quản lý người dùng</h3>
-          <div className='card p-3 shadow mt-3'>
-            <table class="table">
+          <div className='card p-3 shadow mt-3 me-3'>
+            <table className="table">
               <thead>
                 <tr>
                   <th scope="col">STT</th>
@@ -53,11 +53,11 @@ function ManageUsers() {
                     <td>{`${active[user.id]}`}</td>
                     <td>
                       {active[user.id] ? (
-                        <button className="" onClick={() => toggleActive(user.id)}>Inactive</button>
+                        <button className="btn btn-sm btn-outline-primary" onClick={() => toggleActive(user.id)}>Inactive</button>
                       ) : (
-                        <button className="" onClick={() => toggleActive(user.id)}>Active</button>
+                        <button className="btn btn-sm btn-primary" onClick={() => toggleActive(user.id)}>Active</button>
                       )}
-                      <button className='ms-2 text-danger'>Xóa</button>
+                      <button className='ms-1 btn btn-sn btn-danger'>Xóa</button>
                     </td>
                   </tr>
                 ))}
