@@ -15,33 +15,36 @@ function Product() {
     const [product, setProduct] = useState()
     const { addToCart } = useContext(CartContext)
     const [reviews, setReviews] = useState([])
-    const [showReview, setshowReview] = useState(false)
 
     useEffect(() => {
-        fetch(`https://fakestoreapi.in/api/products/${productId}`)
-            .then(res => res.json())
-            .then(data => setProduct(data.product))
-            .catch(err => console.log("error: ", err))
+        const fetchData = async () => {
+            try {
+                const [productRes, reviewsRes] = await Promise.all([
+                    fetch(`https://fakestoreapi.in/api/products/${productId}`),
+                    fetch('https://fakeapi.net/reviews')
+                ]);
 
-        fetch('https://fakeapi.net/reviews')
-            .then(res => res.json())
-            .then(res => setReviews(res.data))
-            .catch(err => console.log("error: ", err))
+                const productData = await productRes.json();
+                const reviewsData = await reviewsRes.json();
 
-    }, [productId])
+                setProduct(productData.product);
+                setReviews(reviewsData.data);
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            }
+        };
+
+        fetchData();
+    }, [productId]);
 
 
     if (!product) {
         return (
             <div className='position-absolute top-50 start-50 translate-middle'>
-
                 <div className="spinner-border text-danger" role="status">
-                    <span className="visually-hidden ">Loading...</span>
                 </div>
-
             </div>
         )
-
     }
 
     return (
@@ -58,7 +61,7 @@ function Product() {
             <div className='container'>
                 {/* Product Details */}
                 <div className='row'>
-                    <div className='col-md-6 mt-3 '>
+                    <div className='col-md-6 mt-3'>
                         <div className='card bored-0 d-flex align-items-center'>
                             <img src={product.image} alt={product.title} width={400} height={400} />
                         </div>
@@ -96,7 +99,7 @@ function Product() {
                             </div>
                         </div>
 
-                        <div className='card mt-3 box-more-promotion'>
+                        <div className='card box-more-promotion mt-5'>
                             <p className='card-header fw-bolder bg-body-secondary'>ƯU ĐÃI THÊM</p>
                             <ul className="list-unstyled box-more-promotion-list p-2">
                                 <li>
@@ -136,14 +139,16 @@ function Product() {
                 </div>
 
                 {/* Product Description */}
-                <div className="card mt-4 p-3" >
-                    <h4>Mô tả sản phẩm</h4>
-                    <p>{product.description}</p>
+                <div className="card mt-5 p-3 shadow" >
+                    <h4 className='p-2'>MÔ TẢ SẢN PHẨM</h4>
+                    {product.description.split(/[|\r\n]/).map((line, index) => (
+                        <p className='ms-2' key={index}>{line.trim()}</p>
+                    ))}
                 </div>
 
                 {/* Other Products */}
-                <div className="mt-4">
-                    <h4>Các sản phẩm khác</h4>
+                <div className="mt-5">
+                    <h4 className='p-2'>CÁC SẢN PHẨM KHÁC</h4>
                     <div className="row mt-3">
                         {products.slice(product.id, product.id + 4).map((item) => (
                             <div className="col-md-3 my-2" key={item.id} >
@@ -206,35 +211,41 @@ function Product() {
 
                         <div className='my-2 text-center'>
                             <p>Bạn nghĩ sao về sản phẩm này</p>
-                            <button className='btn btn-danger' onClick={() => setshowReview(!showReview)} >Đánh giá ngay</button>
+                            <button className='btn btn-danger' data-bs-toggle="modal" data-bs-target="#modal-review" >Đánh giá ngay</button>
                         </div>
-                        {showReview && (
-                            <>
-                                <div
-                                    onClick={() => setshowReview(false)}
-                                    className='position-fixed bg-dark opacity-50 w-100 h-100 top-0 start-0 '
-                                >
-                                </div>
-                                <div className='z-1 position-fixed top-50 start-50 translate-middle card p-3 review'>
-                                    <p className='bg-light fw-bold fs-5'>Đánh giá và nhận xét</p>
-                                    <div className='my-3'>
-                                        <p className='fw-bold'>Đánh giá chung</p>
-                                        <Rating size='large' />
+
+                        {/* modal review */}
+                        <div className="modal fade" id='modal-review' tabIndex="-1">
+                            <div className="modal-dialog modal-dialog-centered">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title bg-light fw-bold">Đánh giá và nhận xét</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
-                                    <div className='my-3'>
-                                        <textarea className="form-control" placeholder='Cảm nhận về sản phẩm' rows={3}></textarea>
+                                    <div className="modal-body">
+                                        <div className='my-3'>
+                                            <p className='fw-bold'>Đánh giá chung</p>
+                                            <Rating size='large' />
+                                        </div>
+                                        <div className='my-3'>
+                                            <textarea className="form-control" placeholder='Cảm nhận về sản phẩm' rows={3}></textarea>
+                                        </div>
+                                        <input className='form-control mb-3' type="file" accept="image/*" multiple />
                                     </div>
-                                    <input className='form-control mb-3' type="file" accept="image/*" multiple />
-                                    <button className='btn btn-danger'>Gửi đánh giá</button>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-danger" >
+                                            Gửi đánh giá
+                                        </button>
+                                    </div>
                                 </div>
-                            </>
-                        )}
+                            </div>
+
+                        </div>
+
                         <div className='my-2'>
                             <p className='fw-bold fs-4'>Nhật xét</p>
                             {reviews.map(review => (
-
                                 <div className='my-2'>
-
                                     <div className='ms-4 d-flex '>
                                         <AccountCircle />
                                         <p className='fw-bold mx-2 mb-0'>User {review.userId}</p>
@@ -248,13 +259,9 @@ function Product() {
                                         </div>
                                     </div>
                                 </div>
-
                             ))}
                         </div>
-
-                        <div>
-
-                        </div>
+                        
                     </div>
                 </div>
             </div>

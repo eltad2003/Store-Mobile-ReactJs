@@ -1,40 +1,25 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { CartContext } from '../CartProvider'
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ArrowBack, RemoveShoppingCart } from '@mui/icons-material';
 import { AuthContext } from '../AuthProvider';
 
 function Cart() {
-
-    const { cartItems, removeFromCart, increaseItem, decreaseItem } = useContext(CartContext);
+    const { cartItems, removeFromCart, increaseItem, decreaseItem, selectedItems, toggleSelectItem, selectAllItems } = useContext(CartContext);
     const { user } = useContext(AuthContext)
-
-    const [selectedProducts, setSelectedProducts] = useState([]);
-
-    // Xử lý chọn/bỏ chọn từng sản phẩm
-    const handleSelectProduct = (productId) => {
-        setSelectedProducts((prevSelected) =>
-            prevSelected.includes(productId)
-                ? prevSelected.filter((id) => id !== productId) // Bỏ chọn
-                : [...prevSelected, productId] // Chọn thêm
-        );
-    };
-
-    // Xử lý chọn tất cả hoặc bỏ chọn tất cả
-    const handleSelectAll = (e) => {
-        if (e.target.checked) {
-            setSelectedProducts(cartItems.map((item) => item.id)); // Chọn tất cả
-        } else {
-            setSelectedProducts([]); // Bỏ chọn tất cả
-        }
-    };
+    const navigation = useNavigate()
 
     // Tính tổng giá dựa trên sản phẩm đã chọn
     const totalPrice = cartItems
-        .filter((item) => selectedProducts.includes(item.id))
+        .filter((item) => selectedItems.includes(item.id))
         .reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-
+    const handleCheckout = (e) => {
+        if (selectedItems.length === 0) {
+            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!")
+            e.preventDefault()
+        }
+    }
 
     return (
         <div className='container mt-3 p-3'>
@@ -54,8 +39,8 @@ function Cart() {
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                onChange={(e) => handleSelectAll(e)}
-                                checked={selectedProducts.length === cartItems.length && cartItems.length > 0}
+                                onChange={selectAllItems}
+                                checked={selectedItems.length === cartItems.length && cartItems.length > 0}
                             />
                             <span className="ms-2 fw-semibold">Chọn tất cả</span>
                         </label>
@@ -69,8 +54,8 @@ function Cart() {
                                         <input
                                             type="checkbox"
                                             className="form-check-input me-2"
-                                            checked={selectedProducts.includes(product.id)}
-                                            onChange={() => handleSelectProduct(product.id)}
+                                            checked={selectedItems.includes(product.id)}
+                                            onChange={() => toggleSelectItem(product.id)}
                                         />
                                         <img src={product.image} alt={product.title} width={70} height={70} />
                                         <div className='ms-3'>
@@ -118,9 +103,9 @@ function Cart() {
                                     <h4 className="fw-bold">${totalPrice}</h4>
                                 </div>
                                 {user ? (
-                                    <Link to={'/order'}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
+                                    <Link to={'/order'} onClick={handleCheckout}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
                                 ) : (
-                                    <Link to={'/login'}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
+                                    <Link to={'/login'} onClick={handleCheckout}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
                                 )}
                             </div>
                         </div>

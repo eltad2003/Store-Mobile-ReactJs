@@ -13,8 +13,8 @@ function Popular({ products }) {
     }
 
     return (
-        <div>
-            <h3 className='fw-bold'>SẢN PHẨM PHỔ BIẾN <Whatshot className="mb-1 fs-1 text-danger" /></h3>
+        <div className='p-3'>
+            <h3 className='ms-4 fw-bolder text-white'>SẢN PHẨM PHỔ BIẾN <Whatshot className="mb-1 fs-1 text-white" /></h3>
             <div className=' p-4 rounded-4'>
                 <Carousel indicators={false} controls={true}
                     prevIcon={<ArrowLeft style={{ color: 'black', fontSize: '70px', marginLeft: '-200px' }} />}

@@ -5,8 +5,10 @@ import { ArrowBack } from '@mui/icons-material'
 import { AuthContext } from '../AuthProvider'
 
 function Order() {
-    const { cartItems } = useContext(CartContext)
+    const { cartItems, selectedItems } = useContext(CartContext)
     const { user } = useContext(AuthContext)
+    const selectedProducts =  cartItems.filter(item => selectedItems.includes(item.id));
+    
 
     return (
 
@@ -18,7 +20,7 @@ function Order() {
                     </div>
 
                     <div className=' card p-3 mt-3'>
-                        {cartItems.map(product => (
+                        {selectedProducts.map(product => (
                             <div key={product.id} className='d-flex'>
                                 <img src={product.image} alt={product.title} width={80} height={80} />
                                 <div className='ms-3 fw-semibold w-100'>

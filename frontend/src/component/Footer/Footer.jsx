@@ -5,7 +5,7 @@ import { Facebook, GitHub, Google, Instagram, LinkedIn, Twitter } from '@mui/ico
 
 const Footer = () => {
     return (
-        <footer className="text-center p-4 bg mt-5">
+        <footer className="text-center p-4 bg mt-5 text-white">
             <hr />
             <Container>
                 {/* Social Media Buttons */}
@@ -76,9 +76,8 @@ const Footer = () => {
             </Container>
 
             {/* Copyright */}
-            <div className="text-center p-3 bg-secondary" >
+            <div className="text-center p-3 bg-secondary " >
                 © 2025 Copyright: LE HOANG DAT-B21DCC212
-
             </div>
         </footer>
     );

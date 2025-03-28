@@ -11,8 +11,8 @@ function ShopCategory({ category }) {
 
   return (
 
-    <div className='p-5'>
-      <div className='pt-5 d-flex'>
+    <div className='p-5 '>
+      <div className='d-flex'>
         <Link to={"/"} className='text-black mt-1'><ArrowBack /></Link>
         <p className='fw-bold fs-4 ms-2'>Danh mục {category.toUpperCase()}</p>
       </div>

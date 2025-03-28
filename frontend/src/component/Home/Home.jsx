@@ -42,13 +42,48 @@ function Home() {
 
    return (
       <div className="">
+         {/* Banner and thanh danh mục */}
+         <div className=" container p-5">
+            <div className="row">
+               <div className="col-md-2 mt-3">
+                  <Sidebar />
+               </div>
+               <div className="col-md-7 mt-3 ">
 
-         <div class="position-relative">
+                  <div className="card h-100 d-flex align-items-center justify-content-center shadow p-2">
+                     <Carousel
+                        prevIcon={<ArrowLeft style={{ color: 'black', fontSize: '70px', marginLeft: '-100px' }} />}
+                        nextIcon={<ArrowRight style={{ color: 'black', fontSize: '70px', marginRight: '-100px' }} />}>
+                        <Carousel.Item>
+                           <img className=" img-fluid w-100" src={clockBanner} alt="First slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                           <img className=" img-fluid w-100" src={s25Banner} alt="Second slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                           <img className=" img-fluid w-100" src={xiaomi15Banner} alt="Third slide" />
+                        </Carousel.Item>
+                     </Carousel>
+                  </div>
+
+
+               </div>
+               <div className="col-md-3 mt-3">
+                  <div className="card h-100 shadow p-2">
+                     <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/m55-right-banner-8-3.png" alt="" className="img-fluid w-100mb-2 rounded" />
+                     <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/right-imac-m4-30-12.jpg" alt="" className="img-fluid w-100mb-2 rounded" />
+                     <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/s-edu-2-0-right-laptop.jpg" alt="" className="img-fluid w-100mb-2 rounded" />
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         {/* <div class="position-relative">
             <img src="https://i.ytimg.com/vi/fekvDICqknA/maxresdefault.jpg" alt="" class=" w-100 img-fluid " />
             <div class="position-absolute start-50 translate-middle mb-5">
                <Link to={"/products/15"}><button class="btn btn-dark btn-outline-light fs-4 rounded-5">Xem chi tiết</button></Link>
             </div>
-         </div>
+         </div> */}
 
 
 
@@ -67,7 +102,7 @@ function Home() {
          </div> */}
 
          {/* sản phảm hot */}
-         <div className="p-5 w-100">
+         <div className="p-3 w-100 bg container rounded-4">
             <Popular products={products} />
          </div>
 
@@ -116,43 +151,6 @@ function Home() {
                   </button>
                </div>
             </div>
-            {/* Banner and thanh danh mục */}
-            <div className=" mt-4 p-5">
-               <div className="row">
-                  <div className="col-md-2 mt-3">
-                     <Sidebar />
-                  </div>
-                  <div className="col-md-7 mt-3 ">
-
-                     <div className="card h-100 d-flex align-items-center justify-content-center shadow p-2">
-                        <Carousel
-                           prevIcon={<ArrowLeft style={{ color: 'black', fontSize: '70px', marginLeft: '-100px' }} />}
-                           nextIcon={<ArrowRight style={{ color: 'black', fontSize: '70px', marginRight: '-100px' }} />}>
-                           <Carousel.Item>
-                              <img className=" img-fluid w-100" src={clockBanner} alt="First slide" />
-                           </Carousel.Item>
-                           <Carousel.Item>
-                              <img className=" img-fluid w-100" src={s25Banner} alt="Second slide" />
-                           </Carousel.Item>
-                           <Carousel.Item>
-                              <img className=" img-fluid w-100" src={xiaomi15Banner} alt="Third slide" />
-                           </Carousel.Item>
-                        </Carousel>
-                     </div>
-
-
-                  </div>
-                  <div className="col-md-3 mt-3">
-                     <div className="card h-100 shadow p-2">
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/m55-right-banner-8-3.png" alt="" className="img-fluid w-100mb-2 rounded" />
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/right-imac-m4-30-12.jpg" alt="" className="img-fluid w-100mb-2 rounded" />
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/s-edu-2-0-right-laptop.jpg" alt="" className="img-fluid w-100mb-2 rounded" />
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-
          </div>
 
          {/*hot sale*/}
@@ -209,7 +207,6 @@ function Home() {
                </>
             )}
          </div>
-
          <Footer />
       </div>
 
