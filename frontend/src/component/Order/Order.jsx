@@ -7,8 +7,8 @@ import { AuthContext } from '../AuthProvider'
 function Order() {
     const { cartItems, selectedItems } = useContext(CartContext)
     const { user } = useContext(AuthContext)
-    const selectedProducts =  cartItems.filter(item => selectedItems.includes(item.id));
-    
+    const selectedProducts = cartItems.filter(item => selectedItems.includes(item.id));
+
 
     return (
 
@@ -43,16 +43,16 @@ function Order() {
                         <div className='card p-3'>
                             <div className='d-flex'>
                                 <label >Tên: </label>
-                                <p className='fw-bold ms-2'>{user.name.firstname} {user.name.lastname}</p>
+                                <p className='fw-bold ms-2'>{user.user.fullName} </p>
                             </div>
                             <div className='d-flex'>
-                                <label >Điện thoại: </label>
-                                <p className='fw-bold ms-2'>{user.phone}</p>
+                                <label className='form-label' >Điện thoại: </label>
+                                <p className='fw-bold ms-2'>{user.user.phone}</p>
                             </div>
 
                             <div className='form-group'>
-                                <label >Email</label>
-                                <input className='w-50 ms-2 form-control' type="email" defaultValue={user.email} />
+                                <label className='form-label' >Email: </label>
+                                <input className='w-50 ms-2 form-control' type="email" defaultValue={user.user.email} />
                             </div>
                         </div>
                     </div>
@@ -61,21 +61,14 @@ function Order() {
                     <div className='mt-3 mb-4'>
                         <h4 className='fw-semibold'>Thông tin nhận hàng</h4>
                         <div className='card p-3'>
-                            <div className='form-group'>
-                                <label >Tên người nhận</label>
-                                <input className='w-50 ms-2 form-control' type="text" required />
-                            </div>
-                            <div className='form-group'>
-                                <label >Điện thoại</label>
-                                <input className='w-50 ms-2 form-control' type="text" required defaultValue={user.phone} />
-                            </div>
+                          
                             <div className='form-group'>
                                 <label >Tỉnh</label>
-                                <input className='w-50 ms-2 form-control' type="text" required defaultValue={user.address.city} />
+                                <input className='w-50 ms-2 form-control' type="text" required defaultValue={user.user.fullName} />
                             </div>
                             <div className='form-group'>
                                 <label >Quận</label>
-                                <input className='w-50 ms-2 form-control' type="text" defaultValue={user.address.street} />
+                                <input className='w-50 ms-2 form-control' type="text" defaultValue={user.user.fullName} />
                             </div>
                         </div>
                     </div>

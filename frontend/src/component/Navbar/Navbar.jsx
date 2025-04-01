@@ -115,6 +115,11 @@ function Navbar() {
 
 
                         <ul className="navbar-nav mx-3">
+                            {user && user.user.role === 'ADMIN' && (
+                                <li className='nav-item p-2'>
+                                    <Link to={'/admin'} className='text-white text-decoration-none'>Quản lý</Link>
+                                </li>
+                            )}
                             <li className="nav-item p-2">
                                 <Link to={'/cart'} class="position-relative me-2" style={{ color: 'white' }}>
                                     <ShoppingCart />
@@ -135,7 +140,8 @@ function Navbar() {
                                     <div className="dropdown-menu show end-0 mt-2">
                                         {user ? (
                                             <div >
-                                                <p className='dropdown-item fw-bolder'>Hello, {user.name.firstname} {user.name.lastname}</p>
+                                                <p className='dropdown-item fw-bolder'>Hello, {user.user.fullName} </p>
+                                                <p className='dropdown-item fw-bolder'>Role: {user.user.role}</p>
                                                 <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>
                                                     Đăng xuất
                                                 </Link>

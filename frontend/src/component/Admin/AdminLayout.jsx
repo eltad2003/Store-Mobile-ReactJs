@@ -7,8 +7,13 @@ import { AuthContext } from '../AuthProvider'
 function AdminLayout() {
 
     const { user, logout } = useContext(AuthContext)
+
+    const handleLogout = async () => {
+        await logout()
+    }
+
     return (
-        (user ? (
+        (user && user.user.role === 'ADMIN' ? (
             <div >
                 {/* <nav className="navbar z-1 navbar-expand-lg bg-dark text-white p-3 fixed-top">
             <div className='navbar-collapse'>
@@ -23,7 +28,7 @@ function AdminLayout() {
                 <div className="z-1 bg-dark text-white p-3 top-0 h-100 position-fixed">
                     <div className='text-center my-3 rounded-5'>
                         <img src="https://png.pngtree.com/png-vector/20190114/ourlarge/pngtree-vector-avatar-icon-png-image_313572.jpg" alt="" className='img-fluid rounded-circle' width={100} height={100} />
-                        <p className='fw-semibold mt-3'>{user.name.firstname} {user.name.lastname}</p>
+                        <p className='fw-semibold mt-3'>{user.user.fullName} </p>
                     </div>
                     <h3 className='mt-5'>Quản lý</h3>
                     <ul className="list-unstyled fw-semibold p-2 mt-2">
@@ -49,7 +54,7 @@ function AdminLayout() {
                         </li>
                     </ul>
                     <div className='mt-5'>
-                        <button className='btn btn-danger' onClick={() => logout()}>Đăng xuất <Logout /></button>
+                        <button className='btn btn-danger' onClick={() => handleLogout()}>Đăng xuất <Logout /></button>
 
                     </div>
                 </div>
@@ -57,8 +62,8 @@ function AdminLayout() {
             </div>
         ) : (
             <div className='position-absolute start-50 top-50 translate-middle'>
-                <h3>Bạn cần đăng nhập</h3>
-                <div className='text-center'>
+                <h3>Bạn cần đăng nhập tài khoản Admin</h3>
+                <div className='text-center mt-3'>
                     <Link to={"/login"}><button className='btn btn-danger'>Đăng nhập</button></Link>
                 </div>
             </div>

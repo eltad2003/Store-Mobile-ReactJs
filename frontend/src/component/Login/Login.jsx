@@ -4,7 +4,7 @@ import { AuthContext } from '../AuthProvider'
 
 
 function Login() {
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
     const { login } = useContext(AuthContext)
@@ -12,8 +12,20 @@ function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        await login(username, password)
-        navigate('/')
+        await login(email, password)
+        const user = JSON.parse(localStorage.getItem('user'))
+        console.log(user);
+
+
+        if (user.user.role === 'ADMIN') {
+            alert('Đăng nhập thành công')
+            navigate('/admin')
+        } else {
+            alert('Đăng nhập thành công')
+            navigate('/')
+        }
+
+
     }
 
     return (
@@ -23,13 +35,14 @@ function Login() {
                 <h1 className="text-center">Đăng nhập</h1>
                 <form onSubmit={handleLogin}>
                     <div className="form-group">
-                        <label>Tên đăng nhập</label>
+                        <label>Email</label>
                         <input
                             type="text"
                             className="form-control"
-                            value={username}
-                            id="username"
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={email}
+                            name='email'
+                            id="email"
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="form-group">
@@ -38,6 +51,7 @@ function Login() {
                             type="password"
                             className="form-control"
                             value={password}
+                            name='password'
                             id='password'
                             onChange={(e) => setPassword(e.target.value)}
                         />
