@@ -13,7 +13,7 @@ function Popular({ products }) {
     }
 
     return (
-        <div className='p-3'>
+        <div className='p-2'>
             <h3 className='ms-4 fw-bolder text-white'>SẢN PHẨM PHỔ BIẾN <Whatshot className="mb-1 fs-1 text-white" /></h3>
             <div className=' p-4 rounded-4'>
                 <Carousel indicators={false} controls={true}

@@ -18,6 +18,8 @@ import ManageOrders from './component/Admin/ManageOrders'
 import Reports from './component/Admin/Reports'
 import ManageProducts from './component/Admin/ManageProducts'
 import Dashboard from './component/Admin/Dashboard'
+import Profile from './component/User/Profile'
+import ChangePassword from './component/User/ChangePassword'
 
 
 
@@ -42,6 +44,9 @@ function App() {
               <Route path='/cart' element={<Cart />} />
               <Route path='/order' element={<Order />} />
               <Route path='/popular' element={<Popular />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/profile/change-password' element={<ChangePassword />} />
+
             </Route>
 
             {/* Các route của Admin  */}

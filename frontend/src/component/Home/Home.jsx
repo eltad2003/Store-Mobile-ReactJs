@@ -102,7 +102,7 @@ function Home() {
          </div> */}
 
          {/* sản phảm hot */}
-         <div className="p-3 w-100 bg container rounded-4">
+         <div className="p-3 w-100 bg-danger container rounded-4">
             <Popular products={products} />
          </div>
 

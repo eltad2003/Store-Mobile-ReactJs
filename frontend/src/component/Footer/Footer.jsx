@@ -5,7 +5,7 @@ import { Facebook, GitHub, Google, Instagram, LinkedIn, Twitter } from '@mui/ico
 
 const Footer = () => {
     return (
-        <footer className="text-center p-4 bg mt-5 text-white">
+        <footer className="text-center p-4 bg-dark mt-5 text-white">
             <hr />
             <Container>
                 {/* Social Media Buttons */}
