@@ -32,7 +32,7 @@ function Navbar() {
         <>
             <div className='bg-dark p-2 position-sticky top-0 z-2  '>
                 <nav className="navbar navbar-expand-lg">
-                    <a className="navbar-brand ms-3 text-white" href="/"><ComputerIcon style={{ color: 'yellow' }} /> SHOP888</a>
+                    <a className="navbar-brand ms-3 text-white fw-bold" href="/"><ComputerIcon style={{ color: 'yellow' }} /> SHOP888</a>
                     <div className="navbar-collapse d-flex justify-content-between" id="navbarNav">
 
                         <ul className="navbar-nav ">
@@ -140,8 +140,8 @@ function Navbar() {
                                     <div className="dropdown-menu show end-0 mt-2">
                                         {user ? (
                                             <div >
-                                                {/* <p className='dropdown-item fw-bolder'>Hello, {user.user.fullName} </p> */}
-                                                <p className='dropdown-item fw-bolder'>Role: {user.user.role}</p>
+                                                <p className='dropdown-item fw-bolder'>Hello, {user.user.fullName} </p>
+                                                {/* <p className='dropdown-item fw-bolder'>Role: {user.user.role}</p> */}
                                                 <Link to={'/profile'} className='dropdown-item'><p>Hồ sơ</p></Link>
                                                 <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>
                                                     Đăng xuất

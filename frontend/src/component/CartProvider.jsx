@@ -33,7 +33,7 @@ function CartProvider({ children }) {
 
     const addToCart = (product) => {
         const existingItem = cartItems.find(item => item.id === product.id)
-        
+
         if (existingItem) {
             setCartItems(cartItems.map(item =>
                 item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
@@ -62,6 +62,13 @@ function CartProvider({ children }) {
         ))
     }
 
+    const updateQuantity = (product, newQuantity) => {
+        if (newQuantity > 0) {
+            setCartItems(cartItems.map(item =>
+                item.id === product.id ? { ...item, quantity: parseInt(newQuantity) } : item
+            ))
+        }
+    }
 
     return (
         <CartContext.Provider value={{
@@ -73,7 +80,7 @@ function CartProvider({ children }) {
             selectedItems,
             toggleSelectItem,
             selectAllItems,
-
+            updateQuantity,
         }}>
             {children}
         </CartContext.Provider>

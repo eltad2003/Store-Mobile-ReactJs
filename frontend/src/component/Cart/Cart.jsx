@@ -5,7 +5,7 @@ import { ArrowBack, RemoveShoppingCart } from '@mui/icons-material';
 import { AuthContext } from '../AuthProvider';
 
 function Cart() {
-    const { cartItems, removeFromCart, increaseItem, decreaseItem, selectedItems, toggleSelectItem, selectAllItems } = useContext(CartContext);
+    const { cartItems, removeFromCart, increaseItem, decreaseItem, selectedItems, toggleSelectItem, selectAllItems, updateQuantity } = useContext(CartContext);
     const { user } = useContext(AuthContext)
     const navigation = useNavigate()
 
@@ -70,7 +70,14 @@ function Cart() {
                                             )}
                                             <div className='mt-3'>
                                                 <button className='btn btn-secondary btn-sm' onClick={() => decreaseItem(product)}>-</button>
-                                                <span className='mx-2'>{product.quantity}</span>
+                                                <input
+                                                    type="text"
+                                                    className="form-control mx-2"
+                                                    style={{ width: "60px", display: "inline" }}
+                                                    value={product.quantity}
+                                                    onChange={(e) => updateQuantity(product, e.target.value)}
+                                                    min="1"
+                                                />
                                                 <button className='btn btn-secondary btn-sm' onClick={() => increaseItem(product)}>+</button>
                                                 <button className='btn btn-small ms-2' onClick={() => removeFromCart(product.id)}>Xóa</button>
                                             </div>
