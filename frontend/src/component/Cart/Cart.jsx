@@ -16,8 +16,8 @@ function Cart() {
 
     const handleCheckout = (e) => {
         if (selectedItems.length === 0) {
-            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!")
             e.preventDefault()
+            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!")
         }
     }
 
@@ -112,7 +112,7 @@ function Cart() {
                                 {user ? (
                                     <Link to={'/order'} onClick={handleCheckout}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
                                 ) : (
-                                    <Link to={'/login'} onClick={handleCheckout}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
+                                    <Link to={'/login'} onClick={() => alert("Bạn cần đăng nhập để thanh toán")}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
                                 )}
                             </div>
                         </div>

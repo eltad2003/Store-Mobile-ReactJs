@@ -1,26 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../AuthProvider';
 
 
 function ManageUsers() {
-  const [users, setUsers] = useState([])
+  const [listUsers, setListUsers] = useState([])
+  const { user } = useContext(AuthContext)
 
 
-  const [active, setActive] = useState(users.map(() => true))
 
-  const toggleActive = (index) => {
-    setActive(prev => {
-      const newStates = [...prev];
-      newStates[index] = !newStates[index];
-      return newStates;
-    });
-  };
-
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/users', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`
+        }
+      })
+      const data = await response.json()
+      setListUsers(data)
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  }
   useEffect(() => {
-    fetch('https://fakestoreapi.in/api/users')
-      .then(res => res.json())
-      .then(res => setUsers(res.users))
-      .catch(err => console.log('err:', err))
-  })
+    fetchUsers()
+  }, [])
 
   return (
     <div className='row'>
@@ -39,26 +44,19 @@ function ManageUsers() {
                   <th scope="col">Số điện thoại</th>
                   <th scope="col">Địa chỉ</th>
                   <th scope="col">Trạng thái</th>
-                  <th scope="col">Hoạt động</th>
+                  <th scope="col">Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.name.firstname} {user.name.lastname}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.address.street}, {user.address.city}</td>
-                    <td>{`${active[user.id]}`}</td>
-                    <td>
-                      {active[user.id] ? (
-                        <button className="btn btn-sm btn-outline-primary" onClick={() => toggleActive(user.id)}>Inactive</button>
-                      ) : (
-                        <button className="btn btn-sm btn-primary" onClick={() => toggleActive(user.id)}>Active</button>
-                      )}
-                      <button className='ms-1 btn btn-sn btn-danger'>Xóa</button>
-                    </td>
+                {listUsers.map((listUser) => (
+                  <tr key={listUser.id}>
+                    <td>{listUser.id}</td>
+                    <td>{listUser.fullName}</td>
+                    <td>{listUser.email}</td>
+                    <td>{listUser.phone}</td>
+                    <td></td>
+                    <td>{listUser.status}</td>
+                    <td><button className='ms-1 btn btn-sn btn-danger'>Xóa</button></td>
                   </tr>
                 ))}
               </tbody>

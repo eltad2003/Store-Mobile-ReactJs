@@ -13,54 +13,54 @@ function Profile() {
                             <img src="https://png.pngtree.com/png-vector/20190114/ourlarge/pngtree-vector-avatar-icon-png-image_313572.jpg" alt="" className='img-fluid rounded-circle' width={100} height={100} />
 
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" defaultValue={user.user.fullName} />
+                        <div className="mb-3">
+                            <label className="form-label">Họ và tên</label>
+                            <input type="text" className="form-control" defaultValue={user.user.fullName} />
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="text" class="form-control" defaultValue={user.user.email} disabled />
+                        <div className="mb-3">
+                            <label className="form-label">Email</label>
+                            <input type="text" className="form-control" defaultValue={user.user.email} disabled />
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control" defaultValue={user.user.phone} />
+                        <div className="mb-3">
+                            <label className="form-label">Số điện thoại</label>
+                            <input type="text" className="form-control" defaultValue={user.user.phone} />
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Địa chỉ</label>
-                            <input type="text" class="form-control" defaultValue={user.user.address} />
+                        <div className="mb-3">
+                            <label className="form-label">Địa chỉ</label>
+                            <input type="text" className="form-control" defaultValue={user.user.address} />
                         </div>
                         <div className='mb-3 d-flex'>
-                            <label class="form-label me-2">Ngày tham gia: </label>
+                            <label className="form-label me-2">Ngày tham gia: </label>
                             <p>{user.user.createdAt}</p>
                         </div>
                         <div className='mb-3'>
                             <button className='btn form-control btn-outline-danger' data-bs-target="#changePasswordModal" data-bs-toggle='modal'>Đổi mật khẩu</button>
                         </div>
                         <div>
-                            <div class="modal fade" id="changePasswordModal" tabindex="-1">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title bg-light fw-bold">Đổi mật khẩu</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <div className="modal fade" id="changePasswordModal" tabindex="-1">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title bg-light fw-bold">Đổi mật khẩu</h5>
+                                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label class="form-label">Mật khẩu cũ</label>
-                                                <input type="password" class="form-control" />
+                                        <div className="modal-body">
+                                            <div className="mb-3">
+                                                <label className="form-label">Mật khẩu cũ</label>
+                                                <input type="password" className="form-control" />
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Mật khẩu mới</label>
-                                                <input type="password" class="form-control" />
+                                            <div className="mb-3">
+                                                <label className="form-label">Mật khẩu mới</label>
+                                                <input type="password" className="form-control" />
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Nhập lại mật khẩu mới</label>
-                                                <input type="password" class="form-control" />
+                                            <div className="mb-3">
+                                                <label className="form-label">Nhập lại mật khẩu mới</label>
+                                                <input type="password" className="form-control" />
                                             </div>
 
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger">Lưu</button>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-danger">Lưu</button>
                                         </div>
                                     </div>
                                 </div>

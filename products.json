@@ -1,0 +1,678 @@
+[
+  {
+    "id": 1,
+    "name": "MacBook Pro 14",
+    "description": "Apple M2 Pro chip, 16GB RAM, 1TB SSD, Liquid Retina XDR display.",
+    "price": "9618000",
+    "stockQuantity": 47,
+    "category": "laptop",
+    "brand": "Apple",
+    "createdAt": "2025-04-18T12:05:41",
+    "listMedia": [
+      "https://cdsassets.apple.com/live/SZLF0YNV/images/sp/111340_macbook-pro-2023-14in.png"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Dell UltraSharp 24",
+    "description": "Full HD IPS display, 99% sRGB, adjustable stand.",
+    "price": "11400000",
+    "stockQuantity": 49,
+    "category": "monitor",
+    "brand": "Dell",
+    "createdAt": "2025-04-18T12:06:44",
+    "listMedia": [
+      "https://nguyencongpc.vn/photos/17/Dell-UltraSharp-U2421HE-1.JPGhttps://images.unsplash.com/photo-1611078489935-0cb964de46d1vhttps://cdsassets.apple.com/live/SZLF0YNV/images/sp/111340_macbook-pro-2023-14in.png"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Office PC Mini ITX",
+    "description": "Compact mini ITX build for business tasks, i5, 16GB RAM.",
+    "price": "46100000",
+    "stockQuantity": 49,
+    "category": "pc",
+    "brand": "HP",
+    "createdAt": "2025-04-18T12:08:15",
+    "listMedia": [
+      "https://maytinhcdc.vn/media/product/8445_d31stdscbk02.png"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Logitech MX Master 3",
+    "description": "Ergonomic wireless mouse with precision tracking.",
+    "price": "2199000",
+    "stockQuantity": 18,
+    "category": "mouse",
+    "brand": "Logitech",
+    "createdAt": "2025-04-18T12:10:01",
+    "listMedia": [
+      "https://resource.logitech.com/w_1206,c_limit,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s-business-wireless-mouse/buy/mx-master-3s-business-product-callout.png?v=1"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Logitech G Pro X",
+    "description": "Mechanical keyboard for esports professionals.",
+    "price": "3700000",
+    "stockQuantity": 7,
+    "category": "keyboard",
+    "brand": "Logitech",
+    "createdAt": "2025-04-18T12:11:41",
+    "listMedia": [
+      "https://resource.logitech.com/content/dam/gaming/en/products/pro-x-keyboard/pro-x-keyboard-gallery-1.png"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Laptop Dell XPS 13",
+    "description": "13-inch Ultrabook with Intel Core i7, 16GB RAM, and 512GB SSD.",
+    "price": "22459000",
+    "stockQuantity": 28,
+    "category": "laptop",
+    "brand": "Dell",
+    "createdAt": "2025-04-18T12:12:41",
+    "listMedia": [
+      "https://hoangsonstore.com/wp-content/uploads/2022/07/dell-xps-9360-laptop-doanh-nhan-cao-cap-407-2.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Apple Magic Mouse 2",
+    "description": "Rechargeable wireless mouse with multi-touch.",
+    "price": "1190000",
+    "stockQuantity": 9,
+    "category": "mouse",
+    "brand": "Apple",
+    "createdAt": "2025-04-18T12:13:12",
+    "listMedia": [
+      "https://zshop.vn/images/detailed/51/Magic-Mouse-2-image-007.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Apple Magic Keyboard",
+    "description": "Wireless keyboard with numeric keypad, rechargeable.",
+    "price": "3050000",
+    "stockQuantity": 21,
+    "category": "keyboard",
+    "brand": "Apple",
+    "createdAt": "2025-04-18T12:13:23",
+    "listMedia": [
+      "https://bizweb.dktcdn.net/thumb/1024x1024/100/410/941/products/ban-phim-apple-magic-with-numeric-keypad-its-mq052za-a-trang-1.png?v=1671186683963"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "LG UltraFine 27 inch",
+    "description": "4K UHD IPS display with USB-C and excellent color accuracy.",
+    "price": "11650000",
+    "stockQuantity": 22,
+    "category": "monitor",
+    "brand": "LG",
+    "createdAt": "2025-04-18T12:13:47",
+    "listMedia": [
+      "https://m.media-amazon.com/images/I/71GRpZb6+vL._AC_SL1500_.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Gaming PC Ryzen 9",
+    "description": "High-performance desktop with RTX 4080, Ryzen 9, 32GB RAM.",
+    "price": "27990000",
+    "stockQuantity": 40,
+    "category": "pc",
+    "brand": "Custom",
+    "createdAt": "2025-04-18T12:14:03",
+    "listMedia": [
+      "https://product.hstatic.net/1000288298/product/dsc03024_b97b6d0597ba4447bd57e2f41e42758b_master.jpg"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Keychron K6",
+    "description": "65% wireless mechanical keyboard with hot-swap support.",
+    "price": "2490000",
+    "stockQuantity": 26,
+    "category": "keyboard",
+    "brand": "Keychron",
+    "createdAt": "2025-04-18T12:14:34",
+    "listMedia": [
+      "https://nvs.tn-cdn.net/2021/11/V5A9478-scaled.jpg"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Samsung Odyssey G7",
+    "description": "27-inch QHD 240Hz curved gaming monitor with HDR600.",
+    "price": "27000000",
+    "stockQuantity": 32,
+    "category": "monitor",
+    "brand": "Samsung",
+    "createdAt": "2025-04-18T12:15:21",
+    "listMedia": [
+      "https://m.media-amazon.com/images/I/81n50WLm6lL.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Razer DeathAdder V2",
+    "description": "Optical sensor, RGB lighting, ergonomic gaming mouse.",
+    "price": "940000",
+    "stockQuantity": 13,
+    "category": "mouse",
+    "brand": "Razer",
+    "createdAt": "2025-04-18T12:16:04",
+    "listMedia": [
+      "https://phucanhcdn.com/media/product/39160_razer_deathadder_v2_h1.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "ASUS ROG Zephyrus G14",
+    "description": "AMD Ryzen 9, RTX 4060, 32GB RAM, 1TB SSD, gaming laptop.",
+    "price": "45600000",
+    "stockQuantity": 17,
+    "category": "laptop",
+    "brand": "ASUS",
+    "createdAt": "2025-04-18T12:16:54",
+    "listMedia": [
+      "https://lapvip.vn/upload/products/original/asus-gaming-rog-zephyrus-g14-windows-10-1597659277.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Intel i9 Creator PC",
+    "description": "Built for creators, RTX 4070, i9-13900K, 64GB RAM.",
+    "price": "34900000",
+    "stockQuantity": 7,
+    "category": "pc",
+    "brand": "Custom",
+    "createdAt": "2025-04-18T12:17:47",
+    "listMedia": [
+      "https://minhancomputercdn.com/media/product/12575_12575_9565_v____case_mik_lv07_white_01.jpg"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Acer Predator Helios 300",
+    "description": "Intel i7-11800H, RTX 3070, 16GB RAM, 512GB SSD, 15.6-inch gaming laptop.",
+    "price": "28990000",
+    "stockQuantity": 22,
+    "category": "laptop",
+    "brand": "Acer",
+    "createdAt": "2025-04-18T12:18:24",
+    "listMedia": [
+      "https://gamalaptop.vn/wp-content/uploads/2021/09/Acer-Predator-Helios-300-i7-8750H-GTX-1060-01-1200x1200.jpg"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "BenQ ZOWIE XL2411K",
+    "description": "24-inch 144Hz esports monitor with DyAc+ technology.",
+    "price": "6300000",
+    "stockQuantity": 34,
+    "category": "monitor",
+    "brand": "BenQ",
+    "createdAt": "2025-04-18T12:19:00",
+    "listMedia": [
+      "https://m.media-amazon.com/images/I/61H8-y6pTaL._AC_UF894,1000_QL80_.jpg"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Corsair K100 RGB",
+    "description": "Mechanical gaming keyboard with Cherry MX switches and customizable RGB.",
+    "price": "3999000",
+    "stockQuantity": 15,
+    "category": "keyboard",
+    "brand": "Corsair",
+    "createdAt": "2025-04-18T12:20:10",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ29ov2db75rU9UC1_ecS_IFazlh1FkQx_5xg&s"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Logitech G502 HERO",
+    "description": "High-precision gaming mouse with 25K DPI sensor and RGB lighting.",
+    "price": "1399000",
+    "stockQuantity": 12,
+    "category": "mouse",
+    "brand": "Logitech",
+    "createdAt": "2025-04-18T12:21:45",
+    "listMedia": [
+      "https://product.hstatic.net/1000037809/product/thegioigear.com_logitech_g502hero_c_master.jpg"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Alienware AW2521H",
+    "description": "25-inch 360Hz gaming monitor with NVIDIA G-SYNC technology.",
+    "price": "15000000",
+    "stockQuantity": 18,
+    "category": "monitor",
+    "brand": "Alienware",
+    "createdAt": "2025-04-18T12:22:30",
+    "listMedia": [
+      "https://minhancomputercdn.com/media/product/10701_dell_allienware_25_aw2521h_2.jpg"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Razer BlackWidow V3",
+    "description": "Mechanical keyboard with green switches, RGB backlighting, and media controls.",
+    "price": "2399000",
+    "stockQuantity": 25,
+    "category": "keyboard",
+    "brand": "Razer",
+    "createdAt": "2025-04-18T12:23:00",
+    "listMedia": [
+      "https://nguyencongpc.vn/media/product/17393-razer-blackwidow-v3-pro-wireless-1.JPG"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "MSI GE76 Raider",
+    "description": "17.3-inch laptop with Intel i9-12900HK, RTX 3080, 32GB RAM, 1TB SSD.",
+    "price": "51990000",
+    "stockQuantity": 10,
+    "category": "laptop",
+    "brand": "MSI",
+    "createdAt": "2025-04-18T12:24:15",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr3x0HG2rlyyJsXeHqFNHwpjSZCEBlpl0Mdg&s"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Samsung Odyssey G9",
+    "description": "49-inch QLED ultra-wide gaming monitor with 240Hz and HDR1000.",
+    "price": "37990000",
+    "stockQuantity": 8,
+    "category": "monitor",
+    "brand": "Samsung",
+    "createdAt": "2025-04-18T12:25:30",
+    "listMedia": [
+      "https://phucanhcdn.com/media/product/56496_man_hinh_cong_samsung_odyssey_g9_ls49cg954eexxv_3.jpg"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "ASUS TUF Gaming A15",
+    "description": "15.6-inch laptop with Ryzen 7, RTX 3050 Ti, 16GB RAM, 512GB SSD.",
+    "price": "17990000",
+    "stockQuantity": 12,
+    "category": "laptop",
+    "brand": "ASUS",
+    "createdAt": "2025-04-18T12:26:40",
+    "listMedia": [
+      "https://onlylap.vn/wp-content/uploads/2024/08/asus-tuf-gaming-a15-fa507nu-lp131w-4.webp"
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Xiaomi Mi 2K Gaming Monitor",
+    "description": "27-inch monitor with 165Hz refresh rate and 2K resolution.",
+    "price": "6600000",
+    "stockQuantity": 21,
+    "category": "monitor",
+    "brand": "Xiaomi",
+    "createdAt": "2025-04-18T12:27:10",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIfampepAwbPLP1rLz4ZbaHYKykOX1V9zR2w&s"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "HyperX Alloy FPS Pro",
+    "description": "Compact mechanical keyboard with red switches, perfect for FPS gaming.",
+    "price": "1999000",
+    "stockQuantity": 16,
+    "category": "keyboard",
+    "brand": "HyperX",
+    "createdAt": "2025-04-18T12:28:45",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM1fqVSKFukpC9XoivsPsuXQVDPko0XwbooA&s"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "SteelSeries Rival 600",
+    "description": "Dual sensor gaming mouse with 12,000 DPI and split-trigger buttons.",
+    "price": "1799000",
+    "stockQuantity": 30,
+    "category": "mouse",
+    "brand": "SteelSeries",
+    "createdAt": "2025-04-18T12:29:00",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMhYSMNXOHYiFUKPIylsUSnJ0H7xzWauuMRQ&s"
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Lenovo Legion 5 Pro",
+    "description": "16-inch gaming laptop with Ryzen 7, RTX 3060, 16GB RAM, 512GB SSD.",
+    "price": "24990000",
+    "stockQuantity": 17,
+    "category": "laptop",
+    "brand": "Lenovo",
+    "createdAt": "2025-04-18T12:29:54",
+    "listMedia": [
+      "https://product.hstatic.net/200000837185/product/lenovo-legion-5-pro-16irx9-83df0046vn_abc39a40a8ef4162a0b6eb9163b692a4_master.jpg"
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Gigabyte AORUS AD27QD",
+    "description": "27-inch 165Hz gaming monitor with 1440p resolution and G-SYNC compatibility.",
+    "price": "10600000",
+    "stockQuantity": 14,
+    "category": "monitor",
+    "brand": "Gigabyte",
+    "createdAt": "2025-04-18T12:30:45",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXVNZzHoGKNOi7f41A2rVwpQbblQV3pIsdBg&s"
+    ]
+  },
+  {
+    "id": 30,
+    "name": "Razer Nari Ultimate",
+    "description": "Wireless gaming headset with haptic feedback and THX spatial audio.",
+    "price": "4299000",
+    "stockQuantity": 10,
+    "category": "headset",
+    "brand": "Razer",
+    "createdAt": "2025-04-18T12:32:00",
+    "listMedia": [
+      "https://nguyencongpc.vn/media/product/17283-tai-nghe-razer-nari-ultimate-gaming-wireless-2.jpg"
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Corsair Vengeance LPX 32GB",
+    "description": "32GB DDR4 RAM, high-performance memory for gaming and content creation.",
+    "price": "2200000",
+    "stockQuantity": 45,
+    "category": "ram",
+    "brand": "Corsair",
+    "createdAt": "2025-04-18T12:33:10",
+    "listMedia": [
+      "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6448/6448611_sd.jpg"
+    ]
+  },
+  {
+    "id": 32,
+    "name": "MSI GE66 Raider",
+    "description": "15.6-inch gaming laptop with Intel i9, RTX 3070, 32GB RAM, 1TB SSD.",
+    "price": "43990000",
+    "stockQuantity": 15,
+    "category": "laptop",
+    "brand": "MSI",
+    "createdAt": "2025-04-18T12:35:10",
+    "listMedia": [
+      "https://img.websosanh.vn/v2/users/review/images/danh-gia-msi-ge66-raider-sieu/dd1dzpx4e2yqb.jpg?compress=80"
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Logitech G Pro Wireless",
+    "description": "Lightweight wireless gaming mouse with HERO sensor and customizable RGB.",
+    "price": "2199000",
+    "stockQuantity": 20,
+    "category": "mouse",
+    "brand": "Logitech",
+    "createdAt": "2025-04-18T12:36:10",
+    "listMedia": [
+      "https://product.hstatic.net/1000333506/product/518ueroegwl._sl1000__a15b100f90f74a209137cda33e1902e2_bdd61021913c407eb32f9be18d64994e.jpg"
+    ]
+  },
+  {
+    "id": 34,
+    "name": "Corsair K70 RGB MK.2",
+    "description": "Mechanical gaming keyboard with Cherry MX switches and RGB backlighting.",
+    "price": "2999000",
+    "stockQuantity": 18,
+    "category": "keyboard",
+    "brand": "Corsair",
+    "createdAt": "2025-04-18T12:37:00",
+    "listMedia": [
+      "https://www.civip.com.vn/media/lib/5515_18b15.jpg"
+    ]
+  },
+  {
+    "id": 35,
+    "name": "Samsung 970 Evo 1TB",
+    "description": "1TB NVMe SSD for fast storage and loading times, ideal for gaming and content creation.",
+    "price": "2500000",
+    "stockQuantity": 30,
+    "category": "ram",
+    "brand": "Samsung",
+    "createdAt": "2025-04-18T12:38:30",
+    "listMedia": [
+      "https://bizweb.dktcdn.net/100/410/941/products/10242.jpg?v=1635150697720"
+    ]
+  },
+  {
+    "id": 36,
+    "name": "Razer Huntsman Mini",
+    "description": "60% compact optical keyboard with Razer Optical switches and RGB lighting.",
+    "price": "2699000",
+    "stockQuantity": 16,
+    "category": "keyboard",
+    "brand": "Razer",
+    "createdAt": "2025-04-18T12:39:00",
+    "listMedia": [
+      "https://m.media-amazon.com/images/I/61Az2uOUbqL._AC_UF894,1000_QL80_.jpg"
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Alienware M15 R7",
+    "description": "15.6-inch gaming laptop with Intel i7, RTX 3070, 16GB RAM, 512GB SSD.",
+    "price": "30990000",
+    "stockQuantity": 13,
+    "category": "laptop",
+    "brand": "Alienware",
+    "createdAt": "2025-04-18T12:40:10",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSodF5koPop-xZWTJ1WnKxoooPKl2LcA_COWg&s"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Logitech G703 LIGHTSPEED",
+    "description": "Wireless gaming mouse with HERO sensor, customizable RGB, and LIGHTSPEED wireless technology.",
+    "price": "1799000",
+    "stockQuantity": 24,
+    "category": "mouse",
+    "brand": "Logitech",
+    "createdAt": "2025-04-18T12:41:45",
+    "listMedia": [
+      "https://down-vn.img.susercontent.com/file/8fc924e6b20cbc38ea305794be51308f"
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Asus ROG Strix SCAR 15",
+    "description": "15.6-inch gaming laptop with Intel i9, RTX 3080, 32GB RAM, 1TB SSD.",
+    "price": "47990000",
+    "stockQuantity": 9,
+    "category": "laptop",
+    "brand": "ASUS",
+    "createdAt": "2025-04-18T12:42:30",
+    "listMedia": [
+      "https://m.media-amazon.com/images/I/71emGfDNSbL.jpg"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Corsair Vengeance LPX 16GB",
+    "description": "16GB DDR4 RAM, high-performance memory ideal for gaming and productivity.",
+    "price": "1300000",
+    "stockQuantity": 50,
+    "category": "ram",
+    "brand": "Corsair",
+    "createdAt": "2025-04-18T12:43:00",
+    "listMedia": [
+      "https://file.hstatic.net/1000026716/file/gearvn-ram-corsair-vengeance-lpx-8gb-ddr4-3200mhz-01_ef11fb329de047a49296e29070aa383c.jpg"
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Custom Gaming PC Intel i7",
+    "description": "Gaming PC build with Intel Core i7-12700K, NVIDIA RTX 3070, 16GB RAM, 512GB SSD, perfect for high-end gaming.",
+    "price": "31900000",
+    "stockQuantity": 10,
+    "category": "pc",
+    "brand": "Custom",
+    "createdAt": "2025-04-18T12:43:40",
+    "listMedia": [
+      "https://mojoelectronics.com/wp-content/uploads/2022/08/13515225_13.png"
+    ]
+  },
+  {
+    "id": 42,
+    "name": "Logitech G915 TKL",
+    "description": "Tenkeyless wireless mechanical gaming keyboard with low-profile GL switches and RGB.",
+    "price": "3599000",
+    "stockQuantity": 15,
+    "category": "keyboard",
+    "brand": "Logitech",
+    "createdAt": "2025-04-18T12:44:15",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnuokvUGfb-1Igh2K8SzZqlbf8rpYF-5ICIA&s"
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Razer Basilisk V3",
+    "description": "Ergonomic gaming mouse with RGB lighting and 11 programmable buttons.",
+    "price": "2299000",
+    "stockQuantity": 20,
+    "category": "mouse",
+    "brand": "Razer",
+    "createdAt": "2025-04-18T12:44:40",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN2C1do3Auo7HPRZXLXF1zOfiF5T7t3D8wlQ&s"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Corsair K95 RGB Platinum",
+    "description": "Full-size mechanical gaming keyboard with Cherry MX switches and RGB backlighting.",
+    "price": "4299000",
+    "stockQuantity": 12,
+    "category": "keyboard",
+    "brand": "Corsair",
+    "createdAt": "2025-04-18T12:45:10",
+    "listMedia": [
+      "https://bizweb.dktcdn.net/100/433/921/products/a1309bdb94b8f1d4031f57ba01a12a4e.jpg?v=1681187801953"
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Gigabyte AORUS Master 32GB",
+    "description": "32GB DDR4 memory, ideal for high-end gaming and content creation.",
+    "price": "3900000",
+    "stockQuantity": 14,
+    "category": "ram",
+    "brand": "Gigabyte",
+    "createdAt": "2025-04-18T12:45:10",
+    "listMedia": [
+      "https://images.gigabyte.com/2021/05/132.jpg"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "HP Pavilion 15",
+    "description": "15.6-inch laptop with Intel Core i5, 8GB RAM, and 512GB SSD.",
+    "price": "14500000",
+    "stockQuantity": 28,
+    "category": "laptop",
+    "brand": "HP",
+    "createdAt": "2025-04-18T12:45:47",
+    "listMedia": [
+      "https://www.hp.com/united-states/campaigns/pavilion-15.jpg"
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Asus TUF Gaming Monitor",
+    "description": "27-inch 165Hz 2K display with G-SYNC compatibility.",
+    "price": "9800000",
+    "stockQuantity": 16,
+    "category": "monitor",
+    "brand": "ASUS",
+    "createdAt": "2025-04-18T12:46:21",
+    "listMedia": [
+      "https://phucanhcdn.com/media/lib/10-01-2025/man-hinh-asus-tuf-gaming-vg27aq1a-1.jpg"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "ASUS ROG Strix G15",
+    "description": "15.6 FHD, Ryzen 7 5800H, NVIDIA GeForce RTX 3070, 16GB RAM, 512GB SSD, ideal for gaming and content creation.",
+    "price": "23000000",
+    "stockQuantity": 10,
+    "category": "laptop",
+    "brand": "ASUS",
+    "createdAt": "2025-04-18T12:47:03",
+    "listMedia": [
+      "https://cdn.tgdd.vn/Products/Images/44/270031/asus-rog-strix-gaming-g513ih-r7-4800h-8gb-512gb-4gb-600x600.jpg"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Corsair K60 RGB Pro",
+    "description": "RGB mechanical keyboard with Cherry MX red switches and aluminum frame.",
+    "price": "2499000",
+    "stockQuantity": 18,
+    "category": "keyboard",
+    "brand": "Corsair",
+    "createdAt": "2025-04-18T12:48:15",
+    "listMedia": [
+      "https://assets.corsair.com/image/upload/f_auto,q_auto/v1/akamai/pdp/k60-pro/low-profile/images/k60_rgb_pro_lp_front.png"
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Alienware AW3423DW",
+    "description": "34-inch ultrawide gaming monitor with 175Hz and OLED technology.",
+    "price": "34990000",
+    "stockQuantity": 6,
+    "category": "monitor",
+    "brand": "Alienware",
+    "createdAt": "2025-04-18T12:49:10",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHnLGKYubRIUMYh9-jfL9OXFgTU15w8egKbg&s"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Razer Nari Essential",
+    "description": "Affordable wireless gaming headset with 7.1 surround sound and soft ear cushions.",
+    "price": "1299000",
+    "stockQuantity": 22,
+    "category": "headset",
+    "brand": "Razer",
+    "createdAt": "2025-04-18T12:50:03",
+    "listMedia": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe_C6-8uZ3Z482DQNQeZGMHdJFpw68hkM6AQ&s"
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Zowie XL2546K",
+    "description": "24.5-inch esports monitor with 240Hz and DyAc+ technology for ultra-smooth gameplay.",
+    "price": "11000000",
+    "stockQuantity": 12,
+    "category": "monitor",
+    "brand": "BenQ",
+    "createdAt": "2025-04-18T12:51:15",
+    "listMedia": [
+      "https://phucanhcdn.com/media/product/46430_xl2546k_ha1.jpg"
+    ]
+  }
+]
