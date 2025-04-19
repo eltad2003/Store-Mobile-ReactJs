@@ -47,7 +47,7 @@ function Register() {
 
     return (
         <div className="d-flex justify-content-center mt-4">
-            <div className="mt-4 p-3 rounded w-25 bg-light">
+            <div className="mt-4 p-3 rounded w-25 bg-light w-50">
                 <h1 className="text-center">Đăng ký</h1>
                 <form >
                     <div className="form-group">

@@ -16,22 +16,23 @@ function Login() {
         const user = JSON.parse(localStorage.getItem('user'))
         console.log(user);
 
-
-        if (user.user.role === 'ADMIN') {
-            alert('Đăng nhập thành công')
-            navigate('/admin')
+        if (user) {
+            if (user.user.role === "ADMIN") {
+                navigate('/admin')
+            } else {
+                alert("Đăng nhập thành công")
+                navigate('/')
+            }
         } else {
-            alert('Đăng nhập thành công')
-            navigate('/')
+            alert("Đăng nhập thất bại")
         }
 
 
     }
 
     return (
-
-        <div className="container d-flex justify-content-center mt-5 p-3">
-            <div className="p-3 rounded w-25 mt-4 bg-light">
+        <div className="container d-flex justify-content-center align-items-center mt-5 p-3">
+            <div className="p-3 rounded bg-light w-50">
                 <h1 className="text-center">Đăng nhập</h1>
                 <form onSubmit={handleLogin}>
                     <div className="form-group">
@@ -56,10 +57,12 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary mt-3 w-100" >Đăng nhập</button>
+                    <button type="submit" className="btn btn-primary mt-3 w-100">Đăng nhập</button>
                 </form>
-                <p className="mt-3">Bạn chưa có tài khoản?</p>
-                <Link to={"/register"}><button className="btn btn-success w-100" >Đăng ký ngay</button></Link>
+                <p className="mt-3 text-center">Bạn chưa có tài khoản?</p>
+                <Link to={"/register"}>
+                    <button className="btn btn-success w-100">Đăng ký ngay</button>
+                </Link>
             </div>
         </div>
     )

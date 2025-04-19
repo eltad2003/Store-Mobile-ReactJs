@@ -25,10 +25,9 @@ const AuthProvider = ({ children }) => {
                 setUser(data);
                 localStorage.setItem('user', JSON.stringify(data));
             } else {
-                alert('Đăng nhập thất bại');
+                console.log("Đăng nhập thất bại");
             }
         } catch (error) {
-            alert('Đăng nhập thất bại');
             console.log("Đăng nhập thất bại", error);
         }
     };

@@ -161,8 +161,8 @@ function ManageProducts() {
         <div className="container p-3 mt-3">
           <div className='d-flex'>
             <h3 className='fw-bold'>Quản lý Sản Phẩm </h3>
-            <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddProduct">Thêm sản phẩm mới</button>
             {/* Thêm sản phẩm */}
+            <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddProduct">Thêm sản phẩm mới</button>
             <div className='modal fade' id='modalAddProduct' tabIndex={-1}>
               <div className="modal-dialog modal-dialog-scrollable">
                 <div className="modal-content">
@@ -258,8 +258,8 @@ function ManageProducts() {
                     <td className='text-truncate' style={{ maxWidth: 250 }}>{product.description} </td>
                     <td className='fw-semibold text-success'>{product.discount ? `${product.discount}%` : ""}</td>
                     <td>
-                      <button className='btn btn-sm btn-primary' data-bs-toggle="modal" data-bs-target={`#modalEdit-${product.id}`} onClick={() => handleEditClick(product.id)}>Sửa</button>
                       {/* Sửa sản phẩm */}
+                      <button className='btn btn-sm btn-primary' data-bs-toggle="modal" data-bs-target={`#modalEdit-${product.id}`} onClick={() => handleEditClick(product.id)}>Sửa</button>
                       <div className="modal" id={`modalEdit-${product.id}`}>
                         <div className="modal-dialog modal-dialog-scrollable">
                           <div className="modal-content">
@@ -318,6 +318,7 @@ function ManageProducts() {
                           </div>
                         </div>
                       </div>
+                      {/* Xóa sản phẩm */}
                       <button className='btn btn-sm btn-danger ms-1' onClick={() => handleDeleteProduct(product.id)}>Xóa {product.id}</button>
                     </td>
                   </tr>
