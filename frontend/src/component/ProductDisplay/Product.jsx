@@ -51,10 +51,10 @@ function Product() {
         <div className='mt-3'>
             {/* Breadcrumb */}
             <div className='container p-3'>
-                <ol className="breadcrumb mt-3">
+                <ol className="breadcrumb fs-5">
                     <li className="breadcrumb-item fw-semibold"><HomeIcon /><Link to={"/"} className='text-decoration-none text-black'>Trang chủ</Link></li>
                     <li className="breadcrumb-item fw-semibold"><Link to={`/${product.category}`} className='text-decoration-none text-black text-uppercase'>{product.category}</Link></li>
-                    <li className="breadcrumb-item active text-truncate" style={{ maxWidth: 250 }}>{product.title}</li>
+                    <li className="breadcrumb-item active text-truncate" style={{ maxWidth: 500 }}>{product.title}</li>
                 </ol>
             </div>
 
@@ -69,11 +69,11 @@ function Product() {
 
                     <div className='col-12 col-lg-6 mt-3 overflow-auto' style={{ maxHeight: '100vh' }}>
                         <div className='card shadow p-4'>
-                            <h4 className='fw-bold'>{product.title}</h4>
+                            <h4 className='fw-bold mb-3'>{product.title}</h4>
                             {product.discount ? (
                                 <div className='d-flex flex-wrap'>
-                                    <p className='text-decoration-line-through'>${Math.round(product.price * (1 + product.discount / 100))}</p>
-                                    <h5 className="text-success fw-bold ms-2">${product.price}</h5>
+                                    <h4 className='text-decoration-line-through '>${Math.round(product.price * (1 + product.discount / 100))}</h4>
+                                    <h3 className="text-success fw-bold ms-2">${product.price}</h3>
                                     <p className='ms-2 text-white bg-danger px-1 rounded-pill'>{product.discount}% off</p>
                                 </div>
                             ) : (

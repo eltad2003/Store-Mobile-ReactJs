@@ -45,12 +45,14 @@ function Home() {
          {/* Banner and thanh danh mục */}
          <div className="container p-5">
             <div className="row">
-
-               <div className="col-lg-2 col-md-3 col-sm-12 mt-3">
+               {/* Sidebar - Hide on mobile */}
+               <div className="col-md-3 mt-3 d-none d-md-block">
                   <Sidebar />
                </div>
-               <div className="col-lg-7 col-md-6 col-sm-12 mt-3">
-                  <div className="card d-flex align-items-center justify-content-center shadow p-2 w-100">
+
+               {/* Carousel - Show on all screens */}
+               <div className="col-12 col-md-6 mt-3">
+                  <div className="card d-flex align-items-center justify-content-center shadow p-2 w-100 h-100">
                      <Carousel
                         prevIcon={<ArrowLeft style={{ color: 'black', fontSize: '70px', marginLeft: '-50px' }} />}
                         nextIcon={<ArrowRight style={{ color: 'black', fontSize: '70px', marginRight: '-50px' }} />}>
@@ -66,7 +68,9 @@ function Home() {
                      </Carousel>
                   </div>
                </div>
-               <div className="col-lg-3 col-md-3 col-sm-12 mt-3">
+
+               {/* Right banner images - Hide on mobile */}
+               <div className="col-md-3 mt-3 d-none d-md-block">
                   <div className="card shadow p-2 h-100">
                      <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/m55-right-banner-8-3.png" alt="" className="img-fluid w-100 mb-2 rounded" />
                      <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/right-imac-m4-30-12.jpg" alt="" className="img-fluid w-100 mb-2 rounded" />
@@ -94,11 +98,7 @@ function Home() {
 
          {/* sản phẩm hot */}
          <div className="p-3 w-100 bg-danger container rounded-4">
-            <div className="row">
-               <div className="col-12">
-                  <Popular products={products} />
-               </div>
-            </div>
+            <Popular products={products} />
          </div>
 
          {/* Tất cả sản phẩm */}
@@ -147,11 +147,7 @@ function Home() {
 
          {/*hot sale*/}
          <div className="p-3 w-100 bg-danger container rounded-4">
-            <div className="row">
-               <div className="col-12">
-                  <Sale products={products} />
-               </div>
-            </div>
+            <Sale products={products} />
          </div>
 
 
@@ -163,7 +159,7 @@ function Home() {
             </div>
             <div className="row">
                {blogs.map((blog, index) => (
-                  <div key={index} className="col-md-3">
+                  <div key={index} className="col-md-3 col-6">
                      <div className="card border-0 h-100">
                         <div className="p-2">
                            <img src={blog.image} alt={blog.title} className="card-img-top rounded-3" />

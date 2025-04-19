@@ -24,7 +24,7 @@ function Sale({ products }) {
                         <Carousel.Item key={index}>
                             <div className='row'>
                                 {chunk.map(item => (
-                                    <div className='col-md-3 mb-3 d-flex justify-content-center'  >
+                                    <div className='col-6 col-md-3 mb-3 d-flex justify-content-center'  >
                                         <CartItem item={item} />
                                     </div>
                                 ))}

@@ -5,82 +5,63 @@ import { Facebook, GitHub, Google, Instagram, LinkedIn, Twitter } from '@mui/ico
 
 const Footer = () => {
     return (
-        <footer className="text-center p-4 bg-dark mt-5 text-white">
-            <hr />
-            <Container>
-                {/* Social Media Buttons */}
-                <section className="mb-4">
-                    <Button variant="" className="m-1" href="#!">
-                        <Facebook />
-                    </Button>
-                    <Button variant="" className="m-1" href="#!">
-                        <Twitter />
-                    </Button>
-                    <Button variant="" className="m-1" href="#!">
-                        <Google />
-                    </Button>
-                    <Button variant="" className="m-1" href="#!">
-                        <Instagram />
-                    </Button>
-                    <Button variant="" className="m-1" href="#!">
-                        <LinkedIn />
-                    </Button>
-                    <Button variant="" className="m-1" href="#!">
-                        <GitHub />
-                    </Button>
-                </section>
+        <footer className="bg-dark text-white mt-5">
+            <div className="container py-5">
+                <div className="row g-4">
+                    {/* About Us Column */}
+                    <div className="col-lg-4 col-md-6">
+                        <h5 className="text-uppercase mb-4">Về chúng tôi</h5>
+                        <p className="text-white">
+                            Chúng tôi là đơn vị chuyên cung cấp các sản phẩm công nghệ chính hãng với giá cả cạnh tranh và dịch vụ chăm sóc khách hàng tốt nhất.
+                        </p>
+                        <div className="d-flex gap-3 mt-4">
+                            <a href="#" className="text-white"><Facebook /></a>
+                            <a href="#" className="text-white"><Instagram /></a>
+                            <a href="#" className="text-white"><Twitter /></a>
+                            <a href="#" className="text-white"><LinkedIn /></a>
+                        </div>
+                    </div>
 
-                {/* Newsletter Subscription */}
-                <section>
-                    <Form>
-                        <Row className="justify-content-center">
-                            <Col xs="auto">
-                                <p className="pt-2"><strong>Sign up for our newsletter</strong></p>
-                            </Col>
-                            <Col md="5">
-                                <Form.Control type="email" placeholder="Email address" className="mb-3" />
-                            </Col>
-                            <Col xs="auto">
-                                <Button variant="" type="submit" className="btn btn-danger mb-3">Subscribe</Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                </section>
+                    {/* Quick Links */}
+                    <div className="col-lg-2 col-md-6">
+                        <h5 className="text-uppercase mb-4">Liên kết nhanh</h5>
+                        <ul className="list-unstyled">
+                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Trang chủ</a></li>
+                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Sản phẩm</a></li>
+                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Khuyến mãi</a></li>
+                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Tin tức</a></li>
+                        </ul>
+                    </div>
 
-                {/* Description */}
-                <section className="mb-4">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum repellat quaerat
-                        voluptatibus placeat nam, commodi optio pariatur est quia magnam eum harum corrupti dicta, aliquam
-                        sequi voluptate quas.
-                    </p>
-                </section>
+                    {/* Contact Info */}
+                    <div className="col-lg-3 col-md-6">
+                        <h5 className="text-uppercase mb-4">Thông tin liên hệ</h5>
+                        <ul className="list-unstyled text-white">
+                            <li className="mb-2">Địa chỉ: 123 Đường ABC, Quận XYZ</li>
+                            <li className="mb-2">Email: contact@example.com</li>
+                            <li className="mb-2">Hotline: 1900 xxxx</li>
+                            <li className="mb-2">Giờ làm việc: 8:00 - 22:00</li>
+                        </ul>
+                    </div>
 
-                {/* Links */}
-                <section>
-                    <Row>
-                        {[...Array(4)].map((_, index) => (
-                            <Col lg="3" md="6" className="mb-4" key={index}>
-                                <h5 className="text-uppercase">Links</h5>
-                                <ul className="list-unstyled">
-                                    {[1, 2, 3, 4].map((num) => (
-                                        <li key={num}>
-                                            <a href="#!" className="text-black">Link {num}</a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Col>
-                        ))}
-                    </Row>
-                </section>
-            </Container>
+                    {/* Newsletter */}
+                    <div className="col-lg-3 col-md-6">
+                        <h5 className="text-uppercase mb-4">Đăng ký nhận tin</h5>
+                        <p className="text-white">Nhận thông tin khuyến mãi mới nhất</p>
+                        <div className="input-group mb-3">
+                            <input type="email" className="form-control" placeholder="Email của bạn" />
+                            <button className="btn btn-danger" type="button">Đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* Copyright */}
-            <div className="text-center p-3 bg-secondary " >
-                © 2025 Copyright: LE HOANG DAT-B21DCC212
+            <div className="text-center py-3 border-top border-secondary">
+                <p className="mb-0">© 2025 Copyright: LE HOANG DAT-B21DCC212</p>
             </div>
         </footer>
-    );
+    )
 };
 
 export default Footer;
