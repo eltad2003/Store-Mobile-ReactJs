@@ -34,16 +34,16 @@ function Navbar() {
                 <nav className="navbar navbar-expand-lg navbar-dark">
                     <div className="container-fluid">
                         <a className="navbar-brand ms-3 text-white fw-bold" href="/"><ComputerIcon style={{ color: 'yellow' }} /> SHOP888</a>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="navbar-nav me-lg-3">
-                                <li className="nav-item">
-                                    <button className="nav-link text-white px-3">Danh mục</button>
+                            <ul className="navbar-nav me-lg-3 d-flex flex-row align-items-center">
+                                <li className="nav-item me-3">
+                                    <button className="nav-link text-white">Danh mục</button>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link text-white px-3" href="/order">Tra cứu đơn hàng</a>
+                                    <a className="nav-link text-white" href="/order">Tra cứu đơn hàng</a>
                                 </li>
                             </ul>
 
@@ -96,21 +96,21 @@ function Navbar() {
                                 </>
                             )}
 
-                            <ul className="navbar-nav ms-lg-5">
+                            <ul className="navbar-nav ms-lg-3 d-flex flex-row align-items-center">
                                 {user && user.user.role === 'ADMIN' && (
-                                    <li className='nav-item me-3 mt-3'>
+                                    <li className='nav-item me-3'>
                                         <Link to={'/admin'} className='text-white text-decoration-none'>Quản lý</Link>
                                     </li>
                                 )}
-                                <li className="nav-item me-3 mt-3">
-                                    <Link to={'/cart'} className="position-relative me-2" style={{ color: 'white' }}>
+                                <li className="nav-item me-3">
+                                    <Link to={'/cart'} className="position-relative" style={{ color: 'white' }}>
                                         <ShoppingCart />
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-danger">
                                             {cartItems.length}
                                         </span>
                                     </Link>
                                 </li>
-                                <li className="nav-item dropdown mt-3 mb-1">
+                                <li className="nav-item dropdown ms-2">
                                     <Link
                                         style={{ color: 'white' }}
                                         onClick={() => setIsOpen(!isOpen)}

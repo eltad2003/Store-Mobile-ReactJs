@@ -234,6 +234,7 @@ function ManageProducts() {
               <thead>
                 <tr>
                   <th className='scope'>STT</th>
+                  <th className='scope'>ID</th>
                   <th className='scope'>Tên sản phẩm</th>
                   <th className='scope'>Ảnh</th>
                   <th className='scope'>Giá</th>
@@ -244,8 +245,9 @@ function ManageProducts() {
                 </tr>
               </thead>
               <tbody>
-                {products.map(product => (
+                {products.map((product, index) => (
                   <tr key={product.id}>
+                    <th>{index + 1}</th>
                     <th>{product.id}</th>
                     <td className='text-truncate' style={{ maxWidth: 250 }}>{product.name}</td>
                     <td>
