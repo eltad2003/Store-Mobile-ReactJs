@@ -3,13 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 import "./Home.css"
 import { blogs, services } from './Service'
-import { products } from './ListProduct'
 import { ArrowLeft, ArrowRight, ArrowUpward, Email, Send } from "@mui/icons-material"
 import clockBanner from '../asset/dong-ho-thong-minh-huawei-watch-gt-5-milanese-13-02-home.webp'
 import s25Banner from "../asset/s25-mo-ban-moi-23-1-25.webp"
 import xiaomi15Banner from '../asset/xiaomi-15-ultra-home-dkntt.webp'
 import { Carousel } from "react-bootstrap"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Sidebar from "../Sidebar/Sidebar"
 import CartItem from "../CartItem/CartItem"
 import Footer from "../Footer/Footer"
@@ -21,15 +20,10 @@ import { Link } from "react-router-dom"
 function Home() {
 
    const [showChat, setShowChat] = useState(false)
-
+   const [products, setProducts] = useState([])
    const [currentPage, setCurrentPage] = useState(1)
    const [itemPerpage, setItemPerPage] = useState(20)
-   const lastItemIndx = currentPage * itemPerpage
-   const firstItemIndx = lastItemIndx - itemPerpage
-   const pages = []
-   for (let i = 1; i <= Math.ceil(products.length / itemPerpage); i++) {
-      pages.push(i)
-   }
+
 
 
    // const [products, setProducts] = useState([])
@@ -39,6 +33,37 @@ function Home() {
    //       .then(data => setProducts(data.products))
    //       .catch(error => console.error('Error fetching products:', error));
    // }, []);
+
+
+   const fetchProducts = async () => {
+      try {
+         const response = await fetch('https://fakestoreapi.in/api/products')
+         const data = await response.json()
+         setProducts(data.products)
+      } catch (error) {
+         console.log("Loi ket noi API: ", error);
+      }
+   }
+   useEffect(() => {
+      fetchProducts()
+   }, [])
+
+   if (!products) {
+      return (
+         <div className='position-absolute top-50 start-50 translate-middle'>
+            <div className="spinner-border text-danger" role="status">
+            </div>
+         </div>
+      )
+   }
+
+
+   const lastItemIndx = currentPage * itemPerpage
+   const firstItemIndx = lastItemIndx - itemPerpage
+   const pages = []
+   for (let i = 1; i <= Math.ceil(products.length / itemPerpage); i++) {
+      pages.push(i)
+   }
 
    return (
       <div className="">
@@ -112,15 +137,16 @@ function Home() {
                      </div>
                   ))}
                </div>
+
                <div className=" mt-4 d-flex justify-content-center">
-                  {/* <button className="btn btn-danger"
+                  <button className="btn btn-danger"
                      onClick={() => {
                         setCurrentPage(currentPage - 1)
                         document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
                      }}
                   >
-                     Trước
-                  </button> */}
+                     <ArrowLeft />
+                  </button>
                   {pages.map(page => (
                      <div>
                         <button className={page === currentPage && currentPage > 0 ? "btn pw-bold btn-danger mx-2 active" : "btn"}
@@ -142,6 +168,7 @@ function Home() {
                      <ArrowRight />
                   </button>
                </div>
+
             </div>
          </div>
 

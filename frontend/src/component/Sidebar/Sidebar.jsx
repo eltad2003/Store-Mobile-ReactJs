@@ -7,7 +7,7 @@ function Sidebar() {
 
     const [menu, setMenu] = useState('')
     return (
-        <div className="sidebar card shadow h-100">
+        <div className="sidebar card shadow p-2 h-100">
             <ul className="list-unstyled p-3 fw-semibold">
                 <li className="mt-3 d-flex align-items-center">
                     <Tv />
