@@ -1,4 +1,4 @@
-import { Dashboard, LocalShipping, Logout, People, Report, ShoppingCart } from '@mui/icons-material'
+import { Category, Dashboard, LocalShipping, Logout, People, Report, ShoppingCart } from '@mui/icons-material'
 import React from 'react'
 import { useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
@@ -43,6 +43,10 @@ function AdminLayout() {
                         <li className=" my-4">
                             <ShoppingCart />
                             <Link className="text-decoration-none text-white ms-2" to="/admin/products" >Quản lý Sản Phẩm</Link>
+                        </li>
+                        <li className=" my-4">
+                            <Category />
+                            <Link className="text-decoration-none text-white ms-2" to="/admin/categories" >Quản lý Danh mục</Link>
                         </li>
                         <li className=" my-4">
                             <LocalShipping />

@@ -75,6 +75,13 @@ function ManageUsers() {
       }
     } catch (error) {
       console.log("Lỗi api: ", error);
+    }
+  }
+
+  const handleAddAdress = async (userId) => {
+    try {
+
+    } catch (error) {
 
     }
   }
@@ -117,6 +124,7 @@ function ManageUsers() {
                     <div className="form-group">
                       <label>Vai trò</label>
                       <select name="role" className='form-select' onChange={e => setNewUser({ ...newUser, [e.target.name]: e.target.value })}>
+                        <option selected value="">-Chọn vai trò-</option>
                         <option value="ADMIN">ADMIN</option>
                         <option value="CUSTOMER">CUSTOMER</option>
 
@@ -133,7 +141,7 @@ function ManageUsers() {
             </div>
           </div>
           <p>Tổng người dùng: {listUsers.length}</p>
-          <div className='card p-3 shadow mt-3 me-3'>
+          <div className='card shadow mt-3'>
             <table className="table">
               <thead>
                 <tr>
@@ -162,8 +170,8 @@ function ManageUsers() {
                     <td>{listUser.phone}</td>
                     <td></td>
                     <td>Đã kích hoạt</td>
-                    <td><button className='ms-1 btn btn-sn btn-primary'>Sửa</button></td>
-                    <td><button className='ms-1 btn btn-sn btn-danger' onClick={() => handleDeleteUser(listUser.id)}>Xóa</button></td>
+                    <td><button className='ms-1 btn btn-sm btn-primary'>Sửa</button></td>
+                    <td><button className='ms-1 btn btn-sm btn-danger' onClick={() => handleDeleteUser(listUser.id)}>Xóa</button></td>
                   </tr>
                 ))}
               </tbody>

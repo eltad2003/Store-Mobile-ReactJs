@@ -8,12 +8,14 @@ function ManageProducts() {
 
   const { user } = useContext(AuthContext)
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [images, setImages] = useState([])
   const [newProduct, setNewProduct] = useState({
     name: "",
     description: "",
     price: "",
     discount: "",
+    categoryId: "",
     brand: "",
     stockQuantity: "",
   });
@@ -22,10 +24,11 @@ function ManageProducts() {
     description: "",
     price: "",
     discount: "",
-    category: "",
+    categoryId: "",
     brand: "",
     stockQuantity: "",
   });
+
   const handleEditClick = (productId) => {
     // Tìm sản phẩm trong mảng products theo id
     const productToEdit = products.find(product => product.id === productId);
@@ -37,7 +40,7 @@ function ManageProducts() {
         description: productToEdit.description,
         price: productToEdit.price,
         discount: productToEdit.discount,
-        category: productToEdit.category || "", // Nếu không có category, đặt giá trị mặc định
+        categoryId: productToEdit.category || "", // Nếu không có category, đặt giá trị mặc định
         brand: productToEdit.brand,
         stockQuantity: productToEdit.stockQuantity,
       });
@@ -59,8 +62,20 @@ function ManageProducts() {
       console.error('Error fetching products:', error);
     }
   };
+  const fetchCategory = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/categories', {
+        method: 'GET',
+      });
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
   useEffect(() => {
     fetchProducts()
+    fetchCategory()
   }, [])
 
 
@@ -101,6 +116,7 @@ function ManageProducts() {
         discount: parseInt(newProduct.discount),
         brand: newProduct.brand,
         stockQuantity: parseInt(newProduct.stockQuantity),
+        categoryId: newProduct.categoryId
       })
     );
 
@@ -122,6 +138,7 @@ function ManageProducts() {
           discount: "",
           brand: "",
           stockQuantity: "",
+          categoryId: ""
         });
       } else {
         alert("Lỗi khi thêm sản phẩm!");
@@ -199,14 +216,11 @@ function ManageProducts() {
                       </div>
                       <div className="mb-3">
                         <label className="form-label">Danh mục</label>
-                        <select className="form-select" name="category" >
-                          <option selected>---Vui lòng chọn danh mục---</option>
-                          <option value="mobile" >Điện thoại</option>
-                          <option value="laptop">Laptop</option>
-                          <option value="gaming">Tay Cầm</option>
-                          <option value="appliances">Linh kiện khác</option>
-                          <option value="tv">TV</option>
-                          <option value="audio">Loa, tai nghe</option>
+                        <select className="form-select" name="categoryId" onChange={(e) => setNewProduct({ ...newProduct, [e.target.name]: e.target.value })}>
+                          <option value="" selected>-Chọn danh mục-</option>
+                          {categories.map(category => (
+                            <option value={category.id}>{category.id}</option>
+                          ))}
                         </select>
                       </div>
                       <div className="mb-3">
@@ -238,6 +252,7 @@ function ManageProducts() {
                   <th className='scope'>Tên sản phẩm</th>
                   <th className='scope'>Ảnh</th>
                   <th className='scope'>Giá</th>
+                  <th className='scope'>Danh mục</th>
                   <th className='scope'>Số lượng trong kho</th>
                   <th className='scope'>Mô tả</th>
                   <th className='scope'>Giảm giá</th>
@@ -256,6 +271,7 @@ function ManageProducts() {
                       ))}
                     </td>
                     <td className='fw-semibold text-danger'>${product.price} </td>
+                    <td>{product.category}</td>
                     <td >{product.stockQuantity} </td>
                     <td className='text-truncate' style={{ maxWidth: 250 }}>{product.description} </td>
                     <td className='fw-semibold text-success'>{product.discount ? `${product.discount}%` : ""}</td>
@@ -289,13 +305,9 @@ function ManageProducts() {
                               <div className="mb-3">
                                 <label className="form-label">Danh mục</label>
                                 <select className="form-select" name="category" onChange={(e) => setEditProduct({ ...editProduct, [e.target.name]: e.target.value })} >
-                                  <option selected>---Vui lòng chọn danh mục---</option>
-                                  <option value="mobile" >Điện thoại</option>
-                                  <option value="laptop">Laptop</option>
-                                  <option value="gaming">Tay Cầm</option>
-                                  <option value="appliances">Linh kiện khác</option>
-                                  <option value="tv">TV</option>
-                                  <option value="audio">Loa, tai nghe</option>
+                                  {categories.map(category => (
+                                    <option value="">{category.name}</option>
+                                  ))}
                                 </select>
                               </div>
                               <div className="mb-2">

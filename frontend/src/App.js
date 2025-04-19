@@ -20,6 +20,7 @@ import ManageProducts from './component/Admin/ManageProducts'
 import Dashboard from './component/Admin/Dashboard'
 import Profile from './component/User/Profile'
 import ChangePassword from './component/User/ChangePassword'
+import ManageCategories from './component/Admin/ManageCategories'
 
 
 
@@ -55,6 +56,7 @@ function App() {
               <Route path="users" element={<ManageUsers />} />
               <Route path="orders" element={<ManageOrders />} />
               <Route path="products" element={<ManageProducts />} />
+              <Route path="categories" element={<ManageCategories />} />
               <Route path="reports" element={<Reports />} />
             </Route>
           </Routes>

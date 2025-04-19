@@ -114,6 +114,7 @@ function Navbar() {
                                     <Link
                                         style={{ color: 'white' }}
                                         onClick={() => setIsOpen(!isOpen)}
+
                                     >
                                         <AccountCircle />
                                     </Link>
@@ -129,7 +130,7 @@ function Navbar() {
                                                     </Link>
                                                 </div>
                                             ) : (
-                                                <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)}>
+                                                <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)} >
                                                     Đăng nhập
                                                 </Link>
                                             )}
