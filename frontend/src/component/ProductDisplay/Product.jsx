@@ -60,14 +60,14 @@ function Product() {
 
             <div className='container'>
                 {/* Product Details */}
-                <div className='row'>
-                    <div className='col-12 col-md-6 mt-3'>
-                        <div className='card bored-0 d-flex align-items-center'>
-                            <img src={product.image} alt={product.title} className="img-fluid" />
+                <div className='row min-vh-100'>
+                    <div className='col-12 col-lg-6 mt-3 d-flex align-items-start'>
+                        <div className='card border-0 d-flex align-items-center position-sticky top-0'>
+                            <img src={product.image} alt={product.title} className="img-fluid" style={{ maxHeight: '80vh' }} />
                         </div>
                     </div>
 
-                    <div className='col-12 col-md-6 mt-3'>
+                    <div className='col-12 col-lg-6 mt-3 overflow-auto' style={{ maxHeight: '100vh' }}>
                         <div className='card shadow p-4'>
                             <h4 className='fw-bold'>{product.title}</h4>
                             {product.discount ? (
@@ -88,9 +88,9 @@ function Product() {
                                 <li>Loại sản phẩm: {product.model}</li>
                             </ul>
                             <div className='d-flex flex-wrap justify-content-center'>
-                                <button className="btn btn-warning w-100 w-md-40 fw-semibold mb-2 mb-md-0">Mua Ngay</button>
+                                <button className="btn btn-warning w-100 my-2">Mua Ngay</button>
                                 <button
-                                    className="btn btn-danger w-100 w-md-40 ms-md-3 fw-semibold"
+                                    className="btn btn-danger w-100"
                                     onClick={() => addToCart(product)}
                                 >
                                     Thêm vào giỏ hàng
