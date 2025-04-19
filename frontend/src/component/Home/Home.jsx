@@ -26,15 +26,6 @@ function Home() {
 
 
 
-   // const [products, setProducts] = useState([])
-   // useEffect(() => {
-   //    fetch('https://fakestoreapi.in/api/products')
-   //       .then(res => res.json())
-   //       .then(data => setProducts(data.products))
-   //       .catch(error => console.error('Error fetching products:', error));
-   // }, []);
-
-
    const fetchProducts = async () => {
       try {
          const response = await fetch('https://fakestoreapi.in/api/products')
