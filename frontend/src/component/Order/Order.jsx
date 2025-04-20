@@ -16,7 +16,6 @@ function Order() {
     })
     const selectedProducts = cartItems.filter(item => selectedItems.includes(item.id));
 
-
     const handleOrder = async () => {
         try {
             const orderItems = selectedProducts.map(product => ({
@@ -36,18 +35,14 @@ function Order() {
                 const data = await res.json()
                 setOrder(data)
                 localStorage.setItem('order', JSON.stringify(data))
-
                 alert('Tạo đơn hàng thành công, chuyển tới thanh toán')
                 navigate('/order/payment')
-                console.log("Tạo đơn hàng thành công");
-            }
-            else {
+            } else {
                 alert("Tạo đơn hàng thất bại")
-                console.log("Tạo đơn hàng thất bại!");
             }
         } catch (error) {
             alert("Lỗi kết nối server")
-            console.log("Lỗi kết nối API: ", error);
+            console.error("Lỗi kết nối API: ", error);
         }
     }
 
@@ -63,102 +58,154 @@ function Order() {
             const data = await res.json()
             setAddresses(data)
         } catch (error) {
-            console.log("Lỗi kết nối api: ", error);
+            console.error("Lỗi kết nối api: ", error);
         }
     }
+
     useEffect(() => {
         fetchAddress()
     }, [])
 
+    if (!user) {
+        return (
+            <div className="container py-5">
+                <div className="row justify-content-center">
+                    <div className="col-md-6 col-lg-4">
+                        <div className="card shadow-sm">
+                            <div className="card-body text-center p-5">
+                                <h5 className="card-title mb-4">Vui lòng đăng nhập để tiếp tục</h5>
+                                <Link to="/login" className="btn btn-danger w-100">
+                                    Đăng nhập
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
-
-        <div className=''>
-            {user ? (
-                <div className='container w-50'>
-                    <div className='mt-3'>
-                        <Link to={'/cart'} className=''><ArrowBack /></Link>
+        <div className="container py-4">
+            <div className="row justify-content-center">
+                <div className="col-lg-8">
+                    <div className="d-flex align-items-center mb-4">
+                        <Link to="/cart" className="text-decoration-none text-dark">
+                            <ArrowBack className="me-2" />
+                        </Link>
+                        <h4 className="mb-0">Đơn hàng của bạn</h4>
                     </div>
 
-                    <div className=' card p-3 mt-3'>
-                        {selectedProducts.map(product => (
-                            <div key={product.id} className='d-flex'>
-                                <img src={product.listMedia[0]} alt={product.name} width={80} height={80} />
-                                <div className='ms-3 fw-semibold w-100'>
-                                    <p>{product.name}</p>
-                                    <p className='text-danger fw-bold'>{formatPrice(product.price)}</p>
-                                    <div className='d-flex'>
-                                        <label className='ms-auto'>Số lượng: </label>
-                                        <p className='text-danger ms-2'>{product.quantity}</p>
+                    {/* Selected Products Section */}
+                    <div className="card shadow-sm mb-4">
+                        <div className="card-body">
+                            <h5 className="card-title mb-3">Sản phẩm đã chọn ({selectedItems.length})</h5>
+                            {selectedProducts.map(product => (
+                                <div key={product.id} className="d-flex align-items-center mb-3 pb-3 border-bottom">
+                                    <img
+                                        src={product.listMedia[0]}
+                                        alt={product.name}
+                                        className="rounded-3"
+                                        style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                                    />
+                                    <div className="ms-3 flex-grow-1">
+                                        <h6 className="mb-1">{product.name}</h6>
+                                        <p className="text-danger fw-bold mb-1">{formatPrice(product.price)}</p>
+                                        <div className="d-flex align-items-center">
+                                            <span className="text-muted">Số lượng:</span>
+                                            <span className="ms-2 fw-semibold">{product.quantity}</span>
+                                        </div>
                                     </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
+                    {/* Customer Information Section */}
+                    <div className="card shadow-sm mb-4">
+                        <div className="card-body">
+                            <h5 className="card-title mb-3">Thông tin khách hàng</h5>
+                            <div className="row g-3">
+                                <div className="col-md-6">
+                                    <div className="d-flex align-items-center">
+                                        <span className="text-muted me-2">Tên:</span>
+                                        <span className="fw-semibold">{user.user.fullName}</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="d-flex align-items-center">
+                                        <span className="text-muted me-2">Điện thoại:</span>
+                                        <span className="fw-semibold">{user.user.phone}</span>
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <label className="form-label">Email</label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        defaultValue={user.user.email}
+                                    />
                                 </div>
                             </div>
-
-                        ))}
+                        </div>
                     </div>
 
-
-                    <div className='mt-3'>
-                        <h4 className='fw-semibold '>Thông tin khách hàng</h4>
-                        <div className='card p-3'>
-                            <div className='d-flex'>
-                                <label >Tên: </label>
-                                <p className='fw-bold ms-2'>{user.user.fullName} </p>
-                            </div>
-                            <div className='d-flex'>
-                                <label className='form-label' >Điện thoại: </label>
-                                <p className='fw-bold ms-2'>{user.user.phone}</p>
-                            </div>
-
-                            <div className='form-group'>
-                                <label className='form-label' >Email: </label>
-                                <input className='w-50 ms-2 form-control' type="email" defaultValue={user.user.email} />
+                    {/* Shipping Information Section */}
+                    <div className="card shadow-sm mb-4">
+                        <div className="card-body">
+                            <h5 className="card-title mb-3">Thông tin nhận hàng</h5>
+                            <div className="row g-3">
+                                <div className="col-12">
+                                    <label className="form-label">Địa chỉ (Số nhà, Xã, Quận)</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={addresses.address}
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label">Thành phố</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={addresses.city}
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label">Khu vực</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={addresses.country}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
 
-
-                    <div className='mt-3 mb-4'>
-                        <h4 className='fw-semibold'>Thông tin nhận hàng</h4>
-                        <div className='card p-3'>
-
-                            <div className='form-group'>
-                                <label >Địa chỉ (Số nhà, Xã, Quận)</label>
-                                <input className='w-50 ms-2 form-control' type="text" defaultValue={addresses.address} />
+                    {/* Order Summary Section */}
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 className="mb-1">Tổng tiền tạm tính</h6>
+                                    <small className="text-muted">Chưa tính chiết khấu</small>
+                                </div>
+                                <h4 className="text-danger mb-0">
+                                    {formatPrice(selectedProducts.reduce((total, item) => total + (item.price * item.quantity), 0))}
+                                </h4>
                             </div>
-                            <div className='form-group'>
-                                <label >Thành Phố</label>
-                                <input className='w-50 ms-2 form-control' type="text" defaultValue={addresses.city} />
-                            </div>
-                            <div className='form-group'>
-                                <label >Khu Vực</label>
-                                <input className='w-50 ms-2 form-control' type="text" defaultValue={addresses.country} />
-                            </div>
+                            <button
+                                className="btn btn-danger w-100 py-2"
+                                onClick={handleOrder}
+                            >
+                                Tiếp tục thanh toán
+                            </button>
                         </div>
                     </div>
-                    <div className='card mb-4 p-3'>
-                        <div className='d-flex'>
-                            <div className='d-grid'>
-                                <p className='fw-bold mb-1'>Tổng tiền tạm tính:</p>
-                                <p className='fst-italic'>Chưa tính chiết khấu</p>
-                            </div>
-                            <p className='ms-auto text-danger fw-bolder fs-5'>{formatPrice(cartItems.reduce((a, b) => (a + b.price * b.quantity), 0))}</p>
-                        </div>
-
-                        <button className='btn btn-danger' onClick={() => handleOrder()}>Tiếp tục</button>
-                    </div>
-
                 </div>
-            ) : (
-                <div className="container w-25 text-center mt-5 p-5">
-                    <p>Vui lòng đăng nhập để tiếp tục.</p>
-                    <Link to={'/login'}><button className='btn btn-danger w-100'>Đăng nhập</button></Link>
-                </div>
-            )}
-
-        </div >
-
+            </div>
+        </div>
     )
 }
 

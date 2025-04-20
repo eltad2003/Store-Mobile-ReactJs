@@ -22,109 +22,165 @@ function Cart() {
         }
     }
 
-    return (
-        <div className='container mt-3 p-3'>
+        return (
+        <div className="container py-4">
             {cartItems.length === 0 ? (
-                <div className=" d-grid justify-content-center align-items-center mt-3 p-3 text-center">
-                    <h4 className='fw-bold'> Giỏ hàng trống</h4>
+                <div className=" d-grid justify-content-center align-items-center mt-3 text-center">
+                    <h4 className='fw-bold mb-3'> Giỏ hàng trống</h4>
                     <RemoveShoppingCart className='w-100 h-50 text-danger' />
                     <p className='text-muted'>Không có sản phẩm nào trong giỏ hàng.</p>
                     <Link to={'/'}><button className='btn btn-danger w-100'>Tiếp tục mua sắm</button></Link>
                 </div>
             ) : (
-                <div className='p-3'>
-                    <Link to={'/'}><button className='btn btn-secondary btn-sm mb-3'> <ArrowBack /> Tiếp tục mua sắm</button></Link>
-                    {/* Chi tiết giỏ hàng */}
-                    <div>
-                        <label className="form-check">
-                            <input
-                                type="checkbox"
-                                className="form-check-input"
-                                onChange={selectAllItems}
-                                checked={selectedItems.length === cartItems.length && cartItems.length > 0}
-                            />
-                            <span className="ms-2 fw-semibold">Chọn tất cả</span>
-                        </label>
-                    </div>
-
-                    <div className='row'>
-                        <div className='col-md-7'>
-                            {cartItems.map((product) => (
-                                <div className='card my-3 p-2'>
-                                    <div key={product.id} className='mt-3 mb-4 d-flex'>
+                <div className="row">
+                    <div className="col-lg-8">
+                        <div className="card border-0 shadow-sm mb-4  position-sticky top-0">
+                            <div className="card-header bg-white py-3">
+                                <div className="d-flex align-items-center">
+                                    <Link to="/" className="text-decoration-none text-dark me-3">
+                                        <ArrowBack />
+                                    </Link>
+                                    <h5 className="mb-0">Giỏ hàng của bạn ({cartItems.length} sản phẩm)</h5>
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                <div className="d-flex align-items-center mb-3 pb-2 border-bottom">
+                                    <div className="form-check">
                                         <input
                                             type="checkbox"
-                                            className="form-check-input me-2"
-                                            checked={selectedItems.includes(product.id)}
-                                            onChange={() => toggleSelectItem(product.id)}
+                                            className="form-check-input"
+                                            id="selectAll"
+                                            onChange={selectAllItems}
+                                            checked={selectedItems.length === cartItems.length && cartItems.length > 0}
                                         />
-                                        <img src={product.listMedia[0]} alt={product.name} width={70} height={70} />
-                                        <div className='ms-3'>
-                                            <h6>{product.name}</h6>
-                                            {product.discount ? (
-                                                <div className='d-flex'>
-                                                    <p className='text-decoration-line-through'>{Math.round(product.price * (1 + product.discount / 100))}</p>
-                                                    <h5 className="text-success fw-bold ms-2">{formatPrice(product.price)} </h5>
-                                                </div>
-                                            ) : (
-                                                <h5 className="text-danger fw-bold">{formatPrice(product.price)} </h5>
-                                            )}
-                                            <div className='mt-3'>
-                                                <button className='btn btn-secondary btn-sm' onClick={() => decreaseItem(product)}>-</button>
-                                                <input
-                                                    type="text"
-                                                    className="form-control mx-2"
-                                                    style={{ width: "60px", display: "inline" }}
-                                                    value={product.quantity}
-                                                    onChange={(e) => updateQuantity(product, e.target.value)}
-                                                    min="1"
-                                                />
-                                                <button className='btn btn-secondary btn-sm' onClick={() => increaseItem(product)}>+</button>
-                                                <button className='btn btn-small ms-2' onClick={() => removeFromCart(product.id)}>Xóa</button>
-                                            </div>
-
-                                        </div>
+                                        <label className="form-check-label fw-semibold" htmlFor="selectAll">
+                                            Chọn tất cả
+                                        </label>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
 
-                        {/* Thông tin đơn hàng */}
-                        <div className='col-md-5 mt-3'>
-                            <div className='card p-3 bg-light'>
-                                <h4 className='fw-bold text-center'>Thông tin đơn hàng</h4>
+                                {cartItems.map((product) => (
+                                    <div key={product.id} className="card mb-3 border-0 shadow-sm">
+                                        <div className="card-body p-3">
+                                            <div className="row align-items-center">
+                                                <div className="col-auto">
+                                                    <div className="form-check">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="form-check-input"
+                                                            id={`product-${product.id}`}
+                                                            checked={selectedItems.includes(product.id)}
+                                                            onChange={() => toggleSelectItem(product.id)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-auto">
+                                                    <img
+                                                        src={product.listMedia[0]}
+                                                        alt={product.name}
+                                                        className="rounded-3"
+                                                        style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                                                    />
+                                                </div>
+                                                <div className="col">
+                                                    <h6 className="mb-1 fw-bold">{product.name}</h6>
+                                                    {product.discount ? (
+                                                        <div className="d-flex align-items-center mb-2">
+                                                            <span className="text-decoration-line-through text-muted me-2">
+                                                                {formatPrice(Math.round(product.price * (1 + product.discount / 100)))}
+                                                            </span>
+                                                            <span className="badge bg-danger me-2">-{product.discount}%</span>
+                                                            <span className="text-success fw-bold">{formatPrice(product.price)}</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="mb-2">
+                                                            <span className="text-danger fw-bold">{formatPrice(product.price)}</span>
+                                                        </div>
+                                                    )}
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="input-group input-group-sm" style={{ width: '120px' }}>
+                                                            <button
+                                                                className="btn btn-outline-secondary"
+                                                                type="button"
+                                                                onClick={() => decreaseItem(product)}
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control text-center"
+                                                                value={product.quantity}
+                                                                onChange={(e) => updateQuantity(product, e.target.value)}
+                                                                min="1"
+                                                            />
+                                                            <button
+                                                                className="btn btn-outline-secondary"
+                                                                type="button"
+                                                                onClick={() => increaseItem(product)}
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
+                                                        <button
+                                                            className="btn btn-link text-danger ms-3 p-0"
+                                                            onClick={() => removeFromCart(product.id)}
+                                                        >
+                                                            <i className="bi bi-trash"></i> Xóa
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-lg-4">
+                        <div className="card border-0 shadow position-sticky top-0" style={{ top: '20px' }}>
+                            <div className="card-header bg-danger text-white py-3 ">
+                                <h5 className="mb-0">Thông tin đơn hàng</h5>
+                            </div>
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between mb-2">
+                                    <span className="text-muted">Tổng tiền hàng:</span>
+                                    <span className="fw-bold">{formatPrice(totalPrice)}</span>
+                                </div>
+                                <div className="d-flex justify-content-between mb-2">
+                                    <span className="text-muted">Phí vận chuyển:</span>
+                                    <span className="text-success">Miễn phí</span>
+                                </div>
+                                <div className="d-flex justify-content-between mb-3">
+                                    <span className="text-muted">Khuyến mãi:</span>
+                                    <span className="text-success">-0đ</span>
+                                </div>
                                 <hr />
-                                <div className='d-flex'>
-                                    <label className='fw-semibold me-2'>Tổng: </label>
-                                    {/* <p className='fw-bold'>${cartItems.reduce((a, b) => (a + b.price * b.quantity), 0)}</p> */}
-                                    <h4 className="fw-bold">{formatPrice(totalPrice)}</h4>
+                                <div className="d-flex justify-content-between mb-4">
+                                    <span className="fw-bold">Tổng cộng:</span>
+                                    <span className="h5 mb-0 text-danger fw-bold">{formatPrice(totalPrice)}</span>
                                 </div>
-                                <div className='d-flex'>
-                                    <p className='me-2'>Phí vận chuyển: </p>
-                                    <p className='text-success fw-bold'>Free</p>
-                                </div>
-                                <p>Khuyến mãi</p>
-                                <hr />
-                                <div className='d-flex'>
-                                    <h4 className='fw-bold me-4'>Tạm tính: </h4>
-                                    {/* <h4 className='fw-bolder'>${cartItems.reduce((a, b) => (a + b.price * b.quantity), 0)}</h4> */}
-                                    <h4 className="fw-bold">{formatPrice(totalPrice)}</h4>
-                                </div>
+
                                 {user ? (
-                                    <Link to={'/order'} onClick={handleCheckout}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
+                                    <Link to="/order" onClick={handleCheckout} className="text-decoration-none">
+                                        <button className="btn btn-danger w-100 py-2">
+                                            Thanh toán
+                                        </button>
+                                    </Link>
                                 ) : (
-                                    <Link to={'/login'} onClick={() => alert("Bạn cần đăng nhập để thanh toán")}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
+                                    <Link to="/login" onClick={() => alert("Bạn cần đăng nhập để thanh toán")} className="text-decoration-none">
+                                        <button className="btn btn-primary w-100 py-2">
+                                            Đăng nhập để thanh toán
+                                        </button>
+                                    </Link>
                                 )}
                             </div>
                         </div>
                     </div>
                 </div>
-
             )}
-
-
         </div>
-    )
+        )
 }
 
-export default Cart
+        export default Cart

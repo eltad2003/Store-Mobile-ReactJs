@@ -36,8 +36,18 @@ function Payment() {
         }
       } else {
         // Handle COD payment
-        alert("Hoàn tất, vui lòng vào mục TRA CỨU ĐƠN HÀNG để theo dõi đơn")
-        navigate('/')
+        try {
+          localStorage.removeItem('order')
+          alert("Hoàn tất, vui lòng vào mục TRA CỨU ĐƠN HÀNG để theo dõi đơn")
+          // Use setTimeout to ensure state updates are completed before navigation
+          setTimeout(() => {
+            navigate('/')
+          }, 0)
+        } catch (error) {
+          console.error('Error during COD cleanup:', error)
+          // Still try to navigate even if localStorage removal fails
+          navigate('/')
+        }
       }
     } catch (error) {
       console.error('Payment error:', error)
