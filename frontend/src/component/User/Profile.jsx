@@ -135,7 +135,7 @@ function Profile() {
                         </div>
                         <div className='mb-3 d-flex'>
                             <label className="form-label me-2">Ngày tham gia: </label>
-                            <p>{user.user.createdAt}</p>
+                            <p>{new Date(user.user.createdAt).toLocaleString()}</p>
                         </div>
                         <div className='mb-3'>
                             <button className='btn form-control btn-outline-danger' data-bs-target="#changePasswordModal" data-bs-toggle='modal'>Đổi mật khẩu</button>
