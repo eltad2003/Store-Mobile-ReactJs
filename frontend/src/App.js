@@ -37,12 +37,12 @@ function App() {
               <Route path='/products/:productId' element={<Product />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/tv" element={<ShopCategory category="tv" />} />
-              <Route path="/audio" element={<ShopCategory category="audio" />} />
-              <Route path="/mobile" element={<ShopCategory category="mobile" />} />
-              <Route path="/laptop" element={<ShopCategory category="laptop" />} />
-              <Route path="/gaming" element={<ShopCategory category="gaming" />} />
-              <Route path="/appliances" element={<ShopCategory category="appliances" />} />
+              <Route path="/tv" element={<ShopCategory category="Tv" />} />
+              <Route path="/audio" element={<ShopCategory category="Audio" />} />
+              <Route path="/mobile" element={<ShopCategory category="Mobile" />} />
+              <Route path="/laptop" element={<ShopCategory category="Laptop" />} />
+              <Route path="/gaming" element={<ShopCategory category="Gaming" />} />
+              <Route path="/appliances" element={<ShopCategory category="Appliances" />} />
               <Route path='/cart' element={<Cart />} />
               <Route path='/order' element={<Order />} />
               <Route path='/viewOrder' element={<ViewOrder />} />

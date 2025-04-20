@@ -15,19 +15,25 @@ function Product() {
     const [product, setProduct] = useState()
     const { addToCart } = useContext(CartContext)
     const [reviews, setReviews] = useState([])
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(price)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [productRes, reviewsRes] = await Promise.all([
-                    fetch(`https://fakestoreapi.in/api/products/${productId}`),
+                    fetch(`http://localhost:8080/products/${productId}`),
                     fetch('https://fakeapi.net/reviews')
                 ]);
 
                 const productData = await productRes.json();
                 const reviewsData = await reviewsRes.json();
 
-                setProduct(productData.product);
+                setProduct(productData);
                 setReviews(reviewsData.data);
             } catch (err) {
                 console.error("Error fetching data:", err);
@@ -54,7 +60,7 @@ function Product() {
                 <ol className="breadcrumb fs-5">
                     <li className="breadcrumb-item fw-semibold"><HomeIcon /><Link to={"/"} className='text-decoration-none text-black'>Trang chủ</Link></li>
                     <li className="breadcrumb-item fw-semibold"><Link to={`/${product.category}`} className='text-decoration-none text-black text-uppercase'>{product.category}</Link></li>
-                    <li className="breadcrumb-item active text-truncate" style={{ maxWidth: 500 }}>{product.title}</li>
+                    <li className="breadcrumb-item active text-truncate" style={{ maxWidth: 500 }}>{product.name}</li>
                 </ol>
             </div>
 
@@ -63,28 +69,25 @@ function Product() {
                 <div className='row min-vh-100'>
                     <div className='col-12 col-lg-6 mt-3 d-flex align-items-start'>
                         <div className='card border-0 d-flex align-items-center position-sticky top-0'>
-                            <img src={product.image} alt={product.title} className="img-fluid" style={{ maxHeight: '80vh' }} />
+                            <img src={product.listMedia[0]} alt={product.name} className="img-fluid" style={{ maxHeight: '80vh' }} />
                         </div>
                     </div>
 
                     <div className='col-12 col-lg-6 mt-3 overflow-auto' style={{ maxHeight: '100vh' }}>
                         <div className='card shadow p-4'>
-                            <h4 className='fw-bold mb-3'>{product.title}</h4>
+                            <h4 className='fw-bold mb-3'>{product.name}</h4>
                             {product.discount ? (
                                 <div className='d-flex flex-wrap'>
                                     <h4 className='text-decoration-line-through '>${Math.round(product.price * (1 + product.discount / 100))}</h4>
-                                    <h3 className="text-success fw-bold ms-2">${product.price}</h3>
+                                    <h3 className="text-success fw-bold ms-2">{formatPrice(product.price)}</h3>
                                     <p className='ms-2 text-white bg-danger px-1 rounded-pill'>{product.discount}% off</p>
                                 </div>
                             ) : (
-                                <h5 className="text-danger fw-bold">${product.price}</h5>
+                                <h5 className="text-danger fw-bold">{formatPrice(product.price)}</h5>
                             )}
                             <ul className="list-unstyled text-uppercase">
                                 <li>Hãng: {product.brand}</li>
-                                <div className='d-flex align-items-center'>
-                                    <li>Màu: {product.color}</li>
-                                    <svg style={{ background: product.color, margin: '0 10px' }} width={15} height={15}></svg>
-                                </div>
+                              
                                 <li>Loại sản phẩm: {product.model}</li>
                             </ul>
                             <div className='d-flex flex-wrap justify-content-center'>
@@ -144,7 +147,7 @@ function Product() {
                 </div>
 
                 {/* Other Products */}
-                <div className="mt-5">
+                {/* <div className="mt-5">
                     <h4 className='p-2'>CÁC SẢN PHẨM KHÁC</h4>
                     <div className="row mt-3">
                         {products.slice(product.id, product.id + 4).map((item) => (
@@ -153,7 +156,7 @@ function Product() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div> */}
 
                 {/* Review and Rating */}
                 <div className='mt-5'>

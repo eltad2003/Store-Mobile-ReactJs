@@ -22,15 +22,15 @@ function Home() {
    const [showChat, setShowChat] = useState(false)
    const [products, setProducts] = useState([])
    const [currentPage, setCurrentPage] = useState(1)
-   const [itemPerpage, setItemPerPage] = useState(20)
+   const [itemPerpage, setItemPerPage] = useState(12)
 
 
 
    const fetchProducts = async () => {
       try {
-         const response = await fetch('https://fakestoreapi.in/api/products')
+         const response = await fetch('http://localhost:8080/products')
          const data = await response.json()
-         setProducts(data.products)
+         setProducts(data)
       } catch (error) {
          console.log("Loi ket noi API: ", error);
       }
@@ -113,9 +113,9 @@ function Home() {
          </div> */}
 
          {/* sản phẩm hot */}
-         <div className="p-3 bg-danger container rounded-4">
+         {/* <div className="p-3 bg-danger container rounded-4">
             <Popular products={products} />
-         </div>
+         </div> */}
 
          {/* Tất cả sản phẩm */}
          <div className="p-5" id="top">
@@ -130,14 +130,14 @@ function Home() {
                </div>
 
                <div className=" mt-4 d-flex justify-content-center">
-                  <button className="btn btn-danger"
+                  {/* <button className="btn btn-danger"
                      onClick={() => {
                         setCurrentPage(currentPage - 1)
                         document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
                      }}
                   >
                      <ArrowLeft />
-                  </button>
+                  </button> */}
                   {pages.map(page => (
                      <div>
                         <button className={page === currentPage && currentPage > 0 ? "btn pw-bold btn-danger mx-2 active" : "btn"}
@@ -164,9 +164,9 @@ function Home() {
          </div>
 
          {/*hot sale*/}
-         <div className="p-3 w-100 bg-danger container rounded-4">
+         {/* <div className="p-3 w-100 bg-danger container rounded-4">
             <Sale products={products} />
-         </div>
+         </div> */}
 
 
          {/* forum */}
