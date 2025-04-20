@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Card, Table, Badge, Spinner, Button, Modal } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider';
+import formatPrice from '../../formatPrice';
 
 function ViewOrder() {
     const [orders, setOrders] = useState([]);
@@ -37,12 +38,6 @@ function ViewOrder() {
         fetchOrders();
     }, [user.token]);
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(price);
-    };
 
     const getStatusBadge = (status) => {
         const statusColors = {

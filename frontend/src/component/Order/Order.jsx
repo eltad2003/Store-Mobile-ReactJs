@@ -1,41 +1,74 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../CartProvider'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowBack } from '@mui/icons-material'
 import { AuthContext } from '../AuthProvider'
+import formatPrice from '../../formatPrice'
 
 function Order() {
-    const { cartItems, selectedItems } = useContext(CartContext)
     const { user } = useContext(AuthContext)
+    const { cartItems, selectedItems } = useContext(CartContext)
+    const [addresses, setAddresses] = useState({})
+    const navigate = useNavigate()
+    const [order, setOrder] = useState(() => {
+        const storage = JSON.parse(localStorage.getItem('order'))
+        return storage ?? []
+    })
     const selectedProducts = cartItems.filter(item => selectedItems.includes(item.id));
 
-    const [inforOrder, setInforOrder] = useState({
-        productId: "",
-        quantity: "",
-    })
 
     const handleOrder = async () => {
         try {
-            const res = await fetch('https://localhost:8080/orders', {
+            const orderItems = selectedProducts.map(product => ({
+                productId: product.id,
+                quantity: product.quantity
+            }));
+
+            const res = await fetch('http://localhost:8080/orders', {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.token}`,
+                },
+                body: JSON.stringify(orderItems)
+            })
+            if (res.ok) {
+                const data = await res.json()
+                setOrder(data)
+                localStorage.setItem('order', JSON.stringify(data))
+
+                alert('Tạo đơn hàng thành công, chuyển tới thanh toán')
+                navigate('/order/payment')
+                console.log("Tạo đơn hàng thành công");
+            }
+            else {
+                alert("Tạo đơn hàng thất bại")
+                console.log("Tạo đơn hàng thất bại!");
+            }
+        } catch (error) {
+            alert("Lỗi kết nối server")
+            console.log("Lỗi kết nối API: ", error);
+        }
+    }
+
+    const fetchAddress = async () => {
+        try {
+            const res = await fetch('http://localhost:8080/user/address', {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${user.token}`
                 }
             })
-            if (res.ok) {
-                console.log("Tạo đơn hàng thành công");
-
-            }
-            else {
-                console.log("Tạo đơn hàng thất bại!");
-
-            }
+            const data = await res.json()
+            setAddresses(data)
         } catch (error) {
-            console.log("Lỗi kết nối API: ", error);
-
+            console.log("Lỗi kết nối api: ", error);
         }
     }
+    useEffect(() => {
+        fetchAddress()
+    }, [])
 
 
     return (
@@ -50,10 +83,10 @@ function Order() {
                     <div className=' card p-3 mt-3'>
                         {selectedProducts.map(product => (
                             <div key={product.id} className='d-flex'>
-                                <img src={product.image} alt={product.title} width={80} height={80} />
+                                <img src={product.listMedia[0]} alt={product.name} width={80} height={80} />
                                 <div className='ms-3 fw-semibold w-100'>
-                                    <p>{product.title}</p>
-                                    <p className='text-danger fw-bold'>{product.price}$</p>
+                                    <p>{product.name}</p>
+                                    <p className='text-danger fw-bold'>{formatPrice(product.price)}</p>
                                     <div className='d-flex'>
                                         <label className='ms-auto'>Số lượng: </label>
                                         <p className='text-danger ms-2'>{product.quantity}</p>
@@ -91,12 +124,16 @@ function Order() {
                         <div className='card p-3'>
 
                             <div className='form-group'>
-                                <label >Tỉnh</label>
-                                <input className='w-50 ms-2 form-control' type="text" required defaultValue={user.user.fullName} />
+                                <label >Địa chỉ (Số nhà, Xã, Quận)</label>
+                                <input className='w-50 ms-2 form-control' type="text" defaultValue={addresses.address} />
                             </div>
                             <div className='form-group'>
-                                <label >Quận</label>
-                                <input className='w-50 ms-2 form-control' type="text" defaultValue={user.user.fullName} />
+                                <label >Thành Phố</label>
+                                <input className='w-50 ms-2 form-control' type="text" defaultValue={addresses.city} />
+                            </div>
+                            <div className='form-group'>
+                                <label >Khu Vực</label>
+                                <input className='w-50 ms-2 form-control' type="text" defaultValue={addresses.country} />
                             </div>
                         </div>
                     </div>
@@ -106,10 +143,10 @@ function Order() {
                                 <p className='fw-bold mb-1'>Tổng tiền tạm tính:</p>
                                 <p className='fst-italic'>Chưa tính chiết khấu</p>
                             </div>
-                            <p className='ms-auto text-danger fw-bolder fs-5'>${cartItems.reduce((a, b) => (a + b.price * b.quantity), 0)}</p>
+                            <p className='ms-auto text-danger fw-bolder fs-5'>{formatPrice(cartItems.reduce((a, b) => (a + b.price * b.quantity), 0))}</p>
                         </div>
 
-                        <button className='btn btn-danger'>Tiếp tục</button>
+                        <button className='btn btn-danger' onClick={() => handleOrder()}>Tiếp tục</button>
                     </div>
 
                 </div>

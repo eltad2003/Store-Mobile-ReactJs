@@ -128,7 +128,7 @@ function Home() {
                      </div>
                   ))}
                </div>
-
+               {/* pagination */}
                <div className=" mt-4 d-flex justify-content-center">
                   {/* <button className="btn btn-danger"
                      onClick={() => {

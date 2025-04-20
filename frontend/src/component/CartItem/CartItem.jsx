@@ -2,15 +2,9 @@ import { FavoriteBorder, Star } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './CartItem.css'
+import formatPrice from '../../formatPrice'
 
 function CartItem({ item }) {
-
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(price);
-    };
 
     return (
         <div className="card my-2 shadow h-100">

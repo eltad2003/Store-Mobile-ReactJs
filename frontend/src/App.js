@@ -22,6 +22,8 @@ import Profile from './component/User/Profile'
 import ChangePassword from './component/User/ChangePassword'
 import ManageCategories from './component/Admin/ManageCategories'
 import ViewOrder from './component/Order/ViewOrder'
+import Payment from './component/Payment/Payment'
+
 
 
 
@@ -45,6 +47,7 @@ function App() {
               <Route path="/appliances" element={<ShopCategory category="Appliances" />} />
               <Route path='/cart' element={<Cart />} />
               <Route path='/order' element={<Order />} />
+              <Route path='/order/payment' element={<Payment />} />
               <Route path='/viewOrder' element={<ViewOrder />} />
               <Route path='/popular' element={<Popular />} />
               <Route path='/profile' element={<Profile />} />

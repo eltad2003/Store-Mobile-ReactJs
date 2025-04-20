@@ -3,6 +3,7 @@ import { CartContext } from '../CartProvider'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ArrowBack, RemoveShoppingCart } from '@mui/icons-material';
 import { AuthContext } from '../AuthProvider';
+import formatPrice from '../../formatPrice';
 
 function Cart() {
     const { cartItems, removeFromCart, increaseItem, decreaseItem, selectedItems, toggleSelectItem, selectAllItems, updateQuantity } = useContext(CartContext);
@@ -57,16 +58,16 @@ function Cart() {
                                             checked={selectedItems.includes(product.id)}
                                             onChange={() => toggleSelectItem(product.id)}
                                         />
-                                        <img src={product.image} alt={product.title} width={70} height={70} />
+                                        <img src={product.listMedia[0]} alt={product.name} width={70} height={70} />
                                         <div className='ms-3'>
-                                            <h6>{product.title}</h6>
+                                            <h6>{product.name}</h6>
                                             {product.discount ? (
                                                 <div className='d-flex'>
-                                                    <p className='text-decoration-line-through'>${Math.round(product.price * (1 + product.discount / 100))}</p>
-                                                    <h5 className="text-success fw-bold ms-2">${product.price}</h5>
+                                                    <p className='text-decoration-line-through'>{Math.round(product.price * (1 + product.discount / 100))}</p>
+                                                    <h5 className="text-success fw-bold ms-2">{formatPrice(product.price)} </h5>
                                                 </div>
                                             ) : (
-                                                <h5 className="text-danger fw-bold">${product.price}</h5>
+                                                <h5 className="text-danger fw-bold">{formatPrice(product.price)} </h5>
                                             )}
                                             <div className='mt-3'>
                                                 <button className='btn btn-secondary btn-sm' onClick={() => decreaseItem(product)}>-</button>
@@ -96,7 +97,7 @@ function Cart() {
                                 <div className='d-flex'>
                                     <label className='fw-semibold me-2'>Tổng: </label>
                                     {/* <p className='fw-bold'>${cartItems.reduce((a, b) => (a + b.price * b.quantity), 0)}</p> */}
-                                    <h4 className="fw-bold">${totalPrice}</h4>
+                                    <h4 className="fw-bold">{formatPrice(totalPrice)}</h4>
                                 </div>
                                 <div className='d-flex'>
                                     <p className='me-2'>Phí vận chuyển: </p>
@@ -107,7 +108,7 @@ function Cart() {
                                 <div className='d-flex'>
                                     <h4 className='fw-bold me-4'>Tạm tính: </h4>
                                     {/* <h4 className='fw-bolder'>${cartItems.reduce((a, b) => (a + b.price * b.quantity), 0)}</h4> */}
-                                    <h4 className="fw-bold">${totalPrice}</h4>
+                                    <h4 className="fw-bold">{formatPrice(totalPrice)}</h4>
                                 </div>
                                 {user ? (
                                     <Link to={'/order'} onClick={handleCheckout}><button className="btn btn-danger w-100 mt-3">Thanh toán</button></Link>
