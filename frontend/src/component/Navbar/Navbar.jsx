@@ -43,7 +43,7 @@ function Navbar() {
                                     <button className="nav-link text-white">Danh mục</button>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link text-white" href="/order">Tra cứu đơn hàng</a>
+                                    <a className="nav-link text-white" href="/viewOrder">Tra cứu đơn hàng</a>
                                 </li>
                             </ul>
 

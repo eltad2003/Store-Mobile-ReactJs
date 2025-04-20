@@ -5,7 +5,7 @@ import { AuthContext } from '../AuthProvider';
 function ManageUsers() {
   const [listUsers, setListUsers] = useState([])
   const { user } = useContext(AuthContext)
-
+  const [userAddresses, setUserAddresses] = useState({})
   const [newUser, setNewUser] = useState({
     fullName: "",
     email: "",
@@ -26,10 +26,31 @@ function ManageUsers() {
       })
       const data = await response.json()
       setListUsers(data)
+      data.forEach(user => fetchUserAddress(user.id))
     } catch (error) {
       console.error('Error fetching users:', error);
     }
   }
+
+  const fetchUserAddress = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/users/${userId}/address`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`
+        }
+      })
+      const data = await response.json()
+      setUserAddresses(prev => ({
+        ...prev,
+        [userId]: data
+      }))
+    } catch (error) {
+      console.error(`Error fetching address for user ${userId}:`, error);
+    }
+  }
+
   useEffect(() => {
     fetchUsers()
   }, [])
@@ -55,7 +76,6 @@ function ManageUsers() {
       }
     }
   };
-
   const handleAddUser = async () => {
     try {
       const response = await fetch('http://localhost:8080/users', {
@@ -78,13 +98,6 @@ function ManageUsers() {
     }
   }
 
-  const handleAddAdress = async (userId) => {
-    try {
-
-    } catch (error) {
-
-    }
-  }
   return (
     <div className='row'>
       <div className="col-md-2">
@@ -141,36 +154,67 @@ function ManageUsers() {
             </div>
           </div>
           <p>Tổng người dùng: {listUsers.length}</p>
-          <div className='card shadow mt-3'>
-            <table className="table">
-              <thead>
+          <div className='card shadow p-3 me-5 mt-3'>
+            <table className="table table-hover align-middle">
+              <thead className="table-light">
                 <tr>
-
-                  <th scope="col">STT</th>
-                  <th scope="col">ID</th>
-                  <th scope="col">Tên</th>
-                  <th scope="col">Ảnh</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Vai trò</th>
-                  <th scope="col">Số điện thoại</th>
-                  <th scope="col">Địa chỉ</th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col">Thao tác</th>
+                  <th scope="col" className="text-center" style={{ width: '5%' }}>STT</th>
+                  <th scope="col" className="text-center" style={{ width: '5%' }}>ID</th>
+                  <th scope="col" style={{ width: '15%' }}>Tên</th>
+                  <th scope="col" className="text-center" style={{ width: '10%' }}>Ảnh</th>
+                  <th scope="col" style={{ width: '15%' }}>Email</th>
+                  <th scope="col" className="text-center" style={{ width: '10%' }}>Vai trò</th>
+                  <th scope="col" className="text-center" style={{ width: '10%' }}>Số điện thoại</th>
+                  <th scope="col" style={{ width: '15%' }}>Địa chỉ</th>
+                  <th scope="col" className="text-center" style={{ width: '10%' }}>Trạng thái</th>
+                  <th scope="col" className="text-center" style={{ width: '10%' }}>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
                 {listUsers.map((listUser, index) => (
                   <tr key={listUser.id}>
-                    <td>{index + 1}</td>
-                    <td>{listUser.id}</td>
-                    <td>{listUser.fullName}</td>
-                    <td><img src={listUser.avatarUrl} alt="" width={50} height={50} /></td>
-                    <td>{listUser.email}</td>
-                    <td>{listUser.role}</td>
-                    <td>{listUser.phone}</td>
-                    <td></td>
+                    <td className="text-center">{index + 1}</td>
+                    <td className="text-center">{listUser.id}</td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <span className="fw-medium">{listUser.fullName}</span>
+                      </div>
+                    </td>
+                    <td className="text-center">
+                      <img
+                        src={listUser.avatarUrl}
+                        alt=""
+                        className="rounded-circle"
+                        style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                      />
+                    </td>
+                    <td>
+                      <div className="text-truncate" style={{ maxWidth: '200px' }}>
+                        {listUser.email}
+                      </div>
+                    </td>
+                    <td className="text-center">
+                      <span className={`badge ${listUser.role === 'ADMIN' ? 'bg-danger' : 'bg-primary'}`}>
+                        {listUser.role}
+                      </span>
+                    </td>
+                    <td className="text-center">{listUser.phone}</td>
+                    <td>
+                      {userAddresses[listUser.id] ? (
+                        <div className="small">
+                          <div className="text-truncate" style={{ maxWidth: '200px' }}>
+                            <i className="bi bi-geo-alt me-1"></i>
+                            {userAddresses[listUser.id].address}
+                          </div>
+                          <div className="text-muted">
+                            {userAddresses[listUser.id].city}, {userAddresses[listUser.id].country}
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-muted small">Chưa có địa chỉ</span>
+                      )}
+                    </td>
                     <td>Đã kích hoạt</td>
-                    <td><button className='ms-1 btn btn-sm btn-primary'>Sửa</button></td>
                     <td><button className='ms-1 btn btn-sm btn-danger' onClick={() => handleDeleteUser(listUser.id)}>Xóa</button></td>
                   </tr>
                 ))}

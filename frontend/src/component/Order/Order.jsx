@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CartContext } from '../CartProvider'
 import { Link } from 'react-router-dom'
 import { ArrowBack } from '@mui/icons-material'
@@ -8,6 +8,34 @@ function Order() {
     const { cartItems, selectedItems } = useContext(CartContext)
     const { user } = useContext(AuthContext)
     const selectedProducts = cartItems.filter(item => selectedItems.includes(item.id));
+
+    const [inforOrder, setInforOrder] = useState({
+        productId: "",
+        quantity: "",
+    })
+
+    const handleOrder = async () => {
+        try {
+            const res = await fetch('https://localhost:8080/orders', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.token}`
+                }
+            })
+            if (res.ok) {
+                console.log("Tạo đơn hàng thành công");
+
+            }
+            else {
+                console.log("Tạo đơn hàng thất bại!");
+
+            }
+        } catch (error) {
+            console.log("Lỗi kết nối API: ", error);
+
+        }
+    }
 
 
     return (
@@ -61,7 +89,7 @@ function Order() {
                     <div className='mt-3 mb-4'>
                         <h4 className='fw-semibold'>Thông tin nhận hàng</h4>
                         <div className='card p-3'>
-                          
+
                             <div className='form-group'>
                                 <label >Tỉnh</label>
                                 <input className='w-50 ms-2 form-control' type="text" required defaultValue={user.user.fullName} />

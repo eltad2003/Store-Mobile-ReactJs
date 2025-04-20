@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../AuthProvider'
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
 
 function Profile() {
