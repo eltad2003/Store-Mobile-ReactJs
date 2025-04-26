@@ -36,6 +36,7 @@ const AuthProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem('user');
         alert('Đăng xuất thành công')
+        window.location.reload()
 
     };
 

@@ -169,7 +169,7 @@ function Cart() {
                                     </Link>
                                 ) : (
                                     <Link to="/login" onClick={() => alert("Bạn cần đăng nhập để thanh toán")} className="text-decoration-none">
-                                        <button className="btn btn-primary w-100 py-2">
+                                        <button className="btn btn-danger w-100 py-2">
                                             Đăng nhập để thanh toán
                                         </button>
                                     </Link>
