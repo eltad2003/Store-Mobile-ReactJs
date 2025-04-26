@@ -10,6 +10,9 @@ function Order() {
     const { cartItems, selectedItems } = useContext(CartContext)
     const [addresses, setAddresses] = useState({})
     const navigate = useNavigate()
+    const [shippingAddress, setShippingAddress] = useState('')
+    const [paymentMethod, setPaymentMethod] = useState('')
+    const [note, setNote] = useState('')
     const [order, setOrder] = useState(() => {
         const storage = JSON.parse(localStorage.getItem('order'))
         return storage ?? []
@@ -20,7 +23,7 @@ function Order() {
         try {
             const orderItems = selectedProducts.map(product => ({
                 productId: product.id,
-                quantity: product.quantity
+                quantity: product.quantity,
             }));
 
             const res = await fetch('http://localhost:8080/orders', {
@@ -29,14 +32,25 @@ function Order() {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${user.token}`,
                 },
-                body: JSON.stringify(orderItems)
+                body: JSON.stringify({
+                    items: orderItems,
+                    paymentMethod: paymentMethod,
+                    shippingAddress: shippingAddress,
+                    note: note
+                })
             })
             if (res.ok) {
                 const data = await res.json()
                 setOrder(data)
                 localStorage.setItem('order', JSON.stringify(data))
-                alert('Tạo đơn hàng thành công, chuyển tới thanh toán')
-                navigate('/order/payment')
+                if (paymentMethod === "payos") {
+                    alert('Tạo đơn hàng thành công, chuyển tới thanh toán')
+                    navigate('/order/payment')
+                } else {
+                    alert('Đặt hàng thành công. Vui lòng theo dõi đơn hàng trong mục TRA CỨU ĐƠN HÀNG')
+                    navigate('/')
+                }
+
             } else {
                 alert("Tạo đơn hàng thất bại")
             }
@@ -161,23 +175,76 @@ function Order() {
                                         type="text"
                                         className="form-control"
                                         defaultValue={addresses.address}
+                                        onChange={(e) => setShippingAddress(e.target.value)}
                                     />
                                 </div>
-                                <div className="col-md-6">
-                                    <label className="form-label">Thành phố</label>
+                                <div className="col-12">
+                                    <label className="form-label">Ghi chú</label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={addresses.city}
+                                        value={note}
+                                        onChange={(e) => setNote(e.target.value)}
                                     />
                                 </div>
-                                <div className="col-md-6">
-                                    <label className="form-label">Khu vực</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        defaultValue={addresses.country}
-                                    />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className=" py-5">
+                        <div className="row justify-content-center">
+                            <div className="col-md-8">
+                                <div className="card">
+                                    <div className="card-header bg-danger text-white">
+                                        <h3 className="mb-0">Phương thức thanh toán</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <form >
+                                            <div className="mb-4">
+                                                <div className="form-check mb-3">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name="paymentMethod"
+                                                        id="cod"
+                                                        value="cod"
+                                                        checked={paymentMethod === 'cod'}
+                                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                                    />
+                                                    <label className="form-check-label" htmlFor="cod">
+                                                        <div className="d-flex align-items-center">
+                                                            <i className="fas fa-money-bill-wave me-2"></i>
+                                                            <div>
+                                                                <h5 className="mb-1">Thanh toán khi nhận hàng</h5>
+                                                                <p className="text-muted mb-0">Bạn có thể kiểm tra hàng trước khi thanh toán</p>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+
+                                                <div className="form-check">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name="paymentMethod"
+                                                        id="payos"
+                                                        value="payos"
+                                                        checked={paymentMethod === 'payos'}
+                                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                                    />
+                                                    <label className="form-check-label" htmlFor="payos">
+                                                        <div className="d-flex align-items-center">
+                                                            <i className="fas fa-credit-card me-2"></i>
+                                                            <div>
+                                                                <h5 className="mb-1">PayOS</h5>
+                                                                <p className="text-muted mb-0">Thanh toán với PayOS</p>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -86,9 +86,8 @@ function Product() {
                                 <h5 className="text-danger fw-bold">{formatPrice(product.price)}</h5>
                             )}
                             <ul className="list-unstyled text-uppercase">
+                                <li className='text-danger'>Còn lại: {product.stockQuantity} sản phẩm</li>
                                 <li>Hãng: {product.brand}</li>
-                              
-                                <li>Loại sản phẩm: {product.model}</li>
                             </ul>
                             <div className='d-flex flex-wrap justify-content-center'>
                                 <button className="btn btn-warning w-100 my-2">Mua Ngay</button>

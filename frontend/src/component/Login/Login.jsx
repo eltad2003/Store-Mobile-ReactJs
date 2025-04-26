@@ -58,6 +58,7 @@ function Login() {
                         />
                     </div>
                     <button type="submit" className="btn btn-primary mt-3 w-100">Đăng nhập</button>
+                    <button type="submit" className="btn btn-primary mt-3 w-100">Đăng nhập bằng Google</button>
                 </form>
                 <p className="mt-3 text-center">Bạn chưa có tài khoản?</p>
                 <Link to={"/register"}>
