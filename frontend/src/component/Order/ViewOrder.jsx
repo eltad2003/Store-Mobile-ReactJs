@@ -119,13 +119,15 @@ function ViewOrder() {
                         <>
                             <div className="row mb-4">
                                 <div className="col-md-6">
-                                    <p><strong>Order ID:</strong> #{order.id}</p>
-                                    <p><strong>User ID:</strong> {order.userId}</p>
-                                    <p><strong>Thời gian:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+                                    <p><strong>Mã đơn hàng:</strong> #{order.id}</p>
+                                    <p><strong>Thời gian tạo:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+                                    <p><strong>Địa chỉ:</strong> {order.shippingAddress}</p>
+                                    <p><strong>Ghi chú cho shipper:</strong> {order.note || '[]'}</p>
                                 </div>
                                 <div className="col-md-6">
-                                    <p><strong>Trạng thái:</strong> {getStatusBadge(order.status)}</p>
+                                    <p><strong>Trạng thái giao hàng:</strong> {getStatusBadge(order.status)}</p>
                                     <p><strong>Trạng thái thanh toán:</strong> {getPaymentStatusBadge(order.paymentStatus)}</p>
+                                    <p><strong>Phương thức thanh toán:</strong> {order.paymentMethod}</p>
                                     <p><strong>Tổng cộng:</strong> {formatPrice(order.totalPrice)}</p>
                                 </div>
                             </div>
@@ -140,7 +142,8 @@ function ViewOrder() {
                             <Table striped bordered hover responsive>
                                 <thead>
                                     <tr>
-                                        <th>Product ID</th>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
                                         <th>Số lượng</th>
                                         <th>Giá gốc</th>
                                         <th>Giá cuối</th>
@@ -151,10 +154,11 @@ function ViewOrder() {
                                     {order.items.map((item) => (
                                         <tr key={item.id}>
                                             <td>{item.productId}</td>
+                                            <td>{item.productName}</td>
                                             <td>{item.quantity}</td>
                                             <td>{formatPrice(item.originalPrice)}</td>
                                             <td>{formatPrice(item.price)}</td>
-                                            <td>{formatPrice(item.price * item.quantity)}</td>
+                                            <td className='fw-bold'>{formatPrice(item.price * item.quantity)}</td>
                                         </tr>
                                     ))}
                                 </tbody>

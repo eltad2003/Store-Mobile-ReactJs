@@ -22,7 +22,7 @@ function Cart() {
         }
     }
 
-        return (
+    return (
         <div className="container py-4">
             {cartItems.length === 0 ? (
                 <div className=" d-grid justify-content-center align-items-center mt-3 text-center">
@@ -60,7 +60,7 @@ function Cart() {
                                 </div>
 
                                 {cartItems.map((product) => (
-                                    <div key={product.id} className="card mb-3 border-0 shadow-sm">
+                                    <div key={product.id} className=" mb-3 border-0">
                                         <div className="card-body p-3">
                                             <div className="row align-items-center">
                                                 <div className="col-auto">
@@ -84,6 +84,7 @@ function Cart() {
                                                 </div>
                                                 <div className="col">
                                                     <h6 className="mb-1 fw-bold">{product.name}</h6>
+                                                    <p className='text-muted fst-italic fs-6'>Còn: {product.stockQuantity} SP</p>
                                                     {product.discount ? (
                                                         <div className="d-flex align-items-center mb-2">
                                                             <span className="text-decoration-line-through text-muted me-2">
@@ -111,7 +112,7 @@ function Cart() {
                                                                 className="form-control text-center"
                                                                 value={product.quantity}
                                                                 onChange={(e) => updateQuantity(product, e.target.value)}
-                                                                min="1"
+
                                                             />
                                                             <button
                                                                 className="btn btn-outline-secondary"
@@ -180,7 +181,7 @@ function Cart() {
                 </div>
             )}
         </div>
-        )
+    )
 }
 
-        export default Cart
+export default Cart

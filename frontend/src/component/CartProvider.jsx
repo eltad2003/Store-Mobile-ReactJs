@@ -35,12 +35,15 @@ function CartProvider({ children }) {
         const existingItem = cartItems.find(item => item.id === product.id)
 
         if (existingItem) {
+            if (existingItem.quantity + 1 > product.stockQuantity) {
+                alert('Số lượng vượt quá hàng trong kho!')
+                return
+            }
             setCartItems(cartItems.map(item =>
                 item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
             ))
         }
         else {
-
             setCartItems([...cartItems, { ...product, quantity: 1 }])
         }
         alert("Đã thêm vào giỏ hàng!")
@@ -52,6 +55,11 @@ function CartProvider({ children }) {
     }
 
     const increaseItem = (product) => {
+        const existingItem = cartItems.find(item => item.id === product.id)
+        if (existingItem.quantity + 1 > product.stockQuantity) {
+            alert('Số lượng vượt quá hàng trong kho!')
+            return
+        }
         setCartItems(cartItems.map(item =>
             item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         ))
@@ -63,6 +71,10 @@ function CartProvider({ children }) {
     }
 
     const updateQuantity = (product, newQuantity) => {
+        if (newQuantity > product.stockQuantity) {
+            alert('Số lượng vượt quá hàng trong kho!')
+            return
+        }
         if (newQuantity > 0) {
             setCartItems(cartItems.map(item =>
                 item.id === product.id ? { ...item, quantity: parseInt(newQuantity) } : item

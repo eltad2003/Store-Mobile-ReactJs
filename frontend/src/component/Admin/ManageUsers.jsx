@@ -159,7 +159,7 @@ function ManageUsers() {
               <thead className="table-light">
                 <tr>
                   <th scope="col" className="text-center" style={{ width: '5%' }}>STT</th>
-                  <th scope="col" className="text-center" style={{ width: '5%' }}>ID</th>
+
                   <th scope="col" style={{ width: '15%' }}>Tên</th>
                   <th scope="col" className="text-center" style={{ width: '10%' }}>Ảnh</th>
                   <th scope="col" style={{ width: '15%' }}>Email</th>
@@ -174,7 +174,7 @@ function ManageUsers() {
                 {listUsers.map((listUser, index) => (
                   <tr key={listUser.id}>
                     <td className="text-center">{index + 1}</td>
-                    <td className="text-center">{listUser.id}</td>
+
                     <td>
                       <div className="d-flex align-items-center">
                         <span className="fw-medium">{listUser.fullName}</span>

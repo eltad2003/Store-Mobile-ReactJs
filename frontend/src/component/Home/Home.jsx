@@ -57,10 +57,11 @@ function Home() {
    }
 
    return (
-      <div className="">
+      <div className="bg-light">
          {/* Banner and thanh danh mục */}
          <div className="container p-5">
             <div className="row">
+
                {/* Sidebar - Hide on mobile */}
                <div className="col-md-3 mt-3 d-none d-md-block">
                   <Sidebar />
@@ -68,10 +69,10 @@ function Home() {
 
                {/* Carousel - Show on all screens */}
                <div className="col-12 col-md-6 mt-3">
-                  <div className="card d-flex align-items-center justify-content-center shadow p-2 w-100 h-100">
+                  <div className="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
                      <Carousel
-                        prevIcon={<ArrowLeft style={{ color: 'black', fontSize: '70px', marginLeft: '-50px' }} />}
-                        nextIcon={<ArrowRight style={{ color: 'black', fontSize: '70px', marginRight: '-50px' }} />}>
+                        prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
+                        nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}>
                         <Carousel.Item>
                            <img className="img-fluid w-100" src={clockBanner} alt="First slide" />
                         </Carousel.Item>
@@ -85,14 +86,16 @@ function Home() {
                   </div>
                </div>
 
-               {/* Right banner images - Hide on mobile */}
+               {/* banner images - Hide on mobile */}
                <div className="col-md-3 mt-3 d-none d-md-block">
-                  <div className="card shadow p-2 h-100">
-                     <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/m55-right-banner-8-3.png" alt="" className="img-fluid w-100 mb-2 rounded" />
-                     <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/right-imac-m4-30-12.jpg" alt="" className="img-fluid w-100 mb-2 rounded" />
-                     <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/s-edu-2-0-right-laptop.jpg" alt="" className="img-fluid w-100 mb-2 rounded" />
+                  <div className="card shadow-sm border-0 h-100">
+                     <div className="card-body p-2 d-flex flex-column justify-content-between">
+                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/RightBanner-iPadAirM3%20(2).jpg" alt="" className="img-fluid w-100 mb-2 rounded" />
+                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/s-edu-2-0-right-laptop.jpg" alt="" className="img-fluid w-100 rounded" />
+                     </div>
                   </div>
                </div>
+
             </div>
          </div>
 
@@ -118,19 +121,18 @@ function Home() {
          </div> */}
 
          {/* Tất cả sản phẩm */}
-         <div className="p-5" id="top">
-            <div className="container">
-               <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
-               <div className="row">
-                  {products.slice(firstItemIndx, lastItemIndx).map((item) => (
-                     <div className="col-6 col-md-3 my-3" key={item.id}>
-                        <CartItem item={item} />
-                     </div>
-                  ))}
-               </div>
-               {/* pagination */}
-               <div className=" mt-4 d-flex justify-content-center">
-                  {/* <button className="btn btn-danger"
+         <div className="container px-5" id="top">
+            <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
+            <div className="row">
+               {products.slice(firstItemIndx, lastItemIndx).map((item) => (
+                  <div className="col-6 col-md-3 my-3" key={item.id}>
+                     <CartItem item={item} />
+                  </div>
+               ))}
+            </div>
+            {/* pagination */}
+            <div className=" mt-4 d-flex justify-content-center">
+               {/* <button className="btn btn-danger"
                      onClick={() => {
                         setCurrentPage(currentPage - 1)
                         document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -138,29 +140,29 @@ function Home() {
                   >
                      <ArrowLeft />
                   </button> */}
-                  {pages.map(page => (
-                     <div>
-                        <button className={page === currentPage && currentPage > 0 ? "btn pw-bold btn-danger mx-2 active" : "btn"}
-                           onClick={() => {
-                              setCurrentPage(page)
-                              document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
-                           }}
-                        >
-                           {page}
-                        </button>
-                     </div>
-                  ))}
-                  <button className="btn btn-danger"
-                     onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                        document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
-                     }}
-                  >
-                     <ArrowRight />
-                  </button>
-               </div>
-
+               {pages.map(page => (
+                  <div>
+                     <button className={page === currentPage && currentPage > 0 ? "btn pw-bold btn-danger mx-2 active" : "btn"}
+                        onClick={() => {
+                           setCurrentPage(page)
+                           document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
+                        }}
+                     >
+                        {page}
+                     </button>
+                  </div>
+               ))}
+               <button className="btn btn-danger"
+                  onClick={() => {
+                     setCurrentPage(currentPage + 1);
+                     document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+               >
+                  <ArrowRight />
+               </button>
             </div>
+
+
          </div>
 
          {/*hot sale*/}
@@ -170,7 +172,7 @@ function Home() {
 
 
          {/* forum */}
-         <div className="container mt-5">
+         <div className="container p-5">
             <div className="d-flex justify-content-between align-items-center my-4">
                <h2 className="fw-bold text-uppercase">Bài Viết Mới Nhất</h2>
                <button className="btn btn-danger rounded-pill px-4">Xem Tất Cả</button>

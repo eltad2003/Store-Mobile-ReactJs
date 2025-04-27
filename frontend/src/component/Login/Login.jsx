@@ -29,7 +29,7 @@ function Login() {
         }
     }
     const handleLoginGoogle = async (e) => {
-        e.preventDefault()
+        e.preventDefault()      
         try {
             const popup = window.open('http://localhost:8080/google_login', '_blank', 'width=500,height=600');
 

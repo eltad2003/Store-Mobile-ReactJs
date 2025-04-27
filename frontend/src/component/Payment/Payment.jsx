@@ -29,7 +29,7 @@ function Payment() {
           if (data.status === 'PENDING' && data.checkoutUrl) {
             // Redirect to PayOS checkout page
             console.log('Redirecting to:', data.checkoutUrl)
-            window.location.href = data.checkoutUrl
+            window.location.href = data.checkoutUrl //cửa sổ popup thanh toán
           }
         } else {
           throw new Error('Payment request failed')

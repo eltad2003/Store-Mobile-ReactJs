@@ -1,39 +1,41 @@
-import { Tv, Speaker, LaptopChromebook, PhoneIphone, SportsEsports, Roofing } from '@mui/icons-material'
+import { Tv, Speaker, LaptopChromebook, PhoneIphone, SportsEsports, Roofing, ChevronRight } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Sidebar.css'
 
 function Sidebar() {
-
     const [menu, setMenu] = useState('')
+
+    const categories = [
+        { icon: <Tv />, name: 'TV', path: '/tv' },
+        { icon: <Speaker />, name: 'Audio', path: '/audio' },
+        { icon: <LaptopChromebook />, name: 'Laptop', path: '/laptop' },
+        { icon: <PhoneIphone />, name: 'Mobile', path: '/mobile' },
+        { icon: <SportsEsports />, name: 'Gaming', path: '/gaming' },
+        { icon: <Roofing />, name: 'Gia dụng', path: '/appliances' }
+    ]
+
     return (
-        <div className="sidebar card shadow p-2 h-100">
-            <ul className="list-unstyled p-3 fw-semibold">
-                <li className="mt-3 d-flex align-items-center">
-                    <Tv />
-                    <Link className="text-decoration-none text-black ms-2" to="/tv" onClick={() => setMenu('tv')}>TV</Link>
-                </li>
-                <li className="mt-3 d-flex align-items-center">
-                    <Speaker />
-                    <Link className="text-decoration-none text-black ms-2" to="/audio" onClick={() => setMenu('audio')}>Audio</Link>
-                </li>
-                <li className="mt-3 d-flex align-items-center">
-                    <LaptopChromebook />
-                    <Link className="text-decoration-none text-black ms-2" to="/laptop" onClick={() => setMenu('laptop')}>Laptop</Link>
-                </li>
-                <li className="mt-3 d-flex align-items-center">
-                    <PhoneIphone />
-                    <Link className="text-decoration-none text-black ms-2" to="/mobile" onClick={() => setMenu('mobile')}>Mobile</Link>
-                </li>
-                <li className="mt-3 d-flex align-items-center">
-                    <SportsEsports />
-                    <Link className="text-decoration-none text-black ms-2" to="/gaming" onClick={() => setMenu('gaming')}>Gaming</Link>
-                </li>
-                <li className="mt-3 d-flex align-items-center">
-                    <Roofing />
-                    <Link className="text-decoration-none text-black ms-2" to="/appliances" onClick={() => setMenu('appliances')}>Gia dụng</Link>
-                </li>
+        <div className="card sidebar rounded-3 h-100 me-3 border-0 shadow-sm">
+
+            <ul className="list-unstyled mb-0">
+                {categories.map((category, index) => (
+                    <li key={index} className=" fw-bold">
+                        <Link
+                            className={`d-flex align-items-center justify-content-between text-decoration-none text-dark  py-2 px-4 ${menu === category.name.toLowerCase() ? 'active' : ''}`}
+                            to={category.path}
+                            onClick={() => setMenu(category.name.toLowerCase())}
+                        >
+                            <div className="d-flex align-items-center">
+                                <span className="category-icon me-3">{category.icon}</span>
+                                <span className="category-name">{category.name}</span>
+                            </div>
+                            <ChevronRight className="text-muted" />
+                        </Link>
+                    </li>
+                ))}
             </ul>
+
         </div>
     )
 }

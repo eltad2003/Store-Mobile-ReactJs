@@ -6,3 +6,7 @@
     transform: scale(1.1);
     color: red;
 }
+
+.sidebar {
+    transition: all 0.3s ease;
+}

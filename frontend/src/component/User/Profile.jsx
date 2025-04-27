@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../AuthProvider'
 import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
+import { Edit } from '@mui/icons-material'
 
 function Profile() {
     const { user } = useContext(AuthContext)
@@ -61,8 +62,11 @@ function Profile() {
                 <div className='container p-3 d-flex justify-content-center'>
                     <div className=''>
                         <h1>Thông tin cá nhân</h1>
-                        <div className='my-3 text-center'>
-                            <img src="https://png.pngtree.com/png-vector/20190114/ourlarge/pngtree-vector-avatar-icon-png-image_313572.jpg" alt="" className='img-fluid rounded-circle' width={100} height={100} />
+                        <div className='d-flex justify-content-center'>
+                            <div className="position-relative">
+                                <img src={user.user.avatarUrl} alt="" className='rounded-circle' width={100} height={100} />
+                                <button className='btn btn-secondary rounded-circle btn-sm position-absolute bottom-0 end-0'><Edit fontSize="small" /></button>
+                            </div>
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Họ và tên</label>
