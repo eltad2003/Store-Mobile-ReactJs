@@ -44,7 +44,10 @@ function ShopCategory({ category }) {
         {products
           .filter(item => item.category === category)
           .map(item => (
-            <div className="col-md-3 col-6 my-3" key={item.id}>
+            <div
+              className="col col-6 col-12d5 my-3"
+              key={item.id}
+            >
               <CartItem item={item} />
             </div>
           ))}

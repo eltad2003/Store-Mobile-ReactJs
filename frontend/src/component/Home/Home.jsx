@@ -22,7 +22,7 @@ function Home() {
    const [showChat, setShowChat] = useState(false)
    const [products, setProducts] = useState([])
    const [currentPage, setCurrentPage] = useState(1)
-   const [itemPerpage, setItemPerPage] = useState(12)
+   const [itemPerpage, setItemPerPage] = useState(15)
 
 
 
@@ -123,9 +123,9 @@ function Home() {
          {/* Tất cả sản phẩm */}
          <div className="container px-5" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
-            <div className="row">
+            <div className="row mt-3">
                {products.slice(firstItemIndx, lastItemIndx).map((item) => (
-                  <div className="col-6 col-md-3 my-3" key={item.id}>
+                  <div className="col col-12d5 col-6 my-3" key={item.id}>
                      <CartItem item={item} />
                   </div>
                ))}

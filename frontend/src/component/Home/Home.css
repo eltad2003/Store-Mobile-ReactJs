@@ -12,6 +12,10 @@
 
 }
 
+.col-12d5 {
+    flex: 0 0 20%;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1, 1);
