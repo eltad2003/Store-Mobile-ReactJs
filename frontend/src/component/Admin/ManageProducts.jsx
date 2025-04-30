@@ -382,7 +382,6 @@ function ManageProducts() {
                 <thead className="table-light">
                   <tr>
                     <th className='scope'>STT</th>
-                    <th className='scope'>ID</th>
                     <th className='scope'>Tên sản phẩm</th>
                     <th className='scope'>Ảnh</th>
                     <th className='scope'>Giá</th>
@@ -403,8 +402,7 @@ function ManageProducts() {
                   ) : (
                     products.map((product, index) => (
                       <tr key={product.id}>
-                        <th>{index + 1}</th>
-                        <th>{product.id}</th>
+                        <td>{index + 1}</td>
                         <td className='text-truncate' style={{ maxWidth: 250 }}>{product.name}</td>
                         <td>
                           <div className="d-flex gap-1">
@@ -430,7 +428,7 @@ function ManageProducts() {
                         <td className='fw-semibold text-danger'>{formatPrice(product.price)}</td>
                         <td>{product.category}</td>
                         <td>{product.stockQuantity}</td>
-                        <td className='text-truncate' style={{ maxWidth: 250 }}>{product.description}</td>
+                        <td className='text-truncate' style={{ maxWidth: 250 }} title={product.description}>{product.description}</td>
                         <td className='fw-semibold text-success'>{product.discount ? `${product.discount}%` : ""}</td>
                         <td>
                           <div className="d-flex gap-1">

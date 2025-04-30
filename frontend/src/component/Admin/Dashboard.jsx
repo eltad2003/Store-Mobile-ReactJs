@@ -16,6 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ArrowDownward, ArrowUpward, People, ShoppingCart, Category, LocalShipping, MonetizationOn } from "@mui/icons-material";
 import { AuthContext } from '../AuthProvider';
 import formatPrice from '../../formatPrice';
+import { Link } from "react-router-dom";
 
 // Đăng ký các thành phần của Chart.js
 ChartJS.register(
@@ -78,7 +79,7 @@ const Dashboard = () => {
         orders.forEach(order => {
             const date = new Date(order.createdAt);
             if (date.getFullYear() === Number(selectedYear) && order.status === 'DELIVERED') {
-                months[date.getMonth()] += order.totalPrice;
+                months[date.getMonth()] += parseInt(order.totalPrice);
             }
         });
         return months;
@@ -90,7 +91,7 @@ const Dashboard = () => {
         orders.forEach(order => {
             const date = new Date(order.createdAt);
             if (date.getFullYear() === Number(selectedYear) && (date.getMonth() + 1) === Number(selectedMonth) && order.status === 'DELIVERED') {
-                days[date.getDate() - 1] += order.totalPrice;
+                days[date.getDate() - 1] += parseInt(order.totalPrice);
             }
         });
         return days;
@@ -145,14 +146,16 @@ const Dashboard = () => {
     };
 
     // Tổng doanh thu
-    const totalRevenue = orders.filter(o => o.status === 'DELIVERED').reduce((sum, o) => sum + o.totalPrice, 0);
+    const totalRevenue = orders.filter(o => o.status === 'DELIVERED').reduce((sum, o) => sum + parseInt(o.totalPrice), 0);
+    console.log('Tổng doanh thu: ', totalRevenue);
+
 
     // Loading
     if (loading) return <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 400 }}><div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div></div>;
 
     return (
-        <div className="container-fluid bg-light min-vh-100 p-4">
-            <h2 className="fw-bold mb-4">Bảng điều khiển quản trị</h2>
+        <div className="container bg-light min-vh-100 p-4">
+            <h2 className="fw-bold mb-4">DASHBOARD</h2>
             <div className="row g-4 mb-4">
                 <div className="col-md-3">
                     <div className="card shadow border-0 p-3 d-flex flex-row align-items-center">
@@ -165,7 +168,14 @@ const Dashboard = () => {
                 </div>
                 <div className="col-md-2">
                     <div className="card shadow border-0 p-3 d-flex flex-row align-items-center">
-                        <People className="text-primary" style={{ fontSize: 40 }} />
+                        <Link
+                            to={'users'}
+                            style={{ transition: 'transform 1s ease' }}
+                            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.3)'}
+                            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                        >
+                            <People className="text-primary" style={{ fontSize: 40 }} />
+                        </Link>
                         <div className="ms-3">
                             <div className="fw-semibold text-muted">Người dùng</div>
                             <div className="fs-4 fw-bold">{users.length}</div>
@@ -174,7 +184,14 @@ const Dashboard = () => {
                 </div>
                 <div className="col-md-2">
                     <div className="card shadow border-0 p-3 d-flex flex-row align-items-center">
-                        <ShoppingCart className="text-warning" style={{ fontSize: 40 }} />
+                        <Link
+                            to={'products'}
+                            style={{ transition: 'transform 1s ease' }}
+                            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.3)'}
+                            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                        >
+                            <ShoppingCart className="text-warning" style={{ fontSize: 40 }} />
+                        </Link>
                         <div className="ms-3">
                             <div className="fw-semibold text-muted">Sản phẩm</div>
                             <div className="fs-4 fw-bold">{products.length}</div>
@@ -183,7 +200,14 @@ const Dashboard = () => {
                 </div>
                 <div className="col-md-2">
                     <div className="card shadow border-0 p-3 d-flex flex-row align-items-center">
-                        <LocalShipping className="text-info" style={{ fontSize: 40 }} />
+                        <Link
+                            to={'orders'}
+                            style={{ transition: 'transform 1s ease' }}
+                            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.3)'}
+                            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                        >
+                            <LocalShipping className="text-info" style={{ fontSize: 40 }} />
+                        </Link>
                         <div className="ms-3">
                             <div className="fw-semibold text-muted">Đơn hàng</div>
                             <div className="fs-4 fw-bold">{orders.length}</div>
@@ -191,8 +215,15 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="col-md-3">
-                    <div className="card shadow border-0 p-3 d-flex flex-row align-items-center">
-                        <Category className="text-secondary" style={{ fontSize: 40 }} />
+                    <div className="card shadow border-0 p-3 d-flex flex-row align-items-center" >
+                        <Link
+                            style={{ transition: 'transform 1s ease' }}
+                            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.3)'}
+                            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                            to={'categories'}
+                        >
+                            <Category className="text-secondary" style={{ fontSize: 40 }} />
+                        </Link>
                         <div className="ms-3">
                             <div className="fw-semibold text-muted">Danh mục</div>
                             <div className="fs-4 fw-bold">{categories.length}</div>
@@ -200,6 +231,8 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Biểu đồ */}
             <div className="row g-4">
                 <div className="col-lg-6">
                     <div className="card shadow p-3 h-100">
@@ -295,6 +328,8 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Thống kê */}
             <div className="row g-4 mt-2">
                 <div className="col-lg-6">
                     <div className="card shadow p-3 h-100">
@@ -316,7 +351,7 @@ const Dashboard = () => {
                 </div>
                 <div className="col-lg-6">
                     <div className="card shadow p-3 h-100">
-                        <h5 className="fw-bold mb-3">Top 5 sản phẩm bán chạy</h5>
+                        <h5 className="fw-bold mb-3">Top 10 sản phẩm bán chạy</h5>
                         <table className="table table-hover align-middle">
                             <thead className="table-light">
                                 <tr>
@@ -331,13 +366,13 @@ const Dashboard = () => {
                                             ...product,
                                             sold: orders.reduce((sum, order) => {
                                                 if (order.status === 'DELIVERED') {
-                                                    return sum + (order.items.filter(i => i.productId === product.id).reduce((s, i) => s + i.quantity, 0));
+                                                    return sum + (order.items.filter(item => item.productId === product.id).reduce((s, i) => s + i.quantity, 0));
                                                 }
                                                 return sum;
                                             }, 0)
                                         }))
                                         .sort((a, b) => b.sold - a.sold)
-                                        .slice(0, 5)
+                                        .slice(0, 10)
                                         .map(product => (
                                             <tr key={product.id}>
                                                 <td>{product.name}</td>

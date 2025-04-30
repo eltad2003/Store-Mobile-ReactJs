@@ -126,10 +126,10 @@ function ManageOrders() {
                     <div>{order.userId}</div>
                     <div className='text-muted text-truncate' style={{ maxWidth: 200 }}>{order.shippingAddress}</div>
                   </td>
-                  <td className='w-25'>
+                  <td className='w-25 text-nowrap'>
                     {order.items.map(item => (
                       <div key={item.productId}>
-                        <div><span>{item.productDetails?.name || 'N/A'}</span>, <span className='text-muted fst-italic ms-1'>SL: {item.quantity}</span></div>
+                        <div><span className='text-primary'>{item.productDetails?.name || 'N/A'}</span> <span className='text-muted fst-italic ms-1'>SL: {item.quantity}</span></div>
 
                       </div>
                     ))}
