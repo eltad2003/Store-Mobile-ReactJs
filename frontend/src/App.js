@@ -11,7 +11,6 @@ import Cart from './component/Cart/Cart'
 import CartProvider from './component/CartProvider'
 import Order from './component/Order/Order'
 import Popular from './component/Popular'
-
 import AdminLayout from './component/Admin/AdminLayout'
 import ManageUsers from './component/Admin/ManageUsers'
 import ManageOrders from './component/Admin/ManageOrders'
