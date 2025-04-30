@@ -6,7 +6,7 @@ import { AuthContext } from '../AuthProvider'
 
 function AdminLayout() {
     const { user, logout } = useContext(AuthContext)
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
     const handleLogout = async () => {
         await logout()
@@ -20,10 +20,17 @@ function AdminLayout() {
         (user && user.user.role === 'ADMIN' ? (
             <div className="d-flex">
                 {/* Sidebar Toggle Button */}
-                <button className="btn btn-dark position-fixed top-0 start-0 m-3 z-3" onClick={toggleSidebar}><Menu /></button>
+                <button className="btn btn-dark position-fixed top-0 start-0 m-3 z-3" onClick={toggleSidebar} ><Menu /></button>
 
                 {/* Sidebar */}
-                <div className={`z-2 bg-dark text-white p-3 position-fixed h-100 ${isSidebarOpen ? 'd-block' : 'd-none'}`}>
+                <div
+                    className={`z-2 bg-dark text-white p-3 position-fixed h-100`}
+                    style={{
+                        left: isSidebarOpen ? 0 : '-250px',
+                        transition: 'left 0.4s ease',
+
+                    }}
+                >
                     <div className='text-center my-3 rounded-5'>
                         <img
                             src={user.user.avatarUrl}
@@ -38,27 +45,27 @@ function AdminLayout() {
                     <ul className="list-unstyled fw-semibold p-2 mt-2">
                         <li className="my-4 d-flex align-items-center">
                             <Dashboard className="me-2" />
-                            <Link className="text-decoration-none text-white" to="/admin" onClick={() => setIsSidebarOpen(false)}>DashBoard</Link>
+                            <Link className="text-decoration-none text-white" to="/admin"  >DashBoard</Link>
                         </li>
                         <li className="my-4 d-flex align-items-center">
                             <People className="me-2" />
-                            <Link className="text-decoration-none text-white" to="/admin/users" onClick={() => setIsSidebarOpen(false)}>Quản lý người dùng</Link>
+                            <Link className="text-decoration-none text-white" to="/admin/users"  >Quản lý người dùng</Link>
                         </li>
                         <li className="my-4 d-flex align-items-center">
                             <ShoppingCart className="me-2" />
-                            <Link className="text-decoration-none text-white" to="/admin/products" onClick={() => setIsSidebarOpen(false)}>Quản lý Sản Phẩm</Link>
+                            <Link className="text-decoration-none text-white" to="/admin/products"  >Quản lý Sản Phẩm</Link>
                         </li>
                         <li className="my-4 d-flex align-items-center">
                             <Category className="me-2" />
-                            <Link className="text-decoration-none text-white" to="/admin/categories" onClick={() => setIsSidebarOpen(false)}>Quản lý Danh mục</Link>
+                            <Link className="text-decoration-none text-white" to="/admin/categories"  >Quản lý Danh mục</Link>
                         </li>
                         <li className="my-4 d-flex align-items-center">
                             <LocalShipping className="me-2" />
-                            <Link className="text-decoration-none text-white" to="/admin/orders" onClick={() => setIsSidebarOpen(false)}>Quản lý Đơn Hàng</Link>
+                            <Link className="text-decoration-none text-white" to="/admin/orders"  >Quản lý Đơn Hàng</Link>
                         </li>
                         <li className="my-4 d-flex align-items-center">
                             <Report className="me-2" />
-                            <Link className="text-decoration-none text-white" to="/admin/reports" onClick={() => setIsSidebarOpen(false)}>Báo cáo</Link>
+                            <Link className="text-decoration-none text-white" to="/admin/reports"  >Báo cáo</Link>
                         </li>
                     </ul>
                     <div className='mt-5'>
@@ -72,7 +79,12 @@ function AdminLayout() {
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-grow-1 p-4">
+                <div className="flex-grow-1"
+                    style={{
+                        marginLeft: isSidebarOpen ? 250 : 0,
+                        transition: 'margin-left 0.5s ease'
+                    }}
+                >
                     <Outlet />
                 </div>
             </div>

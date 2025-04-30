@@ -17,7 +17,7 @@ function CartItem({ item }) {
                     <img
                         src={item.listMedia[0] || "https://via.placeholder.com/150"}
                         alt={item.category}
-                        className="img-fluid img-hover"
+                        className="img-fluid img-hover rounded-3"
 
                     />
                 </Link>

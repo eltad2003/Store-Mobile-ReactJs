@@ -100,7 +100,7 @@ function ManageOrders() {
   return (
     <div className='container'>
 
-      <div className='mt-5'>
+      <div className='my-5'>
         <h3 className='fw-bold'>Quản lý Các Đơn hàng</h3>
         <div className='card shadow p-3 mt-3'>
           <table class="table align-middle table-hover mb-0">
@@ -112,7 +112,6 @@ function ManageOrders() {
                 <th scope="col" className='text-nowrap'>Sản phẩm</th>
                 <th scope="col" className='text-nowrap'>Tổng thanh toán</th>
                 <th scope="col" className='text-nowrap'>Trạng thái</th>
-                <th scope="col" className='text-nowrap'>Phương thức thanh toán</th>
                 <th scope="col" className='text-nowrap'>Hoạt động</th>
 
               </tr>
@@ -136,7 +135,7 @@ function ManageOrders() {
                   </td>
                   <td>{formatPrice(order.totalPrice)}</td>
                   <td >{getStatusBadge(order.status)}</td>
-                  <td className='text-uppercase text-center'>{order.paymentMethod}</td>
+
                   <td>
                     <select class="form-select form-select-sm" onChange={(e) => setStatusShipping(e.target.value)}>
                       <option>--Trạng thái--</option>

@@ -154,7 +154,7 @@ const Dashboard = () => {
     if (loading) return <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 400 }}><div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div></div>;
 
     return (
-        <div className="container bg-light min-vh-100 p-4">
+        <div className="container bg-light my-5">
             <h2 className="fw-bold mb-4">DASHBOARD</h2>
             <div className="row g-4 mb-4">
                 <div className="col-md-3">

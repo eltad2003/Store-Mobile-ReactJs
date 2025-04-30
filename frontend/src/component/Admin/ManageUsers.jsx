@@ -102,12 +102,14 @@ function ManageUsers() {
     <div className='container'>
 
 
-      <div className='mt-5'>
-        <h3 className='fw-bold'>Quản lý người dùng</h3>
+      <div className='my-5'>
+        <div className="d-flex">
+          <h3 className='fw-bold'>Quản lý người dùng</h3>
+          <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddUser">Thêm người dùng</button>
+        </div>
         <div className="card shadow p-3 mt-3">
 
           {/* Them nguoi dung */}
-          <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddUser">Thêm người dùng</button>
           <div className='modal fade' id='modalAddUser' tabIndex={-1}>
             <div className="modal-dialog modal-dialog-scrollable">
               <div className="modal-content">

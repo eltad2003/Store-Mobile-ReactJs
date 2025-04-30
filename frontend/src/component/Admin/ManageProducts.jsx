@@ -207,7 +207,7 @@ function ManageProducts() {
   return (
     <div className='container'>
 
-      <div className="mt-5">
+      <div className="my-5">
         <div className='d-flex align-items-center mb-4'>
           <h3 className='fw-bold mb-0'>Quản lý Sản Phẩm</h3>
           <button
@@ -377,8 +377,8 @@ function ManageProducts() {
               <p className="mt-2">Đang tải dữ liệu...</p>
             </div>
           ) : (
-            <div className="table-responsive">
-              <table className="table table-hover">
+            <div className=" overflow-auto" style={{ maxHeight: '100vh ' }}>
+              <table className="table table-hover align-middle">
                 <thead className="table-light">
                   <tr>
                     <th className='scope'>STT</th>

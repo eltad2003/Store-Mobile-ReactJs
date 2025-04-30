@@ -88,38 +88,38 @@ function ManageCategories() {
     return (
 
 
-        <div className=" container">
-            <div className="mt-3">
-                <h1>Quản lý danh mục</h1>
-                <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddCate">Thêm danh mục mới</button>
-                <p className='mt-3'>Tổng danh mục: {categories.length}</p>
-                <div className='modal fade' id='modalAddCate' tabIndex={-1}>
-                    <div className="modal-dialog modal-dialog-scrollable">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h4 className="modal-title">Thêm Người Dùng</h4>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-
-                            <div className="modal-body">
-                                <div className="form-group">
-                                    <label>Tên danh mục</label>
-                                    <input type="text" className="form-control" value={newCate} onChange={e => setNewCate(e.target.value)} />
-                                </div>
-                            </div>
-
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-success" onClick={() => handleAddCate()} data-bs-dismiss="modal">Thêm</button>
-                            </div>
-
+        <div className="container my-5">
+            <h1>Quản lý danh mục</h1>
+            <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddCate">Thêm danh mục mới</button>
+            <p className='mt-3'>Tổng danh mục: {categories.length}</p>
+            <div className='modal fade' id='modalAddCate' tabIndex={-1}>
+                <div className="modal-dialog modal-dialog-scrollable">
+                    <div className="modal-content">
+                        <div className="modal-header bg-success text-white">
+                            <h4 className="modal-title">Thêm Danh Mục</h4>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                         </div>
+
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label>Tên danh mục</label>
+                                <input type="text" className="form-control" value={newCate} onChange={e => setNewCate(e.target.value)} />
+                            </div>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-success" onClick={() => handleAddCate()} data-bs-dismiss="modal">Thêm</button>
+                        </div>
+
                     </div>
                 </div>
-                <table className='table table-bordered align-middle table-hover mb-0'>
-                    <thead>
+            </div>
+
+            <div className="card shadow     p-3 mt-3">
+                <table className='table align-middle'>
+                    <thead className='table-light'>
                         <tr>
                             <th>STT</th>
-                            <th>Id</th>
                             <th>Tên Danh mục</th>
                             <th>Thao tác</th>
                         </tr>
@@ -128,11 +128,32 @@ function ManageCategories() {
                         {categories.length ? categories.map((category, index) => (
                             <tr>
                                 <td>{index + 1}</td>
-                                <td>{category.id}</td>
+
                                 <td>{category.name}</td>
                                 <td>
-                                    <button className='btn btn-sm btn-primary ms-1' onClick={() => handleUpdateCate(category.id)} modal-bs-target>Sửa</button>
+                                    <button className='btn btn-sm btn-primary ms-1' data-bs-target="#modalUpdateCate" data-bs-toggle="modal">Sửa</button>
+                                    <div className='modal fade' id='modalUpdateCate' tabIndex={-1}>
+                                        <div className="modal-dialog modal-dialog-scrollable">
+                                            <div className="modal-content">
+                                                <div className="modal-header bg-primary text-white">
+                                                    <h4 className="modal-title">Sửa danh mục</h4>
+                                                    <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
 
+                                                <div className="modal-body">
+                                                    <div className="form-group">
+                                                        <label>Tên danh mục</label>
+                                                        <input type="text" className="form-control" value={newCate} onChange={e => setNewCate(e.target.value)} />
+                                                    </div>
+                                                </div>
+
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-primary" onClick={() => handleUpdateCate(category.id)} data-bs-dismiss="modal">Sửa</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button className='btn btn-sm btn-danger ms-1' onClick={() => handleDeleteCate(category.id)}>Xóa </button>
 
 
@@ -145,7 +166,6 @@ function ManageCategories() {
                 </table>
             </div>
         </div>
-
 
     )
 }
