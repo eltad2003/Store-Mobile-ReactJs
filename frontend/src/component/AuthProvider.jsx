@@ -24,8 +24,9 @@ const AuthProvider = ({ children }) => {
                 const data = await res.json();
                 setUser(data);
                 localStorage.setItem('user', JSON.stringify(data));
+                alert('Đăng nhập thành công')
             } else {
-                console.log("Đăng nhập thất bại");
+                alert(await res.text());
             }
         } catch (error) {
             console.log("Đăng nhập thất bại", error);

@@ -15,21 +15,18 @@ function Login() {
         e.preventDefault()
         await login(email, password)
         const user = JSON.parse(localStorage.getItem('user'))
-        console.log(user);
 
         if (user) {
             if (user.user.role === "ADMIN") {
                 navigate('/admin')
             } else {
-                alert("Đăng nhập thành công")
                 navigate('/')
             }
-        } else {
-            alert("Đăng nhập thất bại")
         }
     }
+
     const handleLoginGoogle = async (e) => {
-        e.preventDefault()      
+        e.preventDefault()
         try {
             const popup = window.open('http://localhost:8080/google_login', '_blank', 'width=500,height=600');
 
@@ -90,43 +87,57 @@ function Login() {
 
 
     return (
-        <div className="container d-flex justify-content-center align-items-center mt-5 p-3">
-            <div className="p-3 rounded bg-light w-50">
-                <h1 className="text-center">Đăng nhập</h1>
+        <div className="container mt-5 d-flex justify-content-center align-items-center ">
+            <div className="card shadow-lg p-4 rounded-4" style={{ minWidth: 370, maxWidth: 400, width: '100%' }}>
+                <h2 className="text-center mb-4 fw-bold">Đăng nhập</h2>
                 <form onSubmit={handleLogin}>
-                    <div className="form-group">
-                        <label>Email</label>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label fw-semibold">Email</label>
                         <input
-                            type="text"
-                            className="form-control"
+                            type="email"
+                            className="form-control form-control-lg rounded-3"
                             value={email}
                             name='email'
                             id="email"
+                            placeholder="Nhập email..."
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className="form-group">
-                        <label>Mật khẩu</label>
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label fw-semibold">Mật khẩu</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className="form-control form-control-lg rounded-3"
                             value={password}
                             name='password'
                             id='password'
+                            placeholder="Nhập mật khẩu..."
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary mt-3 w-100">Đăng nhập</button>
-
-
-
+                    <button type="submit" className="btn btn-primary  w-100 rounded-3 mt-2 fw-semibold">Đăng nhập</button>
                 </form>
-                <p className='mt-3 text-center'>Hoặc</p>
-                <button className="btn btn-primary w-100" onClick={handleLoginGoogle} >Đăng nhập bằng Google <Google /></button>
-                <p className="mt-3 text-center">Bạn chưa có tài khoản?</p>
-                <Link to={"/register"}>
-                    <button className="btn btn-success w-100">Đăng ký ngay</button>
-                </Link>
+                <div className="d-flex align-items-center my-3">
+                    <hr className="flex-grow-1" />
+                    <span className="mx-2 text-muted">Hoặc</span>
+                    <hr className="flex-grow-1" />
+                </div>
+                <button
+                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 w-100 rounded-3 py-2 mb-2 shadow-sm"
+                    style={{ fontWeight: 500 }}
+                    onClick={handleLoginGoogle}
+                >
+                    <span style={{ color: '#4285F4', fontSize: 22 }}><Google /></span>
+                    Đăng nhập bằng Google
+                </button>
+                <div className="text-center mt-3">
+                    <span>Bạn chưa có tài khoản?</span>
+                    <Link to="/register" className="d-block mt-2">
+                        <button className="btn btn-success w-100 rounded-3 fw-semibold">Đăng ký ngay</button>
+                    </Link>
+                </div>
             </div>
         </div>
     )
