@@ -259,7 +259,9 @@ function ManageProducts() {
                         rows="3"
                         value={newProduct.description}
                         onChange={handleInputChange}
-                      ></textarea>
+                      >
+
+                      </textarea>
                     </div>
                     <div className="mb-3">
                       <label className="form-label fw-bold">Giá <span className="text-danger">*</span></label>

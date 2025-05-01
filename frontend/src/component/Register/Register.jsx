@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { data, Link, useNavigate } from 'react-router-dom'
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -9,12 +10,16 @@ function Register() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [capcha, setCapcha] = useState(null)
     const navigate = useNavigate()
 
 
     const handleRegister = async (e) => {
         e.preventDefault()
-
+        if (!capcha) {
+            alert('Vui lòng xác minh không phải Robot')
+            return
+        }
         if (password !== confirmPassword) {
             alert('Mật khẩu không khớp')
             setConfirmPassword('')
@@ -77,6 +82,12 @@ function Register() {
                     <div className="mb-3">
                         <label htmlFor="confirmPassword" className="form-label fw-semibold">Xác nhận mật khẩu</label>
                         <input required type="password" className="form-control form-control-lg rounded-3" name='confirmPassword' id="confirmPassword" value={confirmPassword} placeholder="Nhập lại mật khẩu..." onChange={(e) => setConfirmPassword(e.target.value)} />
+                    </div>
+                    <div className="mb-3">
+                        <ReCAPTCHA
+                            sitekey='6LdfuCorAAAAAMxlRNcfr7t5QyowdWx_n40T83sx'
+                            onChange={(value) => setCapcha(value)}
+                        />
                     </div>
                     <div className="g-recaptcha mb-3" data-sitekey="YOUR_SITE_KEY"></div>
                     <button type="submit" className="btn btn-success btn-lg w-100 rounded-3 fw-semibold">Đăng ký</button>
