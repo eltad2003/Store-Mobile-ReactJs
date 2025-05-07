@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { data, Link, useNavigate } from 'react-router-dom'
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 function Register() {
     const [fullName, setfullName] = useState('')
@@ -85,11 +84,12 @@ function Register() {
                     </div>
                     <div className="mb-3">
                         <ReCAPTCHA
-                            sitekey='6LdfuCorAAAAAMxlRNcfr7t5QyowdWx_n40T83sx'
+                            sitekey='6LdC_TArAAAAAGmaz1ra2JHjkKd66Ip7qx5NDLbR'
+
                             onChange={(value) => setCapcha(value)}
                         />
                     </div>
-                    <div className="g-recaptcha mb-3" data-sitekey="YOUR_SITE_KEY"></div>
+
                     <button type="submit" className="btn btn-success btn-lg w-100 rounded-3 fw-semibold">Đăng ký</button>
                 </form>
                 <div className="text-center mt-3">
