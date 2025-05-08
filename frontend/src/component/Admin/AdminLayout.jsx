@@ -31,13 +31,12 @@ function AdminLayout() {
 
                     }}
                 >
-                    <div className='text-center my-3 rounded-5'>
+                    <div className='text-center my-5 rounded-5'>
                         <img
                             src={user.user.avatarUrl}
                             alt=""
                             className='img-fluid rounded-circle'
-                            width={100}
-                            height={100}
+                            style={{ width: '100px', height: '100px' }}
                         />
                         <p className='fw-semibold mt-3'>{user.user.fullName}</p>
                     </div>

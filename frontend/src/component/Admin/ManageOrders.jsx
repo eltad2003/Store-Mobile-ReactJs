@@ -18,19 +18,23 @@ function ManageOrders() {
         }
       })
       if (res.ok) {
-        const data = await res.json()
-        const ordersWithProductDetails = await Promise.all(
+        const data = await res.json();
+
+        // Lấy thông tin chi tiết của từng khách hàng
+        const ordersWithDetails = await Promise.all(
           data.map(async (order) => {
+            const userDetails = await fetchUserDetail(order.userId); // Lấy thông tin khách hàng
             const itemsWithDetails = await Promise.all(
               order.items.map(async (item) => {
                 const productDetails = await fetchProductDetails(item.productId);
                 return { ...item, productDetails }; // Gắn thông tin sản phẩm vào từng item
               })
             );
-            return { ...order, items: itemsWithDetails }; // Gắn danh sách sản phẩm vào đơn hàng
+            return { ...order, userDetails, items: itemsWithDetails }; // Gắn thông tin khách hàng và sản phẩm vào đơn hàng
           })
         );
-        setOrders(ordersWithProductDetails)
+
+        setOrders(ordersWithDetails);
       }
     } catch (error) {
       console.error('Error fetching orders:', error)
@@ -52,6 +56,24 @@ function ManageOrders() {
       }
     } catch (error) {
       console.error(`Error fetching product details for productId ${productId}:`, error);
+    }
+    return null; // Trả về null nếu có lỗi
+  };
+  const fetchUserDetail = async (userId) => {
+    try {
+      const res = await fetch(`http://localhost:8080/users/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+    } catch (error) {
+      console.error(`Error fetching product details for productId ${userId}:`, error);
     }
     return null; // Trả về null nếu có lỗi
   };
@@ -121,9 +143,11 @@ function ManageOrders() {
                 <tr>
                   <td className='text-center'>{index + 1}</td>
                   <td className='text-nowrap'>{new Date(order.createdAt).toLocaleString()}</td>
-                  <td className='text-nowrap' title={order.shippingAddress}>
-                    <div>{order.userId}</div>
-                    <div className='text-muted text-truncate' style={{ maxWidth: 200 }}>{order.shippingAddress}</div>
+                  <td className='text-nowrap' title={order.shippingAddress || "Chưa có địa chỉ"}>
+                    <div >{order.userDetails?.fullName || 'N/A'}</div>
+                    <div>{order.userDetails?.email || 'N/A'}</div>
+                    <div>{order.userDetails?.phone || 'N/A'}</div>
+                    <div className='text-muted text-truncate fst-italic' style={{ maxWidth: 200 }}>{order.shippingAddress}</div>
                   </td>
                   <td className='w-25 text-nowrap'>
                     {order.items.map(item => (
@@ -133,7 +157,7 @@ function ManageOrders() {
                       </div>
                     ))}
                   </td>
-                  <td>{formatPrice(order.totalPrice)}</td>
+                  <td className='fw-bold'>{formatPrice(order.totalPrice)}</td>
                   <td >{getStatusBadge(order.status)}</td>
 
                   <td>

@@ -7,10 +7,17 @@ import { Edit } from '@mui/icons-material'
 function Profile() {
     const { user } = useContext(AuthContext)
     const [addresses, setAddresses] = useState({})
+    const [avatar, setAvatar] = useState([])
+    const [isAvatarSelected, setIsAvatarSelected] = useState(false);
+    const [avatarPreview, setAvatarPreview] = useState()
     const [editAddress, setEditAddress] = useState({
         address: '',
         city: '',
         country: ''
+    })
+    const [editInfo, setEditInfo] = useState({
+        fullName: user.user.fullName,
+        phone: user.user.phone
     })
 
     const fetchAddress = async () => {
@@ -24,7 +31,7 @@ function Profile() {
             })
             const data = await res.json()
             setAddresses(data)
-            setEditAddress(data) // Initialize edit form with current address
+            setEditAddress(data)
         } catch (error) {
             console.log("Lỗi kết nối api: ", error);
         }
@@ -43,7 +50,7 @@ function Profile() {
 
             if (response.ok) {
                 alert("Cập nhật địa chỉ thành công!");
-                fetchAddress(); // Refresh address data
+                fetchAddress();
             } else {
                 alert("Lỗi khi cập nhật địa chỉ!");
             }
@@ -51,6 +58,65 @@ function Profile() {
             console.error("Lỗi API:", error);
         }
     };
+
+    const handleUpdateInfo = async () => {
+        try {
+            const res = await fetch('http://localhost:8080/user', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify(editInfo)
+            })
+            if (res.ok) {
+                alert('Cập nhật thông tin thành công!')
+                const infoUpdate = { ...user, user: { ...user.user, ...editInfo } };
+                console.log('infoUpdate', infoUpdate);
+                localStorage.setItem('user', JSON.stringify(infoUpdate));
+                window.location.reload()
+            } else {
+                alert('Cập nhật thông tin thất bại!')
+            }
+        } catch (error) {
+            console.error('Lỗi API:', error)
+        }
+    }
+
+    const handleFileChange = (files) => {
+        const file = files[0];
+        if (file) {
+            setAvatar(files);
+            setIsAvatarSelected(true);
+            setAvatarPreview(URL.createObjectURL(file)); // Tạo URL tạm thời để xem trước
+        }
+    };
+
+    const handleChangeAvatar = async () => {
+        const formData = new FormData()
+        for (const x of avatar) {
+            formData.append('file', x)
+        }
+        try {
+            const res = await fetch('http://localhost:8080/user/avatar', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: formData
+            })
+            if (res.ok) {
+                alert('Cập nhật ảnh đại diện thành công!');
+                window.location.reload();
+            }
+            else {
+                alert('Cập nhật ảnh đại diện thất bại!')
+            }
+
+        } catch (error) {
+            console.error('Lỗi API:', error)
+        }
+    }
 
     useEffect(() => {
         fetchAddress()
@@ -64,13 +130,36 @@ function Profile() {
                         <h1>Thông tin cá nhân</h1>
                         <div className='d-flex justify-content-center'>
                             <div className="position-relative">
-                                <img src={user.user.avatarUrl} alt="" className='rounded-circle' width={100} height={100} />
-                                <button className='btn btn-secondary rounded-circle btn-sm position-absolute bottom-0 end-0'><Edit fontSize="small" /></button>
+                                <img src={avatarPreview || user.user.avatarUrl} alt="Avatar" className='rounded-circle' width={100} height={100} />
+                                <button className='btn btn-secondary rounded-circle btn-sm position-absolute bottom-0 end-0' onClick={() => document.getElementById('avatarInput').click()}>
+                                    <Edit fontSize="small" />
+                                </button>
+                                <input
+                                    id='avatarInput'
+                                    type="file"
+                                    accept="image/*"
+                                    className='d-none'
+                                    onChange={(e) => handleFileChange(e.target.files)}
+                                /
+                                >
+
+
                             </div>
+
                         </div>
+                        {isAvatarSelected && ( // Chỉ hiển thị nút nếu file được chọn
+                            <div className="my-3">
+                                <button
+                                    className="btn btn-secondary w-100"
+                                    onClick={() => handleChangeAvatar()}
+                                >
+                                    Cập nhật AVT
+                                </button>
+                            </div>
+                        )}
                         <div className="mb-3">
                             <label className="form-label">Họ và tên</label>
-                            <input type="text" className="form-control" defaultValue={user.user.fullName} />
+                            <input type="text" className="form-control" value={editInfo.fullName} onChange={(e) => setEditInfo({ ...editInfo, fullName: e.target.value })} />
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Email</label>
@@ -78,7 +167,7 @@ function Profile() {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Số điện thoại</label>
-                            <input type="text" className="form-control" defaultValue={user.user.phone} />
+                            <input type="text" className="form-control" value={editInfo.phone} onChange={(e) => setEditInfo({ ...editInfo, phone: e.target.value })} />
                         </div>
                         <div className="mb-3">
                             <button className='btn btn-outline-primary' data-bs-toggle="modal" data-bs-target="#modalAddress">Xem địa chỉ</button>
@@ -174,7 +263,7 @@ function Profile() {
                             </div>
                         </div>
                         <div className='my-3'>
-                            <button className='btn btn-danger w-100'>Cập nhật</button>
+                            <button className='btn btn-danger w-100' onClick={() => handleUpdateInfo()}>Cập nhật</button>
                         </div>
                     </div>
                     <Outlet />

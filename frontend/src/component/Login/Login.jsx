@@ -2,17 +2,23 @@ import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
 import { Google } from '@mui/icons-material'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 
 function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const [capcha, setCapcha] = useState(null)
     const { login } = useContext(AuthContext)
 
 
     const handleLogin = async (e) => {
         e.preventDefault()
+        if (!capcha) {
+            alert('Vui lòng xác minh không phải Robot')
+            return
+        }
         await login(email, password)
         const user = JSON.parse(localStorage.getItem('user'))
 
@@ -115,6 +121,13 @@ function Login() {
                             placeholder="Nhập mật khẩu..."
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <ReCAPTCHA
+                            sitekey='6LdC_TArAAAAAGmaz1ra2JHjkKd66Ip7qx5NDLbR'
+
+                            onChange={(value) => setCapcha(value)}
                         />
                     </div>
                     <button type="submit" className="btn btn-primary  w-100 rounded-3 mt-2 fw-semibold">Đăng nhập</button>
