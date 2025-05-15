@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
-import { AccountCircle, Person, ShoppingCart } from '@mui/icons-material'
+import { AccountCircle, Notifications, Person, ShoppingCart } from '@mui/icons-material'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import "./Navbar.css"
 import { AuthContext } from '../AuthProvider'
@@ -16,20 +16,51 @@ function Navbar() {
     const { cartItems } = useContext(CartContext)
     const navigate = useNavigate()
     const [search, setSearch] = useState("")
-
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [toastMessage, setToastMessage] = useState(null);
+    const [showToast, setShowToast] = useState(false)
+
 
     const listSearch = products.filter(item =>
         item.title.toLowerCase().includes(search.toLowerCase())
     )
 
+
+
     const handleLogout = async () => {
         await logout()
         navigate('/')
     }
+    const userId = user?.user.id
+    useEffect(() => {
+        const socket = new WebSocket(`ws://localhost:8080/ws/orders?userId=${userId}`);
+        socket.onopen = () => {
+            console.log('✅ WebSocket connected');
+        };
+        socket.onmessage = (event) => {
+            console.log('📩 Message received:', event.data);
+            setToastMessage(event.data)
+            setShowToast(true)
 
+        }
+
+    }, [userId])
     return (
         <>
+        {/* Thông báo toast */}
+            <div>
+                <div className={`toast shadow bg-dark position-fixed z-3 top-0 end-0 mt-5  ${showToast ? "show" : ""}`} role="alert" aria-live="assertive" aria-atomic="true">
+                    <div className="toast-header">
+                        <Notifications className="text-danger" />
+                        <strong className="me-auto">Thông báo</strong>
+                        <small>Vừa xong</small>
+                        <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div className="toast-body text-white" >
+                        {toastMessage}
+                    </div>
+                </div>
+            </div>
             <div className='bg-dark position-sticky top-0 z-2 p-2'>
                 <nav className="navbar navbar-expand-lg navbar-dark">
                     <div className="container-fluid">
@@ -38,7 +69,7 @@ function Navbar() {
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="navbar-nav me-lg-3 d-flex flex-row align-items-center">
+                            <ul className="navbar-nav me-lg-3  me-5 d-flex flex-row align-items-center">
                                 <li className="nav-item me-3">
                                     <button className="nav-link text-white">Danh mục</button>
                                 </li>
@@ -118,9 +149,8 @@ function Navbar() {
                                     >
                                         <AccountCircle />
                                     </Link>
-
                                     {isOpen && (
-                                        <div className="dropdown-menu show end-0 mt-2">
+                                        <div className="dropdown-menu show end-0  mt-2">
                                             {user ? (
                                                 <div>
                                                     <p className='dropdown-item fw-bolder'>Hello, {user.user.fullName}</p>
@@ -136,8 +166,12 @@ function Navbar() {
                                             )}
                                         </div>
                                     )}
+
                                 </li>
+
                             </ul>
+
+
                         </div>
                     </div>
                 </nav>

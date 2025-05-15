@@ -13,10 +13,11 @@ import {
     ArcElement,
 } from "chart.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ArrowDownward, ArrowUpward, People, ShoppingCart, Category, LocalShipping, MonetizationOn } from "@mui/icons-material";
+import { People, ShoppingCart, Category, LocalShipping, MonetizationOn, Notifications } from "@mui/icons-material";
 import { AuthContext } from '../AuthProvider';
 import formatPrice from '../../formatPrice';
 import { Link } from "react-router-dom";
+
 
 // Đăng ký các thành phần của Chart.js
 ChartJS.register(
@@ -40,37 +41,66 @@ const Dashboard = () => {
     const [categories, setCategories] = useState([]);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+    const [toastMessage, setToastMessage] = useState(null);
+    const [showToast, setShowToast] = useState(false)
+    const fetchData = async () => {
+        try {
+            const token = user?.token;
+            const [usersRes, productsRes, ordersRes, categoriesRes] = await Promise.all([
+                fetch('http://localhost:8080/users', { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch('http://localhost:8080/products', { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch('http://localhost:8080/orders/all', { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch('http://localhost:8080/categories'),
+            ]);
+            const [users, products, orders, categories] = await Promise.all([
+                usersRes.json(),
+                productsRes.json(),
+                ordersRes.json(),
+                categoriesRes.json(),
+            ]);
+            setUsers(users);
+            setProducts(products);
+            setOrders(orders);
+            setCategories(categories);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false)
+        }
+    }
 
     // Fetch all data
     useEffect(() => {
-        const fetchAll = async () => {
-            setLoading(true);
-            try {
-                const token = user?.token;
-                const [usersRes, productsRes, ordersRes, categoriesRes] = await Promise.all([
-                    fetch('http://localhost:8080/users', { headers: { 'Authorization': `Bearer ${token}` } }),
-                    fetch('http://localhost:8080/products', { headers: { 'Authorization': `Bearer ${token}` } }),
-                    fetch('http://localhost:8080/orders/all', { headers: { 'Authorization': `Bearer ${token}` } }),
-                    fetch('http://localhost:8080/categories'),
-                ]);
-                const [users, products, orders, categories] = await Promise.all([
-                    usersRes.json(),
-                    productsRes.json(),
-                    ordersRes.json(),
-                    categoriesRes.json(),
-                ]);
-                setUsers(users);
-                setProducts(products);
-                setOrders(orders);
-                setCategories(categories);
-            } catch (err) {
-                // eslint-disable-next-line
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
+
+        fetchData();
+        // Thiết lập WebSocket với userId và role
+        const userId = user?.user.id;
+        const socket = new WebSocket(`ws://localhost:8080/ws/orders?userId=${userId}&role=admin`);
+
+        socket.onopen = () => {
+            console.log('✅ WebSocket connected');
         };
-        fetchAll();
+
+        socket.onmessage = (event) => {
+            console.log('📩 Nhận thông báo từ server:', event.data);
+            setToastMessage(event.data)
+            setShowToast(true)
+            fetchData()
+
+        };
+
+        socket.onerror = (error) => {
+            console.error('❌ WebSocket error:', error);
+        };
+
+        socket.onclose = () => {
+            console.log('❌ WebSocket disconnected');
+        };
+
+        // Dọn dẹp WebSocket khi component bị unmount
+        return () => {
+            socket.close();
+        };
     }, [user]);
 
     // Tính toán doanh thu theo tháng/năm
@@ -155,6 +185,17 @@ const Dashboard = () => {
 
     return (
         <div className="container bg-light my-5">
+            <div className={`toast shadow position-fixed z-3 top-0 end-0 m-3  ${showToast ? "show" : ""}`} role="alert" aria-live="assertive" aria-atomic="true">
+                <div className="toast-header">
+                    <Notifications className="text-danger" />
+                    <strong className="me-auto">Thông báo</strong>
+                    <small>Vừa xong</small>
+                    <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div className="toast-body">
+                    {toastMessage}
+                </div>
+            </div>
             <h2 className="fw-bold mb-4">DASHBOARD</h2>
             <div className="row g-4 mb-4">
                 <div className="col-md-3">

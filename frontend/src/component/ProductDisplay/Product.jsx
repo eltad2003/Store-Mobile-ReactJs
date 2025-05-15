@@ -138,11 +138,20 @@ function Product() {
                 </div>
 
                 {/* Product Description */}
-                <div className="card mt-5 p-3 shadow">
+                {/* <div className="card mt-5 p-3 shadow">
                     <h4 className='p-2'>MÔ TẢ SẢN PHẨM</h4>
                     {product.description.split(/[|\r\n]/).map((line, index) => (
                         <p className='ms-2' key={index}>{line.trim()}</p>
                     ))}
+                </div> */}
+
+                <div className="card">
+                    <h4 className='p-2'>Mô tả sản phẩm</h4>
+                    <div
+                        dangerouslySetInnerHTML={{ __html: product.description }}
+                        className='p-2'
+                    >
+                    </div>
                 </div>
 
                 {/* Other Products */}

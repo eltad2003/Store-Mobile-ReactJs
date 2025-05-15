@@ -6,6 +6,7 @@ import { Edit } from '@mui/icons-material'
 
 function Profile() {
     const { user } = useContext(AuthContext)
+
     const [addresses, setAddresses] = useState({})
     const [avatar, setAvatar] = useState([])
     const [isAvatarSelected, setIsAvatarSelected] = useState(false);
@@ -16,8 +17,8 @@ function Profile() {
         country: ''
     })
     const [editInfo, setEditInfo] = useState({
-        fullName: user.user.fullName,
-        phone: user.user.phone
+        fullName: user?.user?.fullName,
+        phone: user?.user?.phone
     })
 
     const fetchAddress = async () => {
@@ -122,6 +123,14 @@ function Profile() {
         fetchAddress()
     }, [])
 
+    if (!user) {
+        return (
+            <div className="alert alert-danger m-4" role="alert">
+                Bạn cần đăng nhập để truy cập trang này.
+            </div>
+        );
+    }
+
     return (
         <div>
             {user ? (
@@ -142,15 +151,13 @@ function Profile() {
                                     onChange={(e) => handleFileChange(e.target.files)}
                                 /
                                 >
-
-
                             </div>
 
                         </div>
                         {isAvatarSelected && ( // Chỉ hiển thị nút nếu file được chọn
                             <div className="my-3">
                                 <button
-                                    className="btn btn-secondary w-100"
+                                    className="btn btn-warning w-100"
                                     onClick={() => handleChangeAvatar()}
                                 >
                                     Cập nhật AVT
@@ -269,7 +276,9 @@ function Profile() {
                     <Outlet />
                 </div>
             ) : (
-                <div></div>
+                <div className="alert alert-danger m-4" role="alert">
+                    Error 404
+                </div>
             )}
         </div>
     )

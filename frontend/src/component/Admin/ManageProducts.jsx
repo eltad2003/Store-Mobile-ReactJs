@@ -2,6 +2,52 @@ import React, { useContext, useEffect, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { AuthContext } from '../AuthProvider';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
+// Custom upload adapter class
+class MyUploadAdapter {
+  constructor(loader) {
+    this.loader = loader;
+  }
+
+  // Bắt đầu upload
+  upload() {
+    return this.loader.file.then(
+      file =>
+        new Promise((resolve, reject) => {
+          const data = new FormData();
+          data.append('file', file);
+
+          fetch('http://localhost:8080/products/detail_image/upload', {
+            method: 'POST',
+            body: data,
+            headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+            }
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (!res.url) return reject('No URL returned');
+              resolve({ default: res.url });
+            })
+            .catch(err => reject(err));
+        })
+    );
+  }
+
+  abort() {
+    // Hủy upload nếu cần
+  }
+}
+
+// Plugin để gắn upload adapter
+function MyCustomUploadAdapterPlugin(editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    return new MyUploadAdapter(loader);
+  };
+}
 
 function ManageProducts() {
   const { user } = useContext(AuthContext)
@@ -253,15 +299,38 @@ function ManageProducts() {
                     </div>
                     <div className="mb-3">
                       <label className="form-label fw-bold">Mô tả sản phẩm</label>
-                      <textarea
+                      {/* <textarea
                         name='description'
                         className="form-control"
                         rows="3"
                         value={newProduct.description}
                         onChange={handleInputChange}
                       >
-
-                      </textarea>
+                      </textarea> */}
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={newProduct.description}
+                        config={{
+                          licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDg1NjMxOTksImp0aSI6IjAyNWQzYzhiLTg4NDEtNDNhYi05ZThhLTQ1ZWY4MjNmM2QxNyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImI4OGQ1MjM1In0.scN2OnfESxaUvv_KNfs8su4q_DVhJewuqQBgPxHaMP029xvh75WaXMoa4oGioaXkpxg2F_9-hlSsLmsFwKsA7A', // Or 'GPL'.
+                          extraPlugins: [MyCustomUploadAdapterPlugin],
+                          image: {
+                            resizeOptions: [
+                              { name: 'resizeImage:original', label: 'Original', value: null },
+                              { name: 'resizeImage:50', label: '50%', value: '50' },
+                              { name: 'resizeImage:75', label: '75%', value: '75' },
+                            ],
+                            toolbar: ['resizeImage', 'imageStyle:full', 'imageStyle:side'],
+                          },
+                        }}
+                        onReady={editor => {
+                          console.log('Editor is ready', editor);
+                        }}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          console.log({ data });
+                          setNewProduct({ ...newProduct, description: data })
+                        }}
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="form-label fw-bold">Giá <span className="text-danger">*</span></label>
@@ -389,7 +458,7 @@ function ManageProducts() {
                     <th className='scope'>Giá</th>
                     <th className='scope'>Danh mục</th>
                     <th className='scope'>Số lượng</th>
-                    <th className='scope'>Mô tả</th>
+
                     <th className='scope'>Giảm giá</th>
                     <th className='scope'>Thao tác</th>
                   </tr>
@@ -430,7 +499,7 @@ function ManageProducts() {
                         <td className='fw-semibold text-danger'>{formatPrice(product.price)}</td>
                         <td>{product.category}</td>
                         <td>{product.stockQuantity}</td>
-                        <td className='text-truncate' style={{ maxWidth: 250 }} title={product.description}>{product.description}</td>
+
                         <td className='fw-semibold text-success'>{product.discount ? `${product.discount}%` : ""}</td>
                         <td>
                           <div className="d-flex gap-1">
@@ -465,12 +534,29 @@ function ManageProducts() {
                                     </div>
                                     <div className="mb-3">
                                       <label className="form-label fw-bold">Mô tả</label>
-                                      <textarea
-                                        name='description'
-                                        value={editProduct.description}
-                                        className="form-control"
-                                        rows="3"
-                                        onChange={(e) => handleInputChange(e, true)}
+                                      <CKEditor
+                                        editor={ClassicEditor}
+                                        data={editProduct.description}
+                                        config={{
+                                          licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDg1NjMxOTksImp0aSI6IjAyNWQzYzhiLTg4NDEtNDNhYi05ZThhLTQ1ZWY4MjNmM2QxNyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImI4OGQ1MjM1In0.scN2OnfESxaUvv_KNfs8su4q_DVhJewuqQBgPxHaMP029xvh75WaXMoa4oGioaXkpxg2F_9-hlSsLmsFwKsA7A', // Or 'GPL'.
+                                          extraPlugins: [MyCustomUploadAdapterPlugin],
+                                          image: {
+                                            resizeOptions: [
+                                              { name: 'resizeImage:original', label: 'Original', value: null },
+                                              { name: 'resizeImage:50', label: '50%', value: '50' },
+                                              { name: 'resizeImage:75', label: '75%', value: '75' },
+                                            ],
+                                            toolbar: ['resizeImage', 'imageStyle:full', 'imageStyle:side'],
+                                          },
+                                        }}
+                                        onReady={editor => {
+                                          console.log('Editor is ready', editor);
+                                        }}
+                                        onChange={(event, editor) => {
+                                          const data = editor.getData();
+                                          console.log({ data });
+                                          setEditProduct({ ...editProduct, description: data });
+                                        }}
                                       />
                                     </div>
                                     <div className="mb-3">

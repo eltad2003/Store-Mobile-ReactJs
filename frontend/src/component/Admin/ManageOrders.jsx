@@ -96,6 +96,7 @@ function ManageOrders() {
         alert('Cập nhật trạng thái đơn hàng thành công')
         setStatusShipping('')
         fetchOrders()
+
       }
       else {
         alert('Vui lòng chọn trạng thái đơn hàng')
