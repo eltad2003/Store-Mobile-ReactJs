@@ -3,5 +3,13 @@
 }
 
 .img-hover:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
+}
+
+.object-fit-contain {
+    object-fit: contain;
+}
+
+.card img {
+    max-height: 100%;
 }

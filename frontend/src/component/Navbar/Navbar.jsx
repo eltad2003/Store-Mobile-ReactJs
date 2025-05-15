@@ -6,8 +6,8 @@ import "./Navbar.css"
 import { AuthContext } from '../AuthProvider'
 import ComputerIcon from '@mui/icons-material/Computer';
 import { CartContext } from '../CartProvider'
-import { Offcanvas } from 'react-bootstrap'
-import { products } from '../Home/ListProduct'
+import formatPrice from '../../formatPrice'
+import { urlBE, urlSocket } from '../../baseUrl'
 function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false)
@@ -19,13 +19,23 @@ function Navbar() {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [toastMessage, setToastMessage] = useState(null);
     const [showToast, setShowToast] = useState(false)
-
+    const [products, setProducts] = useState([])
 
     const listSearch = products.filter(item =>
-        item.title.toLowerCase().includes(search.toLowerCase())
+        item.name.toLowerCase().includes(search.toLowerCase())
     )
 
-
+    const fetchProducts = async () => {
+        try {
+            const res = await fetch(`${urlBE}/products`);
+            if (res.ok) {
+                const data = await res.json()
+                setProducts(data)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleLogout = async () => {
         await logout()
@@ -33,7 +43,8 @@ function Navbar() {
     }
     const userId = user?.user.id
     useEffect(() => {
-        const socket = new WebSocket(`ws://localhost:8080/ws/orders?userId=${userId}`);
+        fetchProducts()
+        const socket = new WebSocket(`${urlSocket}?userId=${userId}`);
         socket.onopen = () => {
             console.log('✅ WebSocket connected');
         };
@@ -41,13 +52,25 @@ function Navbar() {
             console.log('📩 Message received:', event.data);
             setToastMessage(event.data)
             setShowToast(true)
-
+            fetchProducts()
         }
 
+        socket.onerror = (error) => {
+            console.error('❌ WebSocket error:', error);
+        };
+
+        socket.onclose = () => {
+            console.log('❌ WebSocket disconnected');
+        };
+
+        // Dọn dẹp WebSocket khi component bị unmount
+        return () => {
+            socket.close();
+        };
     }, [userId])
     return (
         <>
-        {/* Thông báo toast */}
+            {/* Thông báo toast */}
             <div>
                 <div className={`toast shadow bg-dark position-fixed z-3 top-0 end-0 mt-5  ${showToast ? "show" : ""}`} role="alert" aria-live="assertive" aria-atomic="true">
                     <div className="toast-header">
@@ -61,6 +84,7 @@ function Navbar() {
                     </div>
                 </div>
             </div>
+            {/* Navbar */}
             <div className='bg-dark position-sticky top-0 z-2 p-2'>
                 <nav className="navbar navbar-expand-lg navbar-dark">
                     <div className="container-fluid">
@@ -90,43 +114,6 @@ function Navbar() {
                                 </div>
                             </div>
 
-                            {showSuggestions && (
-                                <>
-                                    <div
-                                        className="position-fixed top-0 start-0 w-100 h-100 bg-dark opacity-50"
-                                        onClick={() => { setShowSuggestions(false); setSearch('') }}>
-                                    </div>
-                                    <div className="position-absolute top-100 start-50 translate-middle-x card rounded shadow-lg p-3 w-75 bg-white z-1">
-                                        <p className="fw-bold">Sản phẩm gợi ý</p>
-                                        {listSearch.length > 0 ? (
-                                            listSearch.slice(0, 5).map((item) => (
-                                                <Link
-                                                    to={`/products/${item.id}`}
-                                                    key={item.id}
-                                                    className="text-decoration-none text-black d-flex align-items-center mt-2 p-2"
-                                                    onClick={() => { setShowSuggestions(false); setSearch(''); }}
-                                                >
-                                                    <img src={item.image} alt={item.title} className="img-fluid" width={60} height={60} />
-                                                    <div className="ms-3">
-                                                        <p className="text-truncate" style={{ maxWidth: 1000 }}>{item.title}</p>
-                                                        {item.discount ? (
-                                                            <div className="d-flex">
-                                                                <p className="text-decoration-line-through text-muted">${Math.round(item.price * (1 + item.discount / 100))}</p>
-                                                                <h5 className="text-success fw-bold ms-2">${item.price}</h5>
-                                                            </div>
-                                                        ) : (
-                                                            <h5 className="text-danger fw-bold">${item.price}</h5>
-                                                        )}
-                                                    </div>
-                                                </Link>
-                                            ))
-                                        ) : (
-                                            <div className="text-center text-danger">Không tìm thấy sản phẩm nào.</div>
-                                        )}
-                                    </div>
-                                </>
-                            )}
-
                             <ul className="navbar-nav ms-lg-3 d-flex flex-row align-items-center">
                                 {user && user.user.role === 'ADMIN' && (
                                     <li className='nav-item me-3'>
@@ -150,21 +137,24 @@ function Navbar() {
                                         <AccountCircle />
                                     </Link>
                                     {isOpen && (
-                                        <div className="dropdown-menu show end-0  mt-2">
-                                            {user ? (
-                                                <div>
-                                                    <p className='dropdown-item fw-bolder'>Hello, {user.user.fullName}</p>
-                                                    <Link to={'/profile'} className='dropdown-item'><p>Hồ sơ</p></Link>
-                                                    <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>
-                                                        Đăng xuất
+                                        <>
+
+                                            <div className="dropdown-menu show end-0  mt-2">
+                                                {user ? (
+                                                    <div>
+                                                        <p className='dropdown-item fw-bolder'>Hello, {user.user.fullName}</p>
+                                                        <Link to={'/profile'} className='dropdown-item'><p>Hồ sơ</p></Link>
+                                                        <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>
+                                                            Đăng xuất
+                                                        </Link>
+                                                    </div>
+                                                ) : (
+                                                    <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)} >
+                                                        Đăng nhập
                                                     </Link>
-                                                </div>
-                                            ) : (
-                                                <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)} >
-                                                    Đăng nhập
-                                                </Link>
-                                            )}
-                                        </div>
+                                                )}
+                                            </div>
+                                        </>
                                     )}
 
                                 </li>
@@ -175,7 +165,44 @@ function Navbar() {
                         </div>
                     </div>
                 </nav>
+                {showSuggestions && (
+                    <>
+                        <div
+                            className="position-fixed top-0 start-0 w-100 h-100 bg-dark opacity-50"
+                            onClick={() => { setShowSuggestions(false); setSearch('') }}>
+                        </div>
+                        <div className="position-absolute top-100 start-50 translate-middle-x card rounded shadow p-3 bg-white z-3 w-50">
+                            <p className="fw-bold">Sản phẩm gợi ý</p>
+                            {listSearch.length > 0 ? (
+                                listSearch.slice(0, 5).map((item) => (
+                                    <Link
+                                        to={`/products/${item.id}`}
+                                        key={item.id}
+                                        className="text-decoration-none text-black d-flex align-items-center mt-2 p-2"
+                                        onClick={() => { setShowSuggestions(false); setSearch(''); }}
+                                    >
+                                        <img src={item.listMedia[0]} alt={item.name} className="img-fluid" width={60} height={60} />
+                                        <div className="ms-3">
+                                            <p >{item.name}</p>
+                                            {item.discount ? (
+                                                <div className="d-flex">
+                                                    <p className="text-decoration-line-through text-muted">${formatPrice(Math.round(item.price * (1 + item.discount / 100)))}</p>
+                                                    <h5 className="text-success fw-bold ms-2">${formatPrice(item.price)}</h5>
+                                                </div>
+                                            ) : (
+                                                <h5 className="text-danger fw-bold">${formatPrice(item.price)}</h5>
+                                            )}
+                                        </div>
+                                    </Link>
+                                ))
+                            ) : (
+                                <div className="text-center text-danger">Không tìm thấy sản phẩm nào.</div>
+                            )}
+                        </div>
+                    </>
+                )}
             </div>
+
             <Outlet />
         </>
     )

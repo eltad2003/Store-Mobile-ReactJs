@@ -7,12 +7,13 @@ import { CartContext } from '../CartProvider';
 import { Rating } from '@mui/material';
 import { AccountCircle, Star } from '@mui/icons-material'
 import CartItem from '../CartItem/CartItem';
-import { products } from '../Home/ListProduct';
+
 
 
 function Product() {
     const { productId } = useParams()
     const [product, setProduct] = useState()
+    const [products, setProducts] = useState([])
     const { addToCart } = useContext(CartContext)
     const [reviews, setReviews] = useState([])
     const formatPrice = (price) => {
@@ -25,14 +26,17 @@ function Product() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [productRes, reviewsRes] = await Promise.all([
+                const [productsRes, productRes, reviewsRes] = await Promise.all([
+                    fetch('http://localhost:8080/products'),
                     fetch(`http://localhost:8080/products/${productId}`),
                     fetch('https://fakeapi.net/reviews')
                 ]);
 
                 const productData = await productRes.json();
                 const reviewsData = await reviewsRes.json();
+                const productsData = await productsRes.json();
 
+                setProducts(productsData);
                 setProduct(productData);
                 setReviews(reviewsData.data);
             } catch (err) {
@@ -155,16 +159,16 @@ function Product() {
                 </div>
 
                 {/* Other Products */}
-                {/* <div className="mt-5">
-                    <h4 className='p-2'>CÁC SẢN PHẨM KHÁC</h4>
+                <div className="mt-5">
+                    <h4 className='p-2'>CÁC SẢN PHẨM LIÊN QUAN</h4>
                     <div className="row mt-3">
-                        {products.slice(product.id, product.id + 4).map((item) => (
+                        {products.filter(item => item.category === product.category).slice(product.id, product.id + 4).map((item) => (
                             <div className="col-6 col-md-3 my-2" key={item.id}>
                                 <CartItem item={item} />
                             </div>
                         ))}
                     </div>
-                </div> */}
+                </div>
 
                 {/* Review and Rating */}
                 <div className='mt-5'>

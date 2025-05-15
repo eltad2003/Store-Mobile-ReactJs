@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
 import { Google } from '@mui/icons-material'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { urlBE } from '../../baseUrl'
 
 
 function Login() {
@@ -34,7 +35,7 @@ function Login() {
     const handleLoginGoogle = async (e) => {
         e.preventDefault()
         try {
-            const popup = window.open('http://localhost:8080/google_login', '_blank', 'width=500,height=600');
+            const popup = window.open(`${urlBE}/google_login`, '_blank', 'width=500,height=600');
 
             if (!popup) {
                 alert('Không thể mở popup. Vui lòng tắt chặn popup.');

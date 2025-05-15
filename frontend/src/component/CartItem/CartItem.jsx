@@ -7,50 +7,70 @@ import formatPrice from '../../formatPrice'
 function CartItem({ item }) {
 
     return (
-        <div className="card shadow rounded-4 h-100">
-            <div className="mt-2 text-center h-100">
+        <div className="card h-100 shadow rounded-4 p-2 d-flex justify-content-between" >
+            {/* Badge khuyến mãi */}
+            {item.discount && (
+                <div className="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end-3 z-3">
+                    Giảm {item.discount}%
+                </div>
+            )}
+
+
+            {/* Ảnh */}
+            <div className="text-center h-100">
                 <Link
                     to={`/products/${item.id}`}
                     style={{ textDecoration: 'none' }}
-                    className='p-2 d-block'
+                    className='p-2 '
                 >
                     <img
                         src={item.listMedia[0] || "https://via.placeholder.com/150"}
                         alt={item.category}
-                        className="img-fluid img-hover rounded-3"
+                        width={150}
+                        height={150}
+                        className='img-fluid h-100 img-hover'
 
                     />
                 </Link>
             </div>
-            <div className="card-body mt-2 px-3">
-                <h4 className="text-truncate mb-2">
+
+            {/* Thông tin */}
+            <div className="mt-2 px-2 py-3 h-100">
+                <h6 className="fw-semibold flex-wrap" title={item.name} >
                     <Link
                         to={`/products/${item.id}`}
                         className="text-decoration-none fw-bold fs-6 text-black"
                     >
                         {item.name}
                     </Link>
-                </h4>
+                </h6>
+                <div>
+                    {item.discount ? (
+                        <div className="d-flex flex-wrap gap-1 align-items-center">
+                            <span className="text-success fw-bold me-1">{formatPrice(item.price)}</span>
+                            <span className="text-muted text-decoration-line-through small">
+                                {formatPrice(Math.round(item.price * (1 + item.discount / 100)))}
+                            </span>
+                        </div>
+                    ) : (
+                        <span className="text-danger fw-bold">{formatPrice(item.price)}</span>
+                    )}
+                </div>
+                <div className="small text-muted mt-1 bg-light p-1 rounded-3">
+                    Không phí chuyển đổi khi trả góp 0%
+                </div>
+            </div>
 
-                {item.discount ? (
-                    <div className='d-flex align-items-center flex-wrap gap-2 mb-2'>
-                        <p className='text-decoration-line-through mb-0'>{formatPrice(Math.round(item.price * (1 + item.discount / 100)))}</p>
-                        <h5 className="text-success fw-bold mb-0">{formatPrice(item.price)}</h5>
-                        <p className='text-white bg-danger px-2 rounded-pill mb-0'>Giảm {item.discount}%</p>
-                    </div>
-                ) : (
-                    <h5 className="text-danger fw-bold mb-2">{formatPrice(item.price)}</h5>
-                )}
-                <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex">
-                        {[...Array(5)].map((_, index) => (
-                            <Star key={index} className="text-warning fs-6" />
-                        ))}
-                    </div>
-                    <div className="d-flex align-items-center">
-                        <span className="text-muted small d-none d-sm-inline">Yêu thích</span>
-                        <Link className="ms-1 text-danger"><FavoriteBorder /></Link>
-                    </div>
+            {/* Đánh giá và yêu thích */}
+            <div className="px-2 py-2 d-flex justify-content-between align-items-center mt-auto border-top">
+                <div className="d-flex">
+                    {[...Array(5)].map((_, index) => (
+                        <Star key={index} className="text-warning fs-6" />
+                    ))}
+                </div>
+                <div className="text-muted small d-flex align-items-center">
+                    <Link className="ms-1 text-danger"><FavoriteBorder /></Link>
+                    <span className="d-none d-sm-inline me-1">Yêu thích</span>
                 </div>
             </div>
         </div>

@@ -15,20 +15,18 @@ import Footer from "../Footer/Footer"
 import Popular from "../Popular"
 import Sale from "../Sale"
 import { Link } from "react-router-dom"
+import Chatbot from "../Chatbot/Chatbot"
+import { urlBE } from "../../baseUrl"
 
 
 function Home() {
-
-   const [showChat, setShowChat] = useState(false)
    const [products, setProducts] = useState([])
    const [currentPage, setCurrentPage] = useState(1)
    const [itemPerpage, setItemPerPage] = useState(15)
 
-
-
    const fetchProducts = async () => {
       try {
-         const response = await fetch('http://localhost:8080/products')
+         const response = await fetch(`${urlBE}/products`)
          const data = await response.json()
          setProducts(data)
       } catch (error) {
@@ -125,7 +123,7 @@ function Home() {
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
             <div className="row mt-3">
                {products.slice(firstItemIndx, lastItemIndx).map((item) => (
-                  <div className="col col-12d5 col-6 my-3" key={item.id}>
+                  <div className="col col-12d5 col-6 col-md-4 my-3" key={item.id}>
                      <CartItem item={item} />
                   </div>
                ))}
@@ -199,26 +197,9 @@ function Home() {
          {/* lên đầu và chat */}
          <div>
             <a href='#top' className="up-to-top rounded-pill p-2 bg-danger text-white"> <ArrowUpward /></a>
-            <button className="btn respond rounded-pill p-2 bg-primary text-white" onClick={() => setShowChat(!showChat)}> <Email /></button>
-            {showChat ? (
-               <>
-                  <div className="position-fixed top-0 start-0 h-100 w-100 bg-dark opacity-50 " onClick={() => setShowChat(false)}>
-                  </div>
-                  <div className=" p-5 fixed-bottom  w-50 start-50 translate-middle-y">
-                     <div className="card shadow mt-2 p-3">
-                        <p className="fw-bold fs-5">Chat</p>
-                        <div className="d-flex">
-                           <textarea className="form-control mx-2"></textarea>
-                           <button className="btn text-primary btn-sm"><Send /></button>
-                        </div>
-                     </div>
-                  </div>
-               </>
-            ) : (
-               <>
-               </>
-            )}
+
          </div>
+         <Chatbot />
          <Footer />
       </div>
 

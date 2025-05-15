@@ -43,6 +43,7 @@ const Dashboard = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
     const [toastMessage, setToastMessage] = useState(null);
     const [showToast, setShowToast] = useState(false)
+
     const fetchData = async () => {
         try {
             const token = user?.token;
@@ -96,8 +97,7 @@ const Dashboard = () => {
         socket.onclose = () => {
             console.log('❌ WebSocket disconnected');
         };
-
-        // Dọn dẹp WebSocket khi component bị unmount
+        // Đóng kết nối WebSocket khi component unmount
         return () => {
             socket.close();
         };
