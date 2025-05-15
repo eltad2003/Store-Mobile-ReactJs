@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { data, Link, useNavigate } from 'react-router-dom'
+import { urlBE } from '../../baseUrl'
 
 
 function Register() {
@@ -9,16 +10,15 @@ function Register() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [capcha, setCapcha] = useState(null)
+    const [otp, setOtp] = useState('')
+    const [show, setShow] = useState('d-block')
+    const [showOtp, setShowOtp] = useState('d-none')
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
 
 
     const handleRegister = async (e) => {
         e.preventDefault()
-        if (!capcha) {
-            alert('Vui lòng xác minh không phải Robot')
-            return
-        }
         if (password !== confirmPassword) {
             alert('Mật khẩu không khớp')
             setConfirmPassword('')
@@ -36,14 +36,13 @@ function Register() {
                 })
             })
             if (res.ok) {
-                alert("Đăng ký thành công!");
-                navigate('/login')
+                alert('Tiếp tục xác minh OTP')
                 setfullName('')
-                setEmail('')
                 setPhone('')
                 setPassword('')
                 setConfirmPassword('')
-
+                setShow('d-none')
+                setShowOtp('d-block')
             } else {
                 // Hiển thị lỗi trả về từ response (nếu có)
                 alert(await res.text())
@@ -54,6 +53,27 @@ function Register() {
         }
     }
 
+    const handleOTP = async () => {
+        try {
+            const res = await fetch(`${urlBE}/otp/verify`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    code: otp
+                })
+            })
+            if (res.ok) {
+                alert('Xác minh thành công. Chuyển đến trang đăng nhập')
+                navigate('/login')
+            }
+            else {
+                alert(await res.text())
+            }
+        } catch (error) {
+            console.log("Lỗi api", error);
+        }
+    }
 
 
 
@@ -61,7 +81,7 @@ function Register() {
         <div className="container mt-5 d-flex justify-content-center align-items-center">
             <div className="card shadow-lg p-4 rounded-4" style={{ minWidth: 370, maxWidth: 430, width: '100%' }}>
                 <h2 className="text-center mb-4 fw-bold">Đăng ký</h2>
-                <form onSubmit={handleRegister}>
+                <form className={show}>
                     <div className="mb-3">
                         <label htmlFor="fullName" className="form-label fw-semibold">Tên đầy đủ</label>
                         <input required type="text" className="form-control form-control-lg rounded-3" name='fullName' id="fullName" value={fullName} placeholder="Nhập họ tên..." onChange={(e) => setfullName(e.target.value)} />
@@ -82,16 +102,20 @@ function Register() {
                         <label htmlFor="confirmPassword" className="form-label fw-semibold">Xác nhận mật khẩu</label>
                         <input required type="password" className="form-control form-control-lg rounded-3" name='confirmPassword' id="confirmPassword" value={confirmPassword} placeholder="Nhập lại mật khẩu..." onChange={(e) => setConfirmPassword(e.target.value)} />
                     </div>
-                    <div className="mb-3">
-                        <ReCAPTCHA
-                            sitekey='6LdC_TArAAAAAGmaz1ra2JHjkKd66Ip7qx5NDLbR'
 
-                            onChange={(value) => setCapcha(value)}
-                        />
-                    </div>
 
-                    <button type="submit" className="btn btn-success btn-lg w-100 rounded-3 fw-semibold">Đăng ký</button>
                 </form>
+                <div className={showOtp}>
+                    <label htmlFor="otp" className='form-label'>Nhập OTP</label>
+                    <input type="text" className='form-control' value={otp} onChange={(e) => setOtp(e.target.value)} />
+                </div>
+                <div className="mt-3">
+                    {show === 'd-block' ?
+                        <button type="submit" className="btn btn-success w-100 rounded-3 fw-semibold" onClick={handleRegister}>Đăng ký</button>
+                        :
+                        <button type="submit" className="btn btn-success w-100 rounded-3 fw-semibold" onClick={handleOTP}>Xác nhận</button>
+                    }
+                </div>
                 <div className="text-center mt-3">
                     <span>Bạn đã có tài khoản?</span>
                     <Link to="/login" className="d-block mt-2">
@@ -99,7 +123,7 @@ function Register() {
                     </Link>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

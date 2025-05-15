@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
 import { Google } from '@mui/icons-material'
@@ -12,23 +12,87 @@ function Login() {
     const navigate = useNavigate()
     const [capcha, setCapcha] = useState(null)
     const { login } = useContext(AuthContext)
+    const [show, setShow] = useState(false)
+    const [showForm, setShowForm] = useState('d-block')
+    const [otp, setOtp] = useState('')
+    const user = JSON.parse(localStorage.getItem('user'))
+    const [isLoading, setIsLoading] = useState(false)
 
+    useEffect(() => {
+
+    }, [user])
 
     const handleLogin = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (!capcha) {
-            alert('Vui lòng xác minh không phải Robot')
-            return
+            alert('Vui lòng xác minh không phải Robot');
+            return;
         }
-        await login(email, password)
-        const user = JSON.parse(localStorage.getItem('user'))
 
-        if (user) {
-            if (user.user.role === "ADMIN") {
-                navigate('/admin')
-            } else {
-                navigate('/')
+        const result = await login(email, password);
+
+        if (!result.success) {
+            alert(result.message || 'Đăng nhập thất bại');
+            if (result.user && result.user.isVerified === false) {
+                setShow(true);
+                setShowForm('d-none');
             }
+            return;
+        }
+
+        // Đăng nhập thành công
+        if (result.user.role === "ADMIN") {
+            navigate('/admin');
+            alert('ADMIN đăng nhập thành công');
+        } else {
+            navigate('/');
+            alert('Khách hàng đăng nhập thành công');
+        }
+    };
+
+    const handleReSendOtp = async () => {
+        setIsLoading(true)
+        try {
+            const res = await fetch(`${urlBE}/otp/resend`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                })
+            })
+            if (res.ok) {
+                alert('Đã gửi OTP. Vui lòng kiểm tra email')
+
+            }
+            else {
+                alert(await res.text())
+            }
+        } catch (error) {
+            console.log("Lỗi api", error);
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleOTP = async () => {
+        try {
+            const res = await fetch(`${urlBE}/otp/verify`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    code: otp
+                })
+            })
+            if (res.ok) {
+                alert('Xác minh thành công. Vui lòng đăng nhập lại')
+                navigate('/login')
+            }
+            else {
+                alert(await res.text())
+            }
+        } catch (error) {
+            console.log("Lỗi api", error);
         }
     }
 
@@ -36,7 +100,6 @@ function Login() {
         e.preventDefault()
         try {
             const popup = window.open(`${urlBE}/google_login`, '_blank', 'width=500,height=600');
-
             if (!popup) {
                 alert('Không thể mở popup. Vui lòng tắt chặn popup.');
                 return;
@@ -89,6 +152,7 @@ function Login() {
         }
     };
 
+    console.log(show);
 
 
 
@@ -97,7 +161,8 @@ function Login() {
         <div className="container mt-5 d-flex justify-content-center align-items-center ">
             <div className="card shadow-lg p-4 rounded-4" style={{ minWidth: 370, maxWidth: 400, width: '100%' }}>
                 <h2 className="text-center mb-4 fw-bold">Đăng nhập</h2>
-                <form onSubmit={handleLogin}>
+
+                <form className={showForm}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label fw-semibold">Email</label>
                         <input
@@ -131,8 +196,51 @@ function Login() {
                             onChange={(value) => setCapcha(value)}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary  w-100 rounded-3 mt-2 fw-semibold">Đăng nhập</button>
                 </form>
+                {show && (
+                    <>
+                        <Link className="text-center text-decoration-none text-danger fw-semibold mb-2" onClick={handleReSendOtp}>
+                            {isLoading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                    Vui lòng chờ giây lát...
+                                </>
+                            ) : (
+                                'Gửi mã xác minh'
+                            )}
+                        </Link>
+                        <div className="mb-3">
+                            <label htmlFor="otp" className="form-label">Nhập mã OTP</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                            />
+                        </div>
+                    </>
+                )}
+
+                {/* Nút chính tùy theo trạng thái */}
+                <div>
+                    {show ? (
+                        <button
+                            type="button"
+                            className="btn btn-warning w-100 rounded-3 mt-2 fw-semibold"
+                            onClick={handleOTP}
+                        >
+                            Xác nhận OTP
+                        </button>
+                    ) : (
+                        <button
+                            type="submit"
+                            className="btn btn-primary w-100 rounded-3 mt-2 fw-semibold"
+                            onClick={handleLogin}
+                        >
+                            Đăng nhập
+                        </button>
+                    )}
+                </div>
                 <div className="d-flex align-items-center my-3">
                     <hr className="flex-grow-1" />
                     <span className="mx-2 text-muted">Hoặc</span>

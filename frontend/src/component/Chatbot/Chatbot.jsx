@@ -1,6 +1,8 @@
 import { Email, Send } from '@mui/icons-material'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../AuthProvider'
+import { useNavigate } from 'react-router-dom'
+
 
 function Chatbot() {
     const { user } = useContext(AuthContext)
@@ -8,6 +10,8 @@ function Chatbot() {
     const [showChat, setShowChat] = useState(false)
     const [content, setContent] = useState('')
     const [reply, setReply] = useState('')
+    const navigate = useNavigate()
+
     const [messages, setMessages] = useState([{
         sender: 'bot', text: 'Xin chào, bạn muốn giúp gì ?'
     }])
@@ -74,21 +78,25 @@ function Chatbot() {
                                 ))}
                                 <div ref={chatEndRef} />
                             </div>
-                            <div className="d-flex">
-                                <textarea
-                                    className="form-control mx-2"
-                                    value={content}
-                                    placeholder='Nhập tin nhắn'
-                                    onChange={(e) => setContent(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' && !e.shiftKey) {
-                                            e.preventDefault();
-                                            handleChat();
-                                        }
-                                    }}
-                                ></textarea>
-                                <button className="btn text-primary btn-sm" onClick={() => handleChat()}><Send /></button>
-                            </div>
+                            {user ?
+                                <div className="d-flex">
+                                    <textarea
+                                        className="form-control mx-2"
+                                        value={content}
+                                        placeholder='Nhập tin nhắn'
+                                        onChange={(e) => setContent(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' && !e.shiftKey) {
+                                                e.preventDefault();
+                                                handleChat();
+                                            }
+                                        }}
+                                    >
+                                    </textarea>
+                                    <button className="btn text-primary btn-sm" onClick={() => handleChat()}><Send /></button>
+                                </div>
+                                : <button className='btn btn-danger' onClick={() => { navigate('/login') }}>Vui lòng đăng nhập để tiếp tục</button>
+                            }
                         </div>
                     </div>
                 </>

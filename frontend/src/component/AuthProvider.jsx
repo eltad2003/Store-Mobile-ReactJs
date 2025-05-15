@@ -1,3 +1,4 @@
+import { DataArray } from '@mui/icons-material';
 import React, { createContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,18 +21,27 @@ const AuthProvider = ({ children }) => {
                     password
                 })
             });
+
             if (res.ok) {
                 const data = await res.json();
+
+                if (!data?.user?.isVerified) {
+                    return { success: false, message: 'Tài khoản chưa xác minh', user: data.user };
+                }
+
                 setUser(data);
                 localStorage.setItem('user', JSON.stringify(data));
-                alert('Đăng nhập thành công')
+                return { success: true, user: data.user };
             } else {
-                alert(await res.text());
+                const errorText = await res.text();
+                return { success: false, message: errorText };
             }
         } catch (error) {
             console.log("Đăng nhập thất bại", error);
+            return { success: false, message: 'Đăng nhập thất bại' };
         }
     };
+
 
     const logout = () => {
         setUser(null);
