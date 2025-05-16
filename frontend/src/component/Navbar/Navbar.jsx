@@ -21,13 +21,11 @@ function Navbar() {
     const [showToast, setShowToast] = useState(false)
     const [products, setProducts] = useState([])
 
-    const listSearch = products.filter(item =>
-        item.name.toLowerCase().includes(search.toLowerCase())
-    )
 
-    const fetchProducts = async () => {
+
+    const fetchProducts = async (type = search) => {
         try {
-            const res = await fetch(`${urlBE}/products`);
+            const res = await fetch(`${urlBE}/products?search=${type}`);
             if (res.ok) {
                 const data = await res.json()
                 setProducts(data)
@@ -42,8 +40,9 @@ function Navbar() {
         navigate('/')
     }
     const userId = user?.user.id
+
     useEffect(() => {
-        fetchProducts()
+
         const socket = new WebSocket(`${urlSocket}?userId=${userId}`);
         socket.onopen = () => {
             console.log('✅ WebSocket connected');
@@ -68,6 +67,11 @@ function Navbar() {
             socket.close();
         };
     }, [userId])
+
+    useEffect(() => {
+        fetchProducts()
+    }
+        , [search])
     return (
         <>
             {/* Thông báo toast */}
@@ -173,8 +177,8 @@ function Navbar() {
                         </div>
                         <div className="position-absolute top-100 start-50 translate-middle-x card rounded shadow p-3 bg-white z-3 w-50">
                             <p className="fw-bold">Sản phẩm gợi ý</p>
-                            {listSearch.length > 0 ? (
-                                listSearch.slice(0, 5).map((item) => (
+                            {products.length > 0 ? (
+                                products.slice(0, 5).map((item) => (
                                     <Link
                                         to={`/products/${item.id}`}
                                         key={item.id}
