@@ -86,6 +86,7 @@ function Login() {
             })
             if (res.ok) {
                 alert('Xác minh thành công. Vui lòng đăng nhập lại')
+                window.location.reload()
                 navigate('/login')
             }
             else {

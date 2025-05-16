@@ -13,38 +13,37 @@ function ViewOrder() {
     const [loadingDetails, setLoadingDetails] = useState(false);
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+    const fetchOrders = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/orders`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch orders');
+            }
+            const data = await response.json();
+            setOrders(data);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/orders`, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${user.token}`
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch orders');
-                }
-                const data = await response.json();
-                setOrders(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchOrders();
     }, []);
 
     const getStatusBadge = (status) => {
         const statusColors = {
-            'SHIPPED': 'success',
+            'SHIPPED': 'primary',
             'PENDING': 'warning',
             'CANCELLED': 'danger',
-            'DELIVERED': 'info',
+            'DELIVERED': 'success',
             'CONFIRMED': 'info'
         };
         return <Badge bg={statusColors[status] || 'secondary'}>{status}</Badge>;

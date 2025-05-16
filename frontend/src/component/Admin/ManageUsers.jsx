@@ -216,7 +216,13 @@ function ManageUsers() {
                       <span className="text-muted small">Chưa có địa chỉ</span>
                     )}
                   </td>
-                  <td>Đã kích hoạt</td>
+                  <td>
+                    {listUser.isVerified ? (
+                      <span className="badge bg-success">Đã xác thực</span>
+                    ) : (
+                      <span className="badge bg-warning">Chưa xác thực</span>
+                    )}
+                  </td>
                   <td><button className='ms-1 btn btn-sm btn-danger' onClick={() => handleDeleteUser(listUser.id)}>Xóa</button></td>
                 </tr>
               ))}

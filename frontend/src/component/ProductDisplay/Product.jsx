@@ -7,6 +7,8 @@ import { CartContext } from '../CartProvider';
 import { Rating } from '@mui/material';
 import { AccountCircle, Star } from '@mui/icons-material'
 import CartItem from '../CartItem/CartItem';
+import Review from './Review';
+import Chatbot from '../Chatbot/Chatbot';
 
 
 
@@ -15,7 +17,7 @@ function Product() {
     const [product, setProduct] = useState()
     const [products, setProducts] = useState([])
     const { addToCart } = useContext(CartContext)
-    const [reviews, setReviews] = useState([])
+
     const formatPrice = (price) => {
         return new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -29,16 +31,15 @@ function Product() {
                 const [productsRes, productRes, reviewsRes] = await Promise.all([
                     fetch('http://localhost:8080/products'),
                     fetch(`http://localhost:8080/products/${productId}`),
-                    fetch('https://fakeapi.net/reviews')
+
                 ]);
 
                 const productData = await productRes.json();
-                const reviewsData = await reviewsRes.json();
                 const productsData = await productsRes.json();
 
                 setProducts(productsData);
                 setProduct(productData);
-                setReviews(reviewsData.data);
+
             } catch (err) {
                 console.error("Error fetching data:", err);
             }
@@ -171,82 +172,9 @@ function Product() {
                 </div>
 
                 {/* Review and Rating */}
-                <div className='mt-5'>
-                    <div className='w-100 w-md-75 my-2 p-3'>
-                        <p className='fw-bold fs-4'>Đánh giá & nhận xét</p>
+                <Review productId={product.id} />
 
-                        <div className="row">
-                            <div className="col-12 col-md-5 text-center p-3">
-                                <p className='fw-bold'>5/5</p>
-                                <Rating />
-                                <Link to={'/'}><p>Đánh giá</p></Link>
-                            </div>
-                            <div className="col-12 col-md-7 d-grid p-3">
-                                {[5, 4, 3, 2, 1].map((rating, index) => (
-                                    <div className='d-flex' key={index}>
-                                        <p className='fw-bold'>{rating}</p>
-                                        <Star className="text-warning" />
-                                        <div className='ms-3 mt-1 progress w-50'>
-                                            <div className={`progress-bar bg-danger w-${rating * 20}`}></div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className='my-2 text-center'>
-                            <p>Bạn nghĩ sao về sản phẩm này</p>
-                            <button className='btn btn-danger' data-bs-toggle="modal" data-bs-target="#modal-review">Đánh giá ngay</button>
-                        </div>
-
-                        {/* Modal Review */}
-                        <div className="modal fade" id='modal-review' tabIndex="-1">
-                            <div className="modal-dialog modal-dialog-centered">
-                                <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title bg-light fw-bold">Đánh giá và nhận xét</h5>
-                                        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div className="modal-body">
-                                        <div className='my-3'>
-                                            <p className='fw-bold'>Đánh giá chung</p>
-                                            <Rating size='large' />
-                                        </div>
-                                        <div className='my-3'>
-                                            <textarea className="form-control" placeholder='Cảm nhận về sản phẩm' rows={3}></textarea>
-                                        </div>
-                                        <input className='form-control mb-3' type="file" accept="image/*" multiple />
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-danger">
-                                            Gửi đánh giá
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='my-2'>
-                            <p className='fw-bold fs-4'>Nhận xét</p>
-                            {reviews.map((review, index) => (
-                                <div className='my-2' key={index}>
-                                    <div className='ms-4 d-flex'>
-                                        <AccountCircle />
-                                        <p className='fw-bold mx-2 mb-0'>User {review.userId}</p>
-                                        <p className='text-muted mt-1' style={{ fontSize: 12 }}>{review.date}</p>
-                                    </div>
-
-                                    <div className='mt-2 ms-4 d-flex'>
-                                        <div className='mb-0'>
-                                            <Rating defaultValue={review.rating} size='small' readOnly />
-                                            <p>{review.content}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <Chatbot />
             </div>
         </div>
     )
