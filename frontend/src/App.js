@@ -15,13 +15,16 @@ import AdminLayout from './component/Admin/AdminLayout'
 import ManageUsers from './component/Admin/ManageUsers'
 import ManageOrders from './component/Admin/ManageOrders'
 import Reports from './component/Admin/Reports'
-import ManageProducts from './component/Admin/ManageProducts'
 import Dashboard from './component/Admin/Dashboard'
 import Profile from './component/User/Profile'
 import ChangePassword from './component/User/ChangePassword'
 import ManageCategories from './component/Admin/ManageCategories'
 import ViewOrder from './component/Order/ViewOrder'
 import Payment from './component/Payment/Payment'
+import EditProduct from './component/Admin/ManageProduct/EditProduct'
+import ManageProducts from './component/Admin/ManageProduct/ManageProducts'
+import AddProduct from './component/Admin/ManageProduct/AddProduct'
+
 
 
 
@@ -60,6 +63,8 @@ function App() {
               <Route path="users" element={<ManageUsers />} />
               <Route path="orders" element={<ManageOrders />} />
               <Route path="products" element={<ManageProducts />} />
+              <Route path="products/edit/:productId" element={<EditProduct />} />
+              <Route path="products/add" element={<AddProduct />} />
               <Route path="categories" element={<ManageCategories />} />
               <Route path="reports" element={<Reports />} />
             </Route>

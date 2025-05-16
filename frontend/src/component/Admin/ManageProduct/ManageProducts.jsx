@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { AuthContext } from '../AuthProvider';
+import { AuthContext } from '../../AuthProvider';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Link } from 'react-router-dom';
+import { urlBE } from '../../../baseUrl';
+import formatPrice from '../../../formatPrice';
 
 
 // Custom upload adapter class
@@ -66,30 +69,9 @@ function ManageProducts() {
     brand: "",
     stockQuantity: "",
   };
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND'
-    }).format(price);
-  };
+
 
   const [newProduct, setNewProduct] = useState(initialProductState);
-  const [editProduct, setEditProduct] = useState(initialProductState);
-
-  const handleEditClick = (productId) => {
-    const productToEdit = products.find(product => product.id === productId);
-    if (productToEdit) {
-      setEditProduct({
-        name: productToEdit.name,
-        description: productToEdit.description,
-        price: productToEdit.price,
-        discount: productToEdit.discount,
-        categoryId: productToEdit.category || "",
-        brand: productToEdit.brand,
-        stockQuantity: productToEdit.stockQuantity,
-      });
-    }
-  };
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -134,33 +116,10 @@ function ManageProducts() {
   useEffect(() => {
     fetchProducts();
     fetchCategory();
+
   }, []);
 
-  const handleEditChange = async (productId) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(`http://localhost:8080/products/${productId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${user.token}`
-        },
-        body: JSON.stringify(editProduct),
-      });
-      if (response.ok) {
-        alert("Cập nhật sản phẩm thành công!");
-        fetchProducts();
-      } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-    } catch (error) {
-      console.error("Lỗi API:", error);
-      setError('Failed to update product. Please try again later.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+
 
   const handleAddProduct = async () => {
     setIsLoading(true);
@@ -191,7 +150,7 @@ function ManageProducts() {
     );
 
     try {
-      const response = await fetch("http://localhost:8080/products", {
+      const response = await fetch(`${urlBE}/products`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${user.token}`,
@@ -243,11 +202,8 @@ function ManageProducts() {
 
   const handleInputChange = (e, isEdit = false) => {
     const { name, value } = e.target;
-    if (isEdit) {
-      setEditProduct(prev => ({ ...prev, [name]: value }));
-    } else {
-      setNewProduct(prev => ({ ...prev, [name]: value }));
-    }
+    setNewProduct(prev => ({ ...prev, [name]: value }));
+
   };
 
   return (
@@ -299,14 +255,6 @@ function ManageProducts() {
                     </div>
                     <div className="mb-3">
                       <label className="form-label fw-bold">Mô tả sản phẩm</label>
-                      {/* <textarea
-                        name='description'
-                        className="form-control"
-                        rows="3"
-                        value={newProduct.description}
-                        onChange={handleInputChange}
-                      >
-                      </textarea> */}
                       <CKEditor
                         editor={ClassicEditor}
                         data={newProduct.description}
@@ -322,13 +270,10 @@ function ManageProducts() {
                             toolbar: ['resizeImage', 'imageStyle:full', 'imageStyle:side'],
                           },
                         }}
-                        onReady={editor => {
-                          console.log('Editor is ready', editor);
-                        }}
+
                         onChange={(event, editor) => {
                           const data = editor.getData();
-                          console.log({ data });
-                          setNewProduct({ ...newProduct, description: data })
+                          setNewProduct(prev => ({ ...prev, description: data }));
                         }}
                       />
                     </div>
@@ -504,160 +449,15 @@ function ManageProducts() {
                         <td>
                           <div className="d-flex gap-1">
                             {/* Edit Product Button */}
-                            <button
+                            <Link
                               className='btn btn-sm btn-primary'
-                              data-bs-toggle="modal"
-                              data-bs-target={`#modalEdit-${product.id}`}
-                              onClick={() => handleEditClick(product.id)}
+                              to={`edit/${product.id}`}
                             >
                               <i className="bi bi-pencil"></i>
-                            </button>
-
-                            {/* Edit Product Modal */}
-                            <div className="modal" id={`modalEdit-${product.id}`}>
-                              <div className="modal-dialog modal-dialog-scrollable">
-                                <div className="modal-content">
-                                  <div className="modal-header bg-primary text-white">
-                                    <h4 className="modal-title">Sửa Thông Tin Sản Phẩm</h4>
-                                    <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                  </div>
-                                  <div className="modal-body">
-                                    <div className="mb-3">
-                                      <label className="form-label fw-bold">Tên sản phẩm</label>
-                                      <input
-                                        type="text"
-                                        name='name'
-                                        value={editProduct.name}
-                                        className="form-control"
-                                        onChange={(e) => handleInputChange(e, true)}
-                                      />
-                                    </div>
-                                    <div className="mb-3">
-                                      <label className="form-label fw-bold">Mô tả</label>
-                                      <CKEditor
-                                        editor={ClassicEditor}
-                                        data={editProduct.description}
-                                        config={{
-                                          licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDg1NjMxOTksImp0aSI6IjAyNWQzYzhiLTg4NDEtNDNhYi05ZThhLTQ1ZWY4MjNmM2QxNyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImI4OGQ1MjM1In0.scN2OnfESxaUvv_KNfs8su4q_DVhJewuqQBgPxHaMP029xvh75WaXMoa4oGioaXkpxg2F_9-hlSsLmsFwKsA7A', // Or 'GPL'.
-                                          extraPlugins: [MyCustomUploadAdapterPlugin],
-                                          image: {
-                                            resizeOptions: [
-                                              { name: 'resizeImage:original', label: 'Original', value: null },
-                                              { name: 'resizeImage:50', label: '50%', value: '50' },
-                                              { name: 'resizeImage:75', label: '75%', value: '75' },
-                                            ],
-                                            toolbar: ['resizeImage', 'imageStyle:full', 'imageStyle:side'],
-                                          },
-                                        }}
-                                        onReady={editor => {
-                                          console.log('Editor is ready', editor);
-                                        }}
-                                        onChange={(event, editor) => {
-                                          const data = editor.getData();
-                                          console.log({ data });
-                                          setEditProduct({ ...editProduct, description: data });
-                                        }}
-                                      />
-                                    </div>
-                                    <div className="mb-3">
-                                      <label className="form-label fw-bold">Giá</label>
-                                      <div className="input-group">
-                                        <span className="input-group-text">₫</span>
-                                        <input
-                                          type="number"
-                                          name='price'
-                                          value={editProduct.price}
-                                          className="form-control"
-                                          onChange={(e) => handleInputChange(e, true)}
-                                          min="0"
-                                          step="1000"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="mb-3">
-                                      <label className="form-label fw-bold">Số lượng sản phẩm</label>
-                                      <input
-                                        type="number"
-                                        name='stockQuantity'
-                                        value={editProduct.stockQuantity}
-                                        className="form-control"
-                                        onChange={(e) => handleInputChange(e, true)}
-                                        min="0"
-                                      />
-                                    </div>
-                                    <div className="mb-3">
-                                      <label className="form-label fw-bold">Danh mục</label>
-                                      <select
-                                        className="form-select"
-                                        name="categoryId"
-                                        value={editProduct.categoryId}
-                                        onChange={(e) => handleInputChange(e, true)}
-                                      >
-                                        <option value="">-Chọn danh mục-</option>
-                                        {categories.map(category => (
-                                          <option key={category.id} value={category.id}>{category.name}</option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                    <div className="mb-3">
-                                      <label className="form-label fw-bold">Giảm giá (%)</label>
-                                      <input
-                                        type="number"
-                                        name='discount'
-                                        value={editProduct.discount}
-                                        className="form-control"
-                                        onChange={(e) => handleInputChange(e, true)}
-                                        min="0"
-                                        max="100"
-                                      />
-                                    </div>
-                                    <div className="mb-3">
-                                      <label className="form-label fw-bold">Hình ảnh sản phẩm</label>
-                                      <input
-                                        type="file"
-                                        onChange={(e) => setImages(Array.from(e.target.files))}
-                                        multiple
-                                        className="form-control"
-                                        accept="image/*"
-                                      />
-                                      <div className="form-text">Bạn có thể chọn nhiều ảnh cùng lúc</div>
-                                    </div>
-                                  </div>
-
-                                  <div className="modal-footer">
-                                    <button
-                                      type="button"
-                                      className="btn btn-secondary"
-                                      data-bs-dismiss="modal"
-                                    >
-                                      Hủy
-                                    </button>
-                                    <button
-                                      type="button"
-                                      className="btn btn-primary"
-                                      onClick={() => handleEditChange(product.id)}
-                                      disabled={isLoading}
-                                    >
-                                      {isLoading ? (
-                                        <>
-                                          <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                                          Đang xử lý...
-                                        </>
-                                      ) : (
-                                        'Cập nhật'
-                                      )}
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            </Link>
 
                             {/* Delete Product Button */}
-                            <button
-                              className='btn btn-sm btn-danger'
-                              onClick={() => handleDeleteProduct(product.id)}
-                              disabled={isLoading}
-                            >
+                            <button className='btn btn-sm btn-danger' onClick={() => handleDeleteProduct(product.id)} disabled={isLoading}>
                               <i className="bi bi-trash"></i>
                             </button>
                           </div>

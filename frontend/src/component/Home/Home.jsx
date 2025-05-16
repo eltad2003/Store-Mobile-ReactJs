@@ -70,7 +70,8 @@ function Home() {
                   <div className="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
                      <Carousel
                         prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
-                        nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}>
+                        nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
+                     >
                         <Carousel.Item>
                            <img className="img-fluid w-100" src={clockBanner} alt="First slide" />
                         </Carousel.Item>
@@ -100,7 +101,7 @@ function Home() {
 
 
 
-         {/* 
+         {/*          
          <div className="container mt-5 mb-5">
             <div className="row justify-content-center text-center">
                {services.map((service, index) => (

@@ -65,14 +65,17 @@ function Chatbot() {
                 <>
                     <div className="position-fixed top-0 start-0 h-100 w-100 bg-dark opacity-50" onClick={() => setShowChat(false)}>
                     </div>
-                    <div className="me-5 position-fixed end-0 bottom-0 z-3">
+                    <div className="me-5 mb-3 position-fixed end-0 bottom-0 z-3">
                         <div className="card shadow-lg border-0 rounded-3" style={{ width: "420px", height: "500px" }}>
-                            <p className="card-header fw-bold fs-5 bg-primary text-white" >Chat với shop</p>
+                            <div className='card-header bg-primary d-flex'>
+                                <p className="fw-bold fs-5  text-white" >Chat với shop</p>
+                                <button onClick={() => setShowChat(false)} className='btn btn-close ms-auto mt-2'></button>
+                            </div>
                             <div className="flex-grow-1 mb-2" style={{ height: "300px", overflowY: "auto", backgroundColor: "#f7f7f7", padding: "10px", borderRadius: "10px" }}>
                                 {messages.map((msg, idx) => (
                                     <div key={idx} className={`d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-2`} >
                                         {msg.sender === 'bot' && <img src={ChatbotIcon} alt="ChatBot" className='rounded-circle me-1' width={30} height={30} />}
-                                        <div className={`px-3 py-2 rounded-pill ${msg.sender === 'user' ? 'bg-primary text-white' : 'bg-light text-dark'}`} style={{ maxWidth: '75%' }} dangerouslySetInnerHTML={{ __html: formatBotMessage(msg.text) }}>
+                                        <div className={`px-3 py-2 rounded-4 ${msg.sender === 'user' ? 'bg-primary text-white' : 'bg-light text-dark'}`} style={{ maxWidth: '75%' }} dangerouslySetInnerHTML={{ __html: formatBotMessage(msg.text) }}>
                                         </div>
                                     </div>
                                 ))}
@@ -145,7 +148,11 @@ function Chatbot() {
                                     </textarea>
                                     <button className="btn text-primary btn-sm" onClick={() => handleChat()} disabled={isLoading}><Send /></button>
                                 </div>
-                                : <button className='btn btn-danger' onClick={() => { navigate('/login') }}>Vui lòng đăng nhập để tiếp tục</button>
+                                : (
+                                    <div className='p-3'>
+                                        <button className='btn btn-primary w-100' onClick={() => { navigate('/login') }}>Vui lòng đăng nhập để tiếp tục</button>
+                                    </div>
+                                )
                             }
                         </div>
                     </div>

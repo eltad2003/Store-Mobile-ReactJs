@@ -85,7 +85,7 @@ function Navbar() {
                 </div>
             </div>
             {/* Navbar */}
-            <div className='bg-dark position-sticky top-0 z-2 p-2'>
+            <div className='bg-dark position-sticky top-0 z-3 p-2'>
                 <nav className="navbar navbar-expand-lg navbar-dark">
                     <div className="container-fluid">
                         <a className="navbar-brand ms-3 text-white fw-bold" href="/"><ComputerIcon style={{ color: 'yellow' }} /> SHOP888</a>

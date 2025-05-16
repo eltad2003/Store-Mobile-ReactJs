@@ -15,6 +15,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.13.1",
     "chart.js": "^4.4.8",
     "ckeditor5": "^45.1.0",
     "ckeditor5-premium-features": "^45.1.0",
