@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../AuthProvider'
 import { useNavigate } from 'react-router-dom'
 import ChatbotIcon from '../asset/ChatbotIcon.png'
+import { urlChat } from "../../baseUrl";
 function Chatbot() {
     const { user } = useContext(AuthContext)
     const userId = user?.user.id
@@ -10,6 +11,7 @@ function Chatbot() {
     const [content, setContent] = useState('')
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
+
     const [messages, setMessages] = useState([{
         sender: 'bot', text: 'Xin chào, bạn muốn giúp gì ?'
     }])
@@ -23,7 +25,7 @@ function Chatbot() {
         setMessages(prev => [...prev, userMessage])
         setContent('')
         try {
-            const res = await fetch('http://localhost:8000/chat', {
+            const res = await fetch(`${urlChat}/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

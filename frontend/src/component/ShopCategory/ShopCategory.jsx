@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ArrowBack, FavoriteBorder, Star } from '@mui/icons-material'
 
 import CartItem from '../CartItem/CartItem'
+import { urlBE } from '../../baseUrl'
 
 
 function ShopCategory({ category }) {
@@ -11,7 +12,7 @@ function ShopCategory({ category }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:8080/products')
+      const response = await fetch(`${urlBE}/products`)
       const data = await response.json()
       setProducts(data)
       console.log(products);

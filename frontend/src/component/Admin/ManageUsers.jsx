@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthProvider';
+import { urlBE } from '../../baseUrl';
 
 
 function ManageUsers() {
@@ -17,7 +18,7 @@ function ManageUsers() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:8080/users', {
+      const response = await fetch(`${urlBE}/users`, {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +35,7 @@ function ManageUsers() {
 
   const fetchUserAddress = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:8080/users/${userId}/address`, {
+      const response = await fetch(`${urlBE}/users/${userId}/address`, {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +59,7 @@ function ManageUsers() {
   const handleDeleteUser = async (userId) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
       try {
-        const response = await fetch(`http://localhost:8080/users/${userId}`, {
+        const response = await fetch(`${urlBE}/users/${userId}`, {
           method: "DELETE",
           headers: {
             "Authorization": `Bearer ${user.token}`
@@ -78,7 +79,7 @@ function ManageUsers() {
   };
   const handleAddUser = async () => {
     try {
-      const response = await fetch('http://localhost:8080/users', {
+      const response = await fetch(`${urlBE}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ArrowBack } from '@mui/icons-material'
 import { AuthContext } from '../AuthProvider'
 import formatPrice from '../../formatPrice'
+import { urlBE } from '../../baseUrl'
 
 function Order() {
     const { user } = useContext(AuthContext)
@@ -26,7 +27,7 @@ function Order() {
                 quantity: product.quantity,
             }));
 
-            const res = await fetch('http://localhost:8080/orders', {
+            const res = await fetch(`${urlBE}/orders`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -62,7 +63,7 @@ function Order() {
 
     const fetchAddress = async () => {
         try {
-            const res = await fetch('http://localhost:8080/user/address', {
+            const res = await fetch(`${urlBE}/user/address`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

@@ -21,7 +21,7 @@ class MyUploadAdapter {
           const data = new FormData();
           data.append('file', file);
 
-          fetch('http://localhost:8080/products/detail_image/upload', {
+          fetch(`${urlBE}/products/detail_image/upload`, {
             method: 'POST',
             body: data,
             headers: {
@@ -63,7 +63,7 @@ function ManageProducts() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${urlBE}/products?page=1&sortBy=price&order=${order}`, {
+      const response = await fetch(`${urlBE}/products?sortBy=price&order=${order}`, {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",

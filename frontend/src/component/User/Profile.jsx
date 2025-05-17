@@ -3,6 +3,7 @@ import { AuthContext } from '../AuthProvider'
 import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import { Edit } from '@mui/icons-material'
+import { urlBE } from '../../baseUrl'
 
 function Profile() {
     const { user } = useContext(AuthContext)
@@ -23,7 +24,7 @@ function Profile() {
 
     const fetchAddress = async () => {
         try {
-            const res = await fetch('http://localhost:8080/user/address', {
+            const res = await fetch(`${urlBE}/user/address`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +41,7 @@ function Profile() {
 
     const handleUpdateAddress = async () => {
         try {
-            const response = await fetch('http://localhost:8080/user/address', {
+            const response = await fetch(`${urlBE}/user/address`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -62,7 +63,7 @@ function Profile() {
 
     const handleUpdateInfo = async () => {
         try {
-            const res = await fetch('http://localhost:8080/user', {
+            const res = await fetch(`${urlBE}/user`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ function Profile() {
             formData.append('file', x)
         }
         try {
-            const res = await fetch('http://localhost:8080/user/avatar', {
+            const res = await fetch(`${urlBE}/user/avatar`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${user.token}`

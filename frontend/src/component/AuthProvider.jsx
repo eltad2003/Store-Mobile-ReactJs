@@ -1,6 +1,7 @@
 import { DataArray } from '@mui/icons-material';
 import React, { createContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { urlBE } from '../baseUrl';
 
 export const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const res = await fetch('http://localhost:8080/login', {
+            const res = await fetch(`${urlBE}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

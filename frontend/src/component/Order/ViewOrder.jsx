@@ -3,6 +3,7 @@ import { Card, Table, Badge, Spinner, Button, Modal } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider';
 import formatPrice from '../../formatPrice';
+import { urlBE } from '../../baseUrl';
 
 function ViewOrder() {
     const [orders, setOrders] = useState([]);
@@ -15,7 +16,7 @@ function ViewOrder() {
     const navigate = useNavigate();
     const fetchOrders = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/orders`, {
+            const response = await fetch(`${urlBE}/orders`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -61,7 +62,7 @@ function ViewOrder() {
     const handleViewDetails = async (orderId) => {
         setLoadingDetails(true);
         try {
-            const response = await fetch(`http://localhost:8080/orders/${orderId}`, {
+            const response = await fetch(`${urlBE}/orders/${orderId}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",

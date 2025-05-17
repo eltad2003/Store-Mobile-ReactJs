@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthProvider'
+import { urlBE } from '../../baseUrl'
 
 function ManageCategories() {
     const [categories, setCategories] = useState([])
@@ -9,7 +10,7 @@ function ManageCategories() {
 
     const fetchCategory = async () => {
         try {
-            const response = await fetch("http://localhost:8080/categories", {
+            const response = await fetch(`${urlBE}/categories`, {
                 method: "GET"
             })
             const data = await response.json()
@@ -20,7 +21,7 @@ function ManageCategories() {
     }
     const handleAddCate = async () => {
         try {
-            const response = await fetch("http://localhost:8080/categories", {
+            const response = await fetch(`${urlBE}/categories`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -45,7 +46,7 @@ function ManageCategories() {
     const handleDeleteCate = async (catogoryId) => {
         if (window.confirm("Bạn chắc chắn muốn xóa danh mục này")) {
             try {
-                const response = await fetch(`http://localhost:8080/categories/${catogoryId}`, {
+                const response = await fetch(`${urlBE}/categories/${catogoryId}`, {
                     method: "DELETE",
 
                 })
@@ -65,7 +66,7 @@ function ManageCategories() {
 
     const handleUpdateCate = async (catogoryId) => {
         try {
-            const response = await fetch(`http://localhost:8080/categories/${catogoryId}`, {
+            const response = await fetch(`${urlBE}/categories/${catogoryId}`, {
                 method: "PUT",
 
             })

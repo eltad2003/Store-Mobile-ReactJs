@@ -1,3 +1,4 @@
-export const urlBE = 'http://localhost:8080'
+const url = 'localhost:8080'
+export const urlBE = `http://${url}`
 export const urlChat = 'http://localhost:8000'
-export const urlSocket = 'ws://localhost:8080/ws/orders'
+export const urlSocket = `ws://${url}/ws/orders`

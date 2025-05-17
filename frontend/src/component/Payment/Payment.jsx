@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../AuthProvider'
 import { Link, useNavigate } from 'react-router-dom'
+import { urlBE } from '../../baseUrl'
 
 
 function Payment() {
@@ -17,7 +18,7 @@ function Payment() {
     try {
       if (selectedPayment === 'payos') {
         // Call payment API for PayOS
-        const response = await fetch(`http://localhost:8080/orders/${orderId}/payment`, {
+        const response = await fetch(`${urlBE}/orders/${orderId}/payment`, {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${user.token}`

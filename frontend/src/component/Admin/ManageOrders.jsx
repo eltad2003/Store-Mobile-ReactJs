@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import formatPrice from '../../formatPrice'
 import { Badge } from 'react-bootstrap'
+import { urlBE } from '../../baseUrl'
 
 function ManageOrders() {
   const [orders, setOrders] = useState([])
@@ -10,7 +11,7 @@ function ManageOrders() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch('http://localhost:8080/orders/all', {
+      const res = await fetch(`${urlBE}/orders/all`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ function ManageOrders() {
 
   const fetchProductDetails = async (productId) => {
     try {
-      const res = await fetch(`http://localhost:8080/products/${productId}`, {
+      const res = await fetch(`${urlBE}/products/${productId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ function ManageOrders() {
   };
   const fetchUserDetail = async (userId) => {
     try {
-      const res = await fetch(`http://localhost:8080/users/${userId}`, {
+      const res = await fetch(`${urlBE}/users/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ function ManageOrders() {
 
   const handleUpdateStatus = async (orderId) => {
     try {
-      const res = await fetch(`http://localhost:8080/orders/${orderId}`, {
+      const res = await fetch(`${urlBE}/orders/${orderId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

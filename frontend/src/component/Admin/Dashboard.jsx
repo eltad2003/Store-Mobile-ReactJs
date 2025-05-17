@@ -17,6 +17,7 @@ import { People, ShoppingCart, Category, LocalShipping, MonetizationOn, Notifica
 import { AuthContext } from '../AuthProvider';
 import formatPrice from '../../formatPrice';
 import { Link } from "react-router-dom";
+import { urlBE, urlSocket } from "../../baseUrl";
 
 
 // Đăng ký các thành phần của Chart.js
@@ -48,10 +49,10 @@ const Dashboard = () => {
         try {
             const token = user?.token;
             const [usersRes, productsRes, ordersRes, categoriesRes] = await Promise.all([
-                fetch('http://localhost:8080/users', { headers: { 'Authorization': `Bearer ${token}` } }),
-                fetch('http://localhost:8080/products', { headers: { 'Authorization': `Bearer ${token}` } }),
-                fetch('http://localhost:8080/orders/all', { headers: { 'Authorization': `Bearer ${token}` } }),
-                fetch('http://localhost:8080/categories'),
+                fetch(`${urlBE}/users`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch(`${urlBE}/products`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch(`${urlBE}/orders/all`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch(`${urlBE}/categories`),
             ]);
             const [users, products, orders, categories] = await Promise.all([
                 usersRes.json(),
@@ -76,7 +77,7 @@ const Dashboard = () => {
         fetchData();
         // Thiết lập WebSocket với userId và role
         const userId = user?.user.id;
-        const socket = new WebSocket(`ws://localhost:8080/ws/orders?userId=${userId}&role=admin`);
+        const socket = new WebSocket(`${urlSocket}?userId=${userId}&role=admin`);
 
         socket.onopen = () => {
             console.log('✅ WebSocket connected');

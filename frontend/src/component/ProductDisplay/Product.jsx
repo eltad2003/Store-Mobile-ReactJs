@@ -12,6 +12,7 @@ import Chatbot from '../Chatbot/Chatbot';
 import { Carousel } from 'react-bootstrap';
 import formatPrice from '../../formatPrice';
 import { services } from '../Home/Service';
+import { urlBE } from '../../baseUrl';
 
 
 
@@ -81,11 +82,11 @@ function Product() {
     const fetchData = async () => {
         try {
             const [productsRes, productRes] = await Promise.all([
-                fetch('http://localhost:8080/products'),
-                fetch(`http://localhost:8080/products/${productId}`),
+                fetch(`${urlBE}/products`),
+                fetch(`${urlBE}/products/${productId}`),
 
             ]);
-            
+
             const productData = await productRes.json();
             const productsData = await productsRes.json();
             setProducts(productsData);
