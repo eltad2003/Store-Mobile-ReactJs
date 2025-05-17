@@ -7,6 +7,7 @@ import { urlBE } from '../../../baseUrl';
 import formatPrice from '../../../formatPrice';
 
 
+
 // Custom upload adapter class
 class MyUploadAdapter {
   constructor(loader) {
@@ -57,24 +58,48 @@ function ManageProducts() {
   const [images, setImages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [sortOrder, setSortOrder] = useState('desc');
 
-  const fetchProducts = async (order = sortOrder) => {
+  const [search, setSearch] = useState('')
+  const [sortOrder, setSortOrder] = useState(null)
+  const [limit, setLimit] = useState(10)
+  const [page, setPage] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+  const [sortBy, setSortBy] = useState(null)
+
+  const fetchProducts = async (order = null, pageNum = page, limitNum = limit, sortType = sortBy) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${urlBE}/products?sortBy=price&order=${order}`, {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${user.token}`
-        }
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      let url = `${urlBE}/products?page=${pageNum}&limit=${limitNum}&search=${search}`;
+      if (order) {
+        url += `&sortBy=${sortType}&order=${order}`;
       }
-      const data = await response.json();
-      setProducts(data);
+      console.log(url);
+
+      const [productsRes, productCountRes] = await Promise.all([
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${user.token}`
+          }
+        }),
+        fetch(`${urlBE}/products/count`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${user.token}`
+          }
+        })
+      ]);
+      if (!productsRes.ok || !productCountRes.ok) {
+        throw new Error(`HTTP error! status: ${productsRes.status} ${productCountRes.status}`);
+      }
+
+      const productsData = await productsRes.json();
+      const productCountData = await productCountRes.json();
+
+      setProducts(productsData);
+      setTotalCount(productCountData);
+
     } catch (error) {
       console.error('Error fetching products:', error);
       setError('Failed to load products. Please try again later.');
@@ -100,14 +125,36 @@ function ManageProducts() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(sortOrder, page, limit);
     fetchCategory();
 
-  }, [sortOrder]);
+  }, [sortOrder, page, limit, search, sortBy]);
 
-  const handleSortChange = (event) => {
-    setSortOrder(prev => prev === 'desc' ? 'asc' : 'desc');
+  const handleSortByPrice = () => {
+    setSortBy('price');
+    setSortOrder(prev => (sortBy === 'price' && prev === 'desc' ? 'asc' : 'desc'));
   }
+  const handleSortByStockQuantity = () => {
+    setSortBy('stock_quantity');
+    setSortOrder(prev => (sortBy === 'stock_quantity' && prev === 'desc' ? 'asc' : 'desc'));
+  }
+  const handleSortByDiscount = () => {
+    setSortBy('discount');
+    setSortOrder(prev => (sortBy === 'discount' && prev === 'desc' ? 'asc' : 'desc'));
+  }
+  const handleLimitChange = (e) => {
+    setLimit(Number(e.target.value));
+    setPage(1);
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+  const totalPages = Math.ceil(totalCount / limit);
 
 
   const handleDeleteProduct = async (productId) => {
@@ -145,6 +192,31 @@ function ManageProducts() {
       <div className="my-5">
         <div className='d-flex align-items-center mb-4'>
           <h3 className='fw-bold mb-0'>Quản lý Sản Phẩm</h3>
+
+        </div>
+        <div className='d-flex justify-content-between align-items-center gap-3'>
+          <div>
+            <span>Hiện</span>
+            <input
+              type="number"
+              value={limit}
+              min={10}
+              onChange={handleLimitChange}
+              step={10}
+              style={{ width: 50, margin: '0 5px' }}
+            />
+          </div>
+          <div className='d-flex gap-2 align-items-center'>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder='Tìm kiếm sản phẩm..'
+              className=' rounded-2 '
+              style={{ width: '500px' }}
+            />
+            <i className="bi bi-search"></i>
+          </div>
           <Link className='btn btn-sm btn-success ms-auto' to={'add'}>
             <i className="bi bi-plus-circle"></i> Thêm sản phẩm
           </Link>
@@ -158,26 +230,54 @@ function ManageProducts() {
               <p className="mt-2">Đang tải dữ liệu...</p>
             </div>
           ) : (
-            <div className=" overflow-auto" style={{ maxHeight: '100vh ' }}>
+            <div >
               <table className="table table-hover align-middle">
                 <thead className="table-light">
                   <tr>
                     <th className='scope'>STT</th>
                     <th className='scope'>Tên sản phẩm</th>
                     <th className='scope'>Ảnh</th>
-                    <th className='scope' style={{ cursor: 'pointer' }} onClick={handleSortChange}>
+                    <th className='scope' style={{ cursor: 'pointer' }} onClick={handleSortByPrice}>
                       Giá
-                      {sortOrder === 'desc' ? (
-                        <i className="bi bi-caret-down-fill ms-1"></i>
+                      {sortBy === 'price' ? (
+                        sortOrder === 'desc' ? (
+                          <i className="bi bi-caret-down-fill ms-1"></i>
+                        ) : (
+                          <i className="bi bi-caret-up-fill ms-1"></i>
+                        )
                       ) : (
-                        <i className="bi bi-caret-up-fill ms-1"></i>
+                        <i class="bi bi-chevron-expand ms-1"></i>
                       )}
                     </th>
                     <th className='scope'>Danh mục</th>
-                    <th className='scope'>Số lượng</th>
+                    <th className='scope' style={{ cursor: 'pointer' }} onClick={handleSortByStockQuantity}>
+                      Số lượng
 
-                    <th className='scope'>Giảm giá</th>
-                    <th className='scope'>Thao tác</th>
+                      {sortBy === 'stock_quantity' ? (
+                        sortOrder === 'desc' ? (
+                          <i className="bi bi-caret-down-fill ms-1"></i>
+                        ) : (
+                          <i className="bi bi-caret-up-fill ms-1"></i>
+                        )
+                      ) : (
+                        <i class="bi bi-chevron-expand ms-1"></i>
+                      )}
+                    </th>
+
+                    <th className='scope' style={{ cursor: 'pointer' }} onClick={handleSortByDiscount}>
+                      Giảm giá
+                      {sortBy === 'discount' ? (
+                        sortOrder === 'desc' ? (
+                          <i className="bi bi-caret-down-fill ms-1"></i>
+                        ) : (
+                          <i className="bi bi-caret-up-fill ms-1"></i>
+                        )
+                      ) : (
+                        <i class="bi bi-chevron-expand ms-1"></i>
+                      )}
+
+                    </th>
+                    <th className='scope' > Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -235,6 +335,22 @@ function ManageProducts() {
                   )}
                 </tbody>
               </table>
+              <div className="d-flex align-items-center gap-2 mb-2">
+                <span className="text-muted fst-italic">Hiển thị từ 1 - {limit} của {totalCount} sản phẩm</span>
+                <div className='justify-content-center d-flex gap-2 ms-auto'>
+                  <button className="btn btn-sm btn-outline-primary" onClick={handlePrevPage} disabled={page === 1}>
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <span>Trang <input value={page} onChange={(e) => setPage(e.target.value)} style={{ width: 30 }} /> / {totalPages}</span>
+                  <button
+                    className="btn btn-sm btn-outline-primary"
+                    onClick={handleNextPage}
+                    disabled={products.length < limit}
+                  >
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>

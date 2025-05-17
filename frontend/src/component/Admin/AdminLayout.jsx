@@ -1,4 +1,4 @@
-import { Category, Dashboard, LocalShipping, Logout, People, Report, ShoppingCart, Menu } from '@mui/icons-material'
+import { Category, Dashboard, LocalShipping, Logout, People, Report, ShoppingCart, Menu, ViewCarousel } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
@@ -61,6 +61,10 @@ function AdminLayout() {
                         <li className="my-4 d-flex align-items-center">
                             <LocalShipping className="me-2" />
                             <Link className="text-decoration-none text-white" to="/admin/orders"  >Quản lý Đơn Hàng</Link>
+                        </li>
+                        <li className="my-4 d-flex align-items-center">
+                            <ViewCarousel className="me-2" />
+                            <Link className="text-decoration-none text-white" to='/admin/banner'  >Quản lý Banner</Link>
                         </li>
                         <li className="my-4 d-flex align-items-center">
                             <Report className="me-2" />

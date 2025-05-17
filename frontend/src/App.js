@@ -24,6 +24,7 @@ import Payment from './component/Payment/Payment'
 import EditProduct from './component/Admin/ManageProduct/EditProduct'
 import ManageProducts from './component/Admin/ManageProduct/ManageProducts'
 import AddProduct from './component/Admin/ManageProduct/AddProduct'
+import ManageBanner from './component/Admin/ManageBanner'
 
 
 
@@ -66,6 +67,7 @@ function App() {
               <Route path="products/edit/:productId" element={<EditProduct />} />
               <Route path="products/add" element={<AddProduct />} />
               <Route path="categories" element={<ManageCategories />} />
+              <Route path="banner" element={<ManageBanner />} />
               <Route path="reports" element={<Reports />} />
             </Route>
           </Routes>

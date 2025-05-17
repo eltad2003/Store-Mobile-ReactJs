@@ -224,7 +224,7 @@ function ManageUsers() {
                       <span className="badge bg-warning">Chưa xác thực</span>
                     )}
                   </td>
-                  <td><button className='ms-1 btn btn-sm btn-danger' onClick={() => handleDeleteUser(listUser.id)}>Xóa</button></td>
+                  <td><button className='ms-1 btn btn-sm btn-danger' onClick={() => handleDeleteUser(listUser.id)}><i className="bi bi-trash"></i></button></td>
                 </tr>
               ))}
             </tbody>
