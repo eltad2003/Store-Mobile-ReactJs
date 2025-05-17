@@ -14,6 +14,7 @@ function Order() {
     const [shippingAddress, setShippingAddress] = useState('')
     const [paymentMethod, setPaymentMethod] = useState('')
     const [note, setNote] = useState('')
+
     const [order, setOrder] = useState(() => {
         const storage = JSON.parse(localStorage.getItem('order'))
         return storage ?? []
@@ -72,6 +73,7 @@ function Order() {
             })
             const data = await res.json()
             setAddresses(data)
+            setShippingAddress(data.address)
         } catch (error) {
             console.error("Lỗi kết nối api: ", error);
         }

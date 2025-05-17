@@ -12,8 +12,10 @@ function ViewOrder() {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [loadingDetails, setLoadingDetails] = useState(false);
+    const [cancellationReason, setCancellationReason] = useState('');
     const { user } = useContext(AuthContext);
-    const navigate = useNavigate();
+
+
     const fetchOrders = async () => {
         try {
             const response = await fetch(`${urlBE}/orders`, {
@@ -27,12 +29,35 @@ function ViewOrder() {
                 throw new Error('Failed to fetch orders');
             }
             const data = await response.json();
+            // Lấy thông tin chi tiết của từng sản phẩm
+
             setOrders(data);
+            console.log('ordersWithDetails', data);
+
         } catch (err) {
             setError(err.message);
         } finally {
             setLoading(false);
         }
+    };
+
+    const fetchProductDetails = async (productId) => {
+        try {
+            const res = await fetch(`${urlBE}/products/${productId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                return data; // Trả về thông tin sản phẩm
+            }
+        } catch (error) {
+            console.error(`Error fetching product details for productId ${productId}:`, error);
+        }
+        return null; // Trả về null nếu có lỗi
     };
 
     useEffect(() => {
@@ -73,7 +98,13 @@ function ViewOrder() {
                 throw new Error('Failed to fetch order details');
             }
             const orderDetails = await response.json();
-            setSelectedOrder(orderDetails);
+            const itemsWithDetails = await Promise.all(
+                orderDetails.items.map(async (item) => {
+                    const productDetails = await fetchProductDetails(item.productId);
+                    return { ...item, productDetails };
+                })
+            );
+            setSelectedOrder({ ...orderDetails, items: itemsWithDetails });
             setShowModal(true);
         } catch (err) {
             setError(err.message);
@@ -96,6 +127,63 @@ function ViewOrder() {
         return (
             <div className="alert alert-danger m-4" role="alert">
                 Error: {error}
+            </div>
+        );
+    }
+    const handleCancelOrder = async (orderId) => {
+        try {
+            const res = await fetch(`${urlBE}/orders/${orderId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({
+                    reason: cancellationReason
+                })
+            });
+            if (res.ok) {
+                alert('Đơn hàng đã được hủy thành công.');
+                setShowModal(false);
+                fetchOrders(); // Refresh the orders list
+            }
+            else {
+                alert(await res.text())
+            }
+        } catch (error) {
+            console.log('Error canceling order:', error);
+
+        }
+    }
+
+    const modalCancelOrder = () => {
+        return (
+            <div className="modal fade" id='cancelOrderModal' tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Hủy đơn hàng #{selectedOrder?.id}</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <label className='form-label'>Lí do</label>
+                            <textarea
+                                className="form-control"
+                                rows="3"
+                                value={cancellationReason}
+                                onChange={(e) => setCancellationReason(e.target.value)}
+                            ></textarea>
+                        </div>
+                        <div className="modal-footer">
+                            <Button variant="secondary" data-bs-dismiss="modal">
+                                Đóng
+                            </Button>
+                            <Button variant="danger" onClick={() => handleCancelOrder(selectedOrder.id)} data-bs-dismiss="modal">
+                                Hủy đơn hàng
+                            </Button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -142,7 +230,7 @@ function ViewOrder() {
                             <Table striped bordered hover responsive>
                                 <thead>
                                     <tr>
-                                        <th>Mã sản phẩm</th>
+
                                         <th>Tên sản phẩm</th>
                                         <th>Số lượng</th>
                                         <th>Giá gốc</th>
@@ -153,12 +241,12 @@ function ViewOrder() {
                                 <tbody>
                                     {order.items.map((item) => (
                                         <tr key={item.id}>
-                                            <td>{item.productId}</td>
-                                            <td>{item.productName}</td>
+
+                                            <td>{item.productDetails?.name || 'N/A'}</td>
                                             <td>{item.quantity}</td>
                                             <td>{formatPrice(item.originalPrice)}</td>
                                             <td>{formatPrice(item.price)}</td>
-                                            <td className='fw-bold'>{formatPrice(item.price * item.quantity)}</td>
+                                            <td className='fw-bold text-danger'>{formatPrice(item.price * item.quantity)}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -201,17 +289,33 @@ function ViewOrder() {
                                     <td>{getStatusBadge(order.status)}</td>
                                     <td>{getPaymentStatusBadge(order.paymentStatus)}</td>
                                     <td className='text-muted fw-bold'>{formatPrice(order.totalPrice)}</td>
-                                    <td>
+                                    <td className='d-flex gap-2'>
                                         <Button
                                             variant="info"
                                             size="sm"
                                             onClick={() => handleViewDetails(order.id)}
                                         >
-                                            Xem chi tiết
+                                            Chi tiết
                                         </Button>
+
+                                        {order.status !== 'CANCELLED' && order.status !== 'DELIVERED' && (
+                                            <Button
+                                                variant='danger'
+                                                size='sm'
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#cancelOrderModal"
+                                                onClick={() => setSelectedOrder(order)}
+                                            >
+                                                <i className='bi bi-'>Hủy</i>
+                                            </Button>
+                                        )}
+
                                     </td>
                                 </tr>
+
+
                             ))}
+
                         </tbody>
 
                     </Table>
@@ -230,6 +334,8 @@ function ViewOrder() {
                 onHide={() => setShowModal(false)}
                 loading={loadingDetails}
             />
+            {modalCancelOrder()}
+
         </div>
     );
 }

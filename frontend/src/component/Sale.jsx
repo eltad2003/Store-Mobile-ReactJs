@@ -4,8 +4,8 @@ import { Carousel } from 'react-bootstrap';
 import CartItem from './CartItem/CartItem';
 
 function Sale({ products }) {
-    const popularProducts = products.filter(product => product.onSale);
-    const chunkSize = 4;
+    const popularProducts = products.filter(product => product.discount > 0);
+    const chunkSize = 5;
     const productChunks = [];
 
     for (let i = 0; i < popularProducts.length; i += chunkSize) {
@@ -13,18 +13,18 @@ function Sale({ products }) {
     }
     return (
         <div>
-            <h3 className='fw-bold'>HOT SALE <Loyalty className="mb-1 fs-1 text-danger" /></h3>
-            <div className='mt-3 p-4 rounded-4'>
+            <h3 className='fw-bold text-white'>HOT SALE <Loyalty className="mb-1 fs-1 " /></h3>
+            <div className='card shadow rounded-4 p-3' style={{ minHeight: '450px' }}>
                 <Carousel indicators={false} controls={true}
-                    prevIcon={<ArrowLeft style={{ color: 'black', fontSize: '70px', marginLeft: '-200px' }} />}
-                    nextIcon={<ArrowRight style={{ color: 'black', fontSize: '70px', marginRight: '-200px' }} />}
+                    prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
+                    nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
 
                 >
                     {productChunks.map((chunk, index) => (
                         <Carousel.Item key={index}>
                             <div className='row'>
                                 {chunk.map(item => (
-                                    <div className='col-6 col-md-3 mb-3 d-flex justify-content-center'  >
+                                    <div className="col-6" style={{ flex: "0 0 20%" }}  >
                                         <CartItem item={item} />
                                     </div>
                                 ))}

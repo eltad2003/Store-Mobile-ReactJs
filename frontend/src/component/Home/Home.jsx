@@ -12,17 +12,19 @@ import { useEffect, useState } from "react"
 import Sidebar from "../Sidebar/Sidebar"
 import CartItem from "../CartItem/CartItem"
 import Footer from "../Footer/Footer"
-import Popular from "../Popular"
 import Sale from "../Sale"
 import { Link } from "react-router-dom"
 import Chatbot from "../Chatbot/Chatbot"
 import { urlBE } from "../../baseUrl"
+import Banner from "./Banner"
 
 
 function Home() {
    const [products, setProducts] = useState([])
+   const [banners, setBanners] = useState([])
    const [currentPage, setCurrentPage] = useState(1)
    const [itemPerpage, setItemPerPage] = useState(15)
+   const [index, setIndex] = useState(0);
 
    const fetchProducts = async () => {
       try {
@@ -33,8 +35,19 @@ function Home() {
          console.log("Loi ket noi API: ", error);
       }
    }
+
+   const fetchBanner = async () => {
+      try {
+         const response = await fetch(`${urlBE}/banners`)
+         const data = await response.json()
+         setBanners(data)
+      } catch (error) {
+         console.log("Loi ket noi API: ", error);
+      }
+   }
    useEffect(() => {
       fetchProducts()
+      fetchBanner()
    }, [])
 
    if (!products) {
@@ -57,70 +70,21 @@ function Home() {
    return (
       <div className="bg-light">
          {/* Banner and thanh danh mục */}
-         <div className="container p-5">
-            <div className="row">
-
-               {/* Sidebar - Hide on mobile */}
-               <div className="col-md-3 mt-3 d-none d-md-block">
-                  <Sidebar />
-               </div>
-
-               {/* Carousel - Show on all screens */}
-               <div className="col-12 col-md-6 mt-3">
-                  <div className="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
-                     <Carousel
-                        prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
-                        nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
-                     >
-                        <Carousel.Item>
-                           <img className="img-fluid w-100" src={clockBanner} alt="First slide" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                           <img className="img-fluid w-100" src={s25Banner} alt="Second slide" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                           <img className="img-fluid w-100" src={xiaomi15Banner} alt="Third slide" />
-                        </Carousel.Item>
-                     </Carousel>
-                  </div>
-               </div>
-
-               {/* banner images - Hide on mobile */}
-               <div className="col-md-3 mt-3 d-none d-md-block">
-                  <div className="card shadow-sm border-0 h-100">
-                     <div className="card-body p-2 d-flex flex-column justify-content-between">
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/RightBanner-iPadAirM3%20(2).jpg" alt="" className="img-fluid w-100 mb-2 rounded" />
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:10/plain/https://dashboard.cellphones.com.vn/storage/s-edu-2-0-right-laptop.jpg" alt="" className="img-fluid w-100 rounded" />
-                     </div>
-                  </div>
-               </div>
-
-            </div>
-         </div>
-
-
-
-
-         {/*          
-         <div className="container mt-5 mb-5">
-            <div className="row justify-content-center text-center">
-               {services.map((service, index) => (
-                  <div key={index} className="col-md-3 d-flex flex-column align-items-center">
-                     <div className="mb-4">{service.icon}</div>
-                     <h5 className="fw-bold">{service.title}</h5>
-                     <p className="text-muted text-center mb-5">{service.description}</p>
-                  </div>
-               ))}
-            </div>
-         </div> */}
+         <Banner />
 
          {/* sản phẩm hot */}
-         {/* <div className="p-3 bg-danger container rounded-4">
-            <Popular products={products} />
-         </div> */}
-
+         <div className="container my-5">
+            <div className="row">
+               <div className="col-md-2 d-none d-md-block">
+                  <Sidebar />
+               </div>
+               <div className="col-md-10 p-3 bg-danger rounded-4">
+                  <Sale products={products} />
+               </div>
+            </div>
+         </div>
          {/* Tất cả sản phẩm */}
-         <div className="container px-5" id="top">
+         <div className="container my-5" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
             <div className="row mt-3">
                {products.slice(firstItemIndx, lastItemIndx).map((item) => (
@@ -139,8 +103,8 @@ function Home() {
                   >
                      <ArrowLeft />
                   </button> */}
-               {pages.map(page => (
-                  <div>
+               {pages.map((page, index) => (
+                  <div key={index}>
                      <button className={page === currentPage && currentPage > 0 ? "btn pw-bold btn-danger mx-2 active" : "btn"}
                         onClick={() => {
                            setCurrentPage(page)
@@ -163,12 +127,6 @@ function Home() {
 
 
          </div>
-
-         {/*hot sale*/}
-         {/* <div className="p-3 w-100 bg-danger container rounded-4">
-            <Sale products={products} />
-         </div> */}
-
 
          {/* forum */}
          <div className="container p-5">

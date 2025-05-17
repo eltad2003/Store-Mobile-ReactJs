@@ -236,6 +236,7 @@ function ManageProducts() {
                   <tr>
                     <th className='scope'>STT</th>
                     <th className='scope'>Tên sản phẩm</th>
+                    <th className='scope'>Mã</th>
                     <th className='scope'>Ảnh</th>
                     <th className='scope' style={{ cursor: 'pointer' }} onClick={handleSortByPrice}>
                       Giá
@@ -292,6 +293,7 @@ function ManageProducts() {
                       <tr key={product.id}>
                         <td>{index + 1}</td>
                         <td className='text-truncate' style={{ maxWidth: 250 }}>{product.name}</td>
+                        <td>{product.id}</td>
                         <td>
                           <div className="d-flex gap-1">
                             {product.listMedia && product.listMedia.length > 0 ? (
@@ -338,12 +340,12 @@ function ManageProducts() {
               <div className="d-flex align-items-center gap-2 mb-2">
                 <span className="text-muted fst-italic">Hiển thị từ 1 - {limit} của {totalCount} sản phẩm</span>
                 <div className='justify-content-center d-flex gap-2 ms-auto'>
-                  <button className="btn btn-sm btn-outline-primary" onClick={handlePrevPage} disabled={page === 1}>
+                  <button className="btn btn-sm btn-primary" onClick={handlePrevPage} disabled={page === 1}>
                     <i class="bi bi-chevron-left"></i>
                   </button>
                   <span>Trang <input value={page} onChange={(e) => setPage(e.target.value)} style={{ width: 30 }} /> / {totalPages}</span>
                   <button
-                    className="btn btn-sm btn-outline-primary"
+                    className="btn btn-sm btn-primary"
                     onClick={handleNextPage}
                     disabled={products.length < limit}
                   >

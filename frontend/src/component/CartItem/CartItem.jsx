@@ -10,7 +10,7 @@ function CartItem({ item }) {
         <div className="card h-100 shadow rounded-4 p-2 d-flex justify-content-between" >
             {/* Badge khuyến mãi */}
             {item.discount ? (
-                <div className="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end-3 z-2">
+                <div className="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end-3 z-1">
                     Giảm {item.discount}%
                 </div>
             ) : (

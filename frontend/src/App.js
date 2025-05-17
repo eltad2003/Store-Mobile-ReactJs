@@ -10,7 +10,6 @@ import AuthProvider from './component/AuthProvider'
 import Cart from './component/Cart/Cart'
 import CartProvider from './component/CartProvider'
 import Order from './component/Order/Order'
-import Popular from './component/Popular'
 import AdminLayout from './component/Admin/AdminLayout'
 import ManageUsers from './component/Admin/ManageUsers'
 import ManageOrders from './component/Admin/ManageOrders'
@@ -52,7 +51,6 @@ function App() {
               <Route path='/order' element={<Order />} />
               <Route path='/order/payment' element={<Payment />} />
               <Route path='/viewOrder' element={<ViewOrder />} />
-              <Route path='/popular' element={<Popular />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/profile/change-password' element={<ChangePassword />} />
 
