@@ -84,7 +84,7 @@ function Review({ productId }) {
                             <p className='fw-bold'>{rating}</p>
                             <Star className="text-warning" />
                             <div className='ms-3 mt-1 progress w-50'>
-                                <div className={`progress-bar bg w-${rating * 20}`}></div>
+
                             </div>
                         </div>
                     ))}

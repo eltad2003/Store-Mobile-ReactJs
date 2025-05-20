@@ -45,9 +45,9 @@ function CartItem({ item }) {
                         {item.name}
                     </Link>
                 </h6>
-                <div className='flex-wrap'>
+                <div>
                     {item.discount ? (
-                        <div className="d-flex gap-1 align-items-center">
+                        <div className="d-flex gap-1 flex-wrap align-items-center">
                             <span className="text-success fw-bold me-1">{formatPrice(item.price)}</span>
                             <span className="text-muted text-decoration-line-through small">
                                 {formatPrice(Math.round(item.price * (1 + item.discount / 100)))}

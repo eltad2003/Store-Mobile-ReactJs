@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
-import { AccountCircle, Notifications, Person, ShoppingCart } from '@mui/icons-material'
+import { HelpOutline, Notifications, Person, ShoppingCart } from '@mui/icons-material'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import "./Navbar.css"
 import { AuthContext } from '../AuthProvider'
@@ -9,10 +9,9 @@ import { CartContext } from '../CartProvider'
 import formatPrice from '../../formatPrice'
 import { urlBE, urlSocket } from '../../baseUrl'
 import logo from '../asset/logo.png'
-function Navbar() {
 
+function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
-    const [showCategory, setShowCategory] = useState(false)
     const { user, logout } = useContext(AuthContext)
     const { cartItems } = useContext(CartContext)
     const navigate = useNavigate()
@@ -43,7 +42,6 @@ function Navbar() {
     const userId = user?.user.id
 
     useEffect(() => {
-
         const socket = new WebSocket(`${urlSocket}?userId=${userId}`);
         socket.onopen = () => {
             console.log('✅ WebSocket connected');
@@ -71,8 +69,7 @@ function Navbar() {
 
     useEffect(() => {
         fetchProducts()
-    }
-        , [search])
+    }, [search])
     return (
         <>
             {/* Thông báo toast */}
@@ -107,7 +104,7 @@ function Navbar() {
                             <ul className="navbar-nav me-auto d-flex align-items-lg-center">
                                 <li className="nav-item me-3">
                                     <Link className="nav-link text-white" to="/contact">
-                                        <Person className="me-1" /> Liên hệ
+                                        <HelpOutline className="me-1" /> Hỗ trợ
                                     </Link>
                                 </li>
                                 <li className="nav-item me-3">
@@ -150,32 +147,33 @@ function Navbar() {
                                         </span>
                                     </Link>
                                 </li>
-                                <li className="nav-item dropdown">
+                                <li className="nav-item dropdown ms-auto">
                                     <Link
                                         className="nav-link text-white"
                                         onClick={() => setIsOpen(!isOpen)}
                                         role="button"
                                     >
-                                        <AccountCircle />
+                                        <Person />
                                     </Link>
-                                    {isOpen && (
-                                        <div className="dropdown-menu show end-0 mt-2">
-                                            {user ? (
-                                                <>
-                                                    <p className="dropdown-item fw-bold">Hello, {user.user.fullName}</p>
-                                                    <Link to="/profile" className="dropdown-item">Hồ sơ</Link>
-                                                    <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>Đăng xuất</Link>
-                                                </>
-                                            ) : (
-                                                <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)}>Đăng nhập</Link>
-                                            )}
-                                        </div>
-                                    )}
+
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
+                {isOpen && (
+                    <div className="dropdown-menu show end-0 mt-2">
+                        {user ? (
+                            <>
+                                <p className="dropdown-item fw-bold">Hello, {user.user.fullName}</p>
+                                <Link to="/profile" className="dropdown-item">Hồ sơ</Link>
+                                <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>Đăng xuất</Link>
+                            </>
+                        ) : (
+                            <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)}>Đăng nhập</Link>
+                        )}
+                    </div>
+                )}
 
                 {showSuggestions && (
                     <>

@@ -159,11 +159,13 @@ function Login() {
 
 
     return (
-        <div className="container mt-5 d-flex justify-content-center align-items-center ">
-            <div className="card shadow-lg p-4 rounded-4" style={{ minWidth: 370, maxWidth: 400, width: '100%' }}>
-                <h2 className="text-center mb-4 fw-bold">Đăng nhập</h2>
+        <div className="container py-5 d-flex justify-content-center align-items-center ">
+            <div className="card shadow-lg  rounded-4" style={{ minWidth: 370, maxWidth: 400, width: '100%' }}>
+                <div className="card-header text-white bg">
+                    <h2 className="text-center  mb-4 fw-bold">Đăng nhập</h2>
+                </div>
 
-                <form className={showForm}>
+                <form className={`${showForm} p-4`}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label fw-semibold">Email</label>
                         <input
@@ -223,7 +225,7 @@ function Login() {
                 )}
 
                 {/* Nút chính tùy theo trạng thái */}
-                <div>
+                <div className='p-4'>
                     {show ? (
                         <button
                             type="button"
@@ -235,31 +237,33 @@ function Login() {
                     ) : (
                         <button
                             type="submit"
-                            className="btn btn-primary w-100 rounded-3 mt-2 fw-semibold"
+                            className="btn bg text-white w-100 rounded-3 mt-2 fw-semibold"
                             onClick={handleLogin}
                         >
                             Đăng nhập
                         </button>
                     )}
                 </div>
-                <div className="d-flex align-items-center my-3">
-                    <hr className="flex-grow-1" />
-                    <span className="mx-2 text-muted">Hoặc</span>
-                    <hr className="flex-grow-1" />
-                </div>
-                <button
-                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 w-100 rounded-3 py-2 mb-2 shadow-sm"
-                    style={{ fontWeight: 500 }}
-                    onClick={handleLoginGoogle}
-                >
-                    <span style={{ color: '#4285F4', fontSize: 22 }}><Google /></span>
-                    Đăng nhập bằng Google
-                </button>
-                <div className="text-center mt-3">
-                    <span>Bạn chưa có tài khoản?</span>
-                    <Link to="/register" className="d-block mt-2">
-                        <button className="btn btn-success w-100 rounded-3 fw-semibold">Đăng ký ngay</button>
-                    </Link>
+                <div className="p-4">
+                    <div className="d-flex align-items-center my-3">
+                        <hr className="flex-grow-1" />
+                        <span className="mx-2 text-muted">Hoặc</span>
+                        <hr className="flex-grow-1" />
+                    </div>
+                    <button
+                        className="btn btn-light border d-flex align-items-center justify-content-center gap-2 w-100 rounded-3 py-2 mb-2 shadow-sm"
+                        style={{ fontWeight: 500 }}
+                        onClick={handleLoginGoogle}
+                    >
+                        <span style={{ color: '#4285F4', fontSize: 22 }}><Google /></span>
+                        Đăng nhập bằng Google
+                    </button>
+                    <div className="text-center mt-3">
+                        <span>Bạn chưa có tài khoản?</span>
+                        <Link to="/register" className="d-block mt-2">
+                            <button className="btn bg text-white w-100 rounded-3 fw-semibold">Đăng ký ngay</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

@@ -78,10 +78,12 @@ function Register() {
 
 
     return (
-        <div className="container mt-5 d-flex justify-content-center align-items-center">
-            <div className="card shadow-lg p-4 rounded-4" style={{ minWidth: 370, maxWidth: 430, width: '100%' }}>
-                <h2 className="text-center mb-4 fw-bold">Đăng ký</h2>
-                <form className={show}>
+        <div className="container py-5 d-flex justify-content-center align-items-center">
+            <div className="card shadow-lg rounded-4" style={{ minWidth: 370, maxWidth: 430, width: '100%' }}>
+                <div className="bg text-white card-header">
+                    <h2 className="text-center mb-4 fw-bold">Đăng ký</h2>
+                </div>
+                <form className={`${show} p-4`}>
                     <div className="mb-3">
                         <label htmlFor="fullName" className="form-label fw-semibold">Tên đầy đủ</label>
                         <input required type="text" className="form-control form-control-lg rounded-3" name='fullName' id="fullName" value={fullName} placeholder="Nhập họ tên..." onChange={(e) => setfullName(e.target.value)} />
@@ -105,22 +107,24 @@ function Register() {
 
 
                 </form>
-                <div className={showOtp}>
-                    <label htmlFor="otp" className='form-label'>Nhập OTP</label>
-                    <input type="text" className='form-control' value={otp} onChange={(e) => setOtp(e.target.value)} />
-                </div>
-                <div className="mt-3">
-                    {show === 'd-block' ?
-                        <button type="submit" className="btn btn-success w-100 rounded-3 fw-semibold" onClick={handleRegister}>Đăng ký</button>
-                        :
-                        <button type="submit" className="btn btn-success w-100 rounded-3 fw-semibold" onClick={handleOTP}>Xác nhận</button>
-                    }
-                </div>
-                <div className="text-center mt-3">
-                    <span>Bạn đã có tài khoản?</span>
-                    <Link to="/login" className="d-block mt-2">
-                        <button className="btn btn-primary w-100 rounded-3 fw-semibold">Đăng nhập</button>
-                    </Link>
+                <div className="p-4">
+                    <div className={showOtp}>
+                        <label htmlFor="otp" className='form-label'>Nhập OTP</label>
+                        <input type="text" className='form-control' value={otp} onChange={(e) => setOtp(e.target.value)} />
+                    </div>
+                    <div className="mt-3">
+                        {show === 'd-block' ?
+                            <button type="submit" className="btn bg text-white  w-100 rounded-3 fw-semibold" onClick={handleRegister}>Đăng ký</button>
+                            :
+                            <button type="submit" className="btn bg text-white  w-100 rounded-3 fw-semibold" onClick={handleOTP}>Xác nhận</button>
+                        }
+                    </div>
+                    <div className="text-center mt-3">
+                        <span>Bạn đã có tài khoản?</span>
+                        <Link to="/login" className="d-block mt-2">
+                            <button className="btn bg text-white w-100 rounded-3 fw-semibold">Đăng nhập</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div >
