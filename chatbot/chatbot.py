@@ -1,13 +1,13 @@
 import json
 import streamlit as st
-from openai import OpenAI
+
 from pydantic import BaseModel
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+from api import key
 
-
-client = OpenAI(api_key="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")
+client = key
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
