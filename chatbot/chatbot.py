@@ -5,9 +5,13 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from api import key
+from openai import OpenAI
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
-client = key
+
+client = OpenAI(api_key=os.getenv('API_KEY'))
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
