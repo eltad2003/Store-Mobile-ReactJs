@@ -2,11 +2,30 @@ import { Tv, Speaker, LaptopChromebook, PhoneIphone, SportsEsports, Roofing, Che
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Sidebar.css'
+import { urlBE } from '../../baseUrl'
 
 function Sidebar() {
     const [menu, setMenu] = useState('')
+    const [categories, setCategories] = useState([])
 
-    const categories = [
+    const fetchCategory = async () => {
+        try {
+            const response = await fetch(`${urlBE}/categories`, {
+                method: 'GET',
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setCategories(data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
+
+
+
+    const categorie = [
         { icon: <Tv />, name: 'TV', path: '/tv' },
         { icon: <Speaker />, name: 'Audio', path: '/audio' },
         { icon: <LaptopChromebook />, name: 'Laptop', path: '/laptop' },
@@ -16,10 +35,10 @@ function Sidebar() {
     ]
 
     return (
-        <div className="card sidebar rounded-3 h-100 me-3 border-0 shadow-sm">
+        <div className="sidebar rounded-4 py-5 px-3 shadow h-100">
 
-            <ul className="list-unstyled mb-0">
-                {categories.map((category, index) => (
+            <ul className="d-flex flex-column gap-5 list-unstyled ">
+                {categorie.map((category, index) => (
                     <li key={index} className=" fw-bold">
                         <Link
                             className={`d-flex align-items-center justify-content-between text-decoration-none text-dark  py-2 px-4 ${menu === category.name.toLowerCase() ? 'active' : ''}`}

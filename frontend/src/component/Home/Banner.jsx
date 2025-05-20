@@ -23,7 +23,7 @@ function Banner() {
         fetchBanner()
     }, [])
     return (
-        <div className="container-fluid my-5">
+        <div className="container p-5">
             <div className="">
 
                 {/* Carousel - Show on all screens */}

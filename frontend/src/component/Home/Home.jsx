@@ -21,10 +21,10 @@ import Banner from "./Banner"
 
 function Home() {
    const [products, setProducts] = useState([])
-   const [banners, setBanners] = useState([])
+
    const [currentPage, setCurrentPage] = useState(1)
    const [itemPerpage, setItemPerPage] = useState(15)
-   const [index, setIndex] = useState(0);
+
 
    const fetchProducts = async () => {
       try {
@@ -36,18 +36,10 @@ function Home() {
       }
    }
 
-   const fetchBanner = async () => {
-      try {
-         const response = await fetch(`${urlBE}/banners`)
-         const data = await response.json()
-         setBanners(data)
-      } catch (error) {
-         console.log("Loi ket noi API: ", error);
-      }
-   }
+
    useEffect(() => {
       fetchProducts()
-      fetchBanner()
+
    }, [])
 
    if (!products) {
@@ -73,18 +65,19 @@ function Home() {
          <Banner />
 
          {/* sản phẩm hot */}
-         <div className="container my-5">
+         <div className="container">
             <div className="row">
-               <div className="col-md-2 d-none d-md-block">
+               <div className="col-md-3 d-none d-md-block">
                   <Sidebar />
                </div>
-               <div className="col-md-10 p-3 bg-danger rounded-4">
+               <div className="col-md-9 p-3 bg-danger rounded-4">
                   <Sale products={products} />
                </div>
             </div>
          </div>
+
          {/* Tất cả sản phẩm */}
-         <div className="container my-5" id="top">
+         <div className="container p-5" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
             <div className="row mt-3">
                {products.slice(firstItemIndx, lastItemIndx).map((item) => (
@@ -156,9 +149,8 @@ function Home() {
          {/* lên đầu và chat */}
          <div>
             <a href='#top' className="up-to-top rounded-pill p-2 bg-danger text-white"> <ArrowUpward /></a>
-
+            <Chatbot />
          </div>
-         <Chatbot />
          <Footer />
       </div>
 

@@ -1,0 +1,370 @@
+[
+  {
+    "id": 1,
+    "name": "MacBook Pro 14",
+    "description": "Apple M2 Pro chip, 16GB RAM, 1TB SSD, Liquid Retina XDR display.",
+    "price": "9618000.00",
+    "stockQuantity": 47,
+    "category": "Laptop",
+    "brand": "Apple",
+    "createdAt": "2025-04-20T14:27:10",
+    "listMedia": [
+      "http://localhost:8080/products/media/497149cb-06d7-4457-80de-1fc47b688304.png"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Dell UltraSharp 24",
+    "description": "Full HD IPS display, 99% sRGB, adjustable stand.",
+    "price": "11400000.00",
+    "stockQuantity": 49,
+    "category": "TV",
+    "brand": "Dell",
+    "createdAt": "2025-04-20T14:38:15",
+    "listMedia": [
+      "http://localhost:8080/products/media/f2920810-3479-4360-b2ae-d02e288be4c8.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Office PC Mini ITX",
+    "description": "Compact mini ITX build for business tasks, i5, 16GB RAM.",
+    "price": "46100000.00",
+    "discount": 5,
+    "stockQuantity": 49,
+    "category": "Gaming",
+    "brand": "HP",
+    "createdAt": "2025-04-20T14:48:32",
+    "listMedia": [
+      "http://localhost:8080/products/media/d8c63613-c1a1-49c8-ab9e-5ca055f7e06a.png"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Logitech MX Master 3",
+    "description": "Ergonomic wireless mouse with precision tracking.",
+    "price": "2199000.00",
+    "discount": 10,
+    "stockQuantity": 18,
+    "category": "Gaming",
+    "brand": "Logitech",
+    "createdAt": "2025-04-20T14:50:48",
+    "listMedia": [
+      "http://localhost:8080/products/media/ac092743-0b34-45f9-a723-b03d2852be50.png"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Logitech G Pro X",
+    "description": "Mechanical keyboard for esports professionals.",
+    "price": "3700000.00",
+    "discount": 3,
+    "stockQuantity": 7,
+    "category": "Gaming",
+    "brand": "Logitech",
+    "createdAt": "2025-04-20T14:52:33",
+    "listMedia": [
+      "http://localhost:8080/products/media/02de3639-1b5a-4f25-b042-9535809051a6.png"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Laptop Dell XPS 13",
+    "description": "13-inch Ultrabook with Intel Core i7, 16GB RAM, and 512GB SSD.",
+    "price": "22459000.00",
+    "discount": 3,
+    "stockQuantity": 28,
+    "category": "Laptop",
+    "brand": "Dell",
+    "createdAt": "2025-04-20T14:53:34",
+    "listMedia": [
+      "http://localhost:8080/products/media/a8cd48bd-6b78-45e4-9138-bc23b7bc2d8e.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Apple Magic Mouse 2",
+    "description": "Rechargeable wireless mouse with multi-touch.",
+    "price": "1190000.00",
+    "stockQuantity": 9,
+    "category": "Gaming",
+    "brand": "Apple",
+    "createdAt": "2025-04-20T14:54:40",
+    "listMedia": [
+      "http://localhost:8080/products/media/4e586835-e9bb-4c5c-89cb-1c262d101044.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Apple Magic Keyboard",
+    "description": "Wireless keyboard with numeric keypad, rechargeable.",
+    "price": "3050000.00",
+    "discount": 15,
+    "stockQuantity": 21,
+    "category": "Gaming",
+    "brand": "Apple",
+    "createdAt": "2025-04-20T14:55:36",
+    "listMedia": [
+      "http://localhost:8080/products/media/ac5d560c-1051-4385-a999-b6ef243f2644.png"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "LG UltraFine 27 inch",
+    "description": "4K UHD IPS display with USB-C and excellent color accuracy.",
+    "price": "11650000.00",
+    "stockQuantity": 20,
+    "category": "TV",
+    "brand": "LG",
+    "createdAt": "2025-04-20T14:56:46",
+    "listMedia": [
+      "http://localhost:8080/products/media/dbe48ff8-d31b-4ea7-91ff-9a83fc846db4.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Gaming PC Ryzen 9",
+    "description": "High-performance desktop with RTX 4080, Ryzen 9, 32GB RAM.",
+    "price": "27990000.00",
+    "discount": 20,
+    "stockQuantity": 40,
+    "category": "Gaming",
+    "brand": "Custom",
+    "createdAt": "2025-04-20T14:57:48",
+    "listMedia": [
+      "http://localhost:8080/products/media/e0af98bf-de37-497e-9c2c-393efcf8211b.jpg"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Keychron K6",
+    "description": "65% wireless mechanical keyboard with hot-swap support.",
+    "price": "2490000.00",
+    "stockQuantity": 26,
+    "category": "Gaming",
+    "brand": "Keychron",
+    "createdAt": "2025-04-20T14:58:31",
+    "listMedia": [
+      "http://localhost:8080/products/media/7cc0b434-b6cd-45f0-97b1-d5cc15b45d82.jpg"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Samsung Odyssey G7",
+    "description": "27-inch QHD 240Hz curved gaming monitor with HDR600.",
+    "price": "27000000.00",
+    "discount": 8,
+    "stockQuantity": 32,
+    "category": "Gaming",
+    "brand": "Samsung",
+    "createdAt": "2025-04-20T14:59:14",
+    "listMedia": [
+      "http://localhost:8080/products/media/9e55ffbc-a94f-40ea-a65e-8888141c3c96.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Razer DeathAdder V2",
+    "description": "Optical sensor, RGB lighting, ergonomic gaming mouse.",
+    "price": "940000.00",
+    "stockQuantity": 13,
+    "category": "Gaming",
+    "brand": "Razer",
+    "createdAt": "2025-04-20T15:00:08",
+    "listMedia": [
+      "http://localhost:8080/products/media/4c02e06b-232d-4473-ab61-7042a49c3415.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "ASUS ROG Zephyrus G14",
+    "description": "AMD Ryzen 9, RTX 4060, 32GB RAM, 1TB SSD, gaming laptop.",
+    "price": "45600000.00",
+    "discount": 15,
+    "stockQuantity": 16,
+    "category": "Laptop",
+    "brand": "ASUS",
+    "createdAt": "2025-04-20T15:00:56",
+    "listMedia": [
+      "http://localhost:8080/products/media/1f3c95b6-f928-4bd6-9caf-40c1bdf31bd0.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Intel i9 Creator PC",
+    "description": "Built for creators, RTX 4070, i9-13900K, 64GB RAM.",
+    "price": "34900000.00",
+    "stockQuantity": 7,
+    "category": "Gaming",
+    "brand": "Custom",
+    "createdAt": "2025-04-20T15:01:59",
+    "listMedia": [
+      "http://localhost:8080/products/media/474512b7-b946-4a51-8a92-11687af9ddb4.jpg"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Acer Predator Helios 300",
+    "description": "Intel i7-11800H, RTX 3070, 16GB RAM, 512GB SSD, 15.6-inch gaming laptop.",
+    "price": "28990000.00",
+    "discount": 10,
+    "stockQuantity": 22,
+    "category": "Laptop",
+    "brand": "Acer",
+    "createdAt": "2025-04-20T15:03:01",
+    "listMedia": [
+      "http://localhost:8080/products/media/3999a2a9-a457-40e3-a0a5-4afb2b605389.jpg"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "BenQ ZOWIE XL2411K",
+    "description": "24-inch 144Hz esports monitor with DyAc+ technology",
+    "price": "6300000.00",
+    "discount": 7,
+    "stockQuantity": 35,
+    "category": "Gaming",
+    "brand": "BenQ",
+    "createdAt": "2025-04-20T15:07:56",
+    "listMedia": [
+      "http://localhost:8080/products/media/34141eb1-2381-4b0c-9e1a-f924f1a4857a.jpg"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Corsair K100 RGB",
+    "description": "Mechanical gaming keyboard with Cherry MX switches and customizable RGB.",
+    "price": "3999000.00",
+    "discount": 5,
+    "stockQuantity": 15,
+    "category": "Gaming",
+    "brand": "Corsair",
+    "createdAt": "2025-04-20T15:10:04",
+    "listMedia": [
+      "http://localhost:8080/products/media/3dc14161-7266-448d-abed-1d8f33baada9.jpg"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Logitech G502 HERO",
+    "description": "High-precision gaming mouse with 25K DPI sensor and RGB lighting.",
+    "price": "1399000.00",
+    "discount": 2,
+    "stockQuantity": 12,
+    "category": "Gaming",
+    "brand": "Logitech",
+    "createdAt": "2025-04-20T15:11:23",
+    "listMedia": [
+      "http://localhost:8080/products/media/fb29e0f4-6332-415f-ac53-aeb467d14eda.jpg"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Alienware AW2521H",
+    "description": "25-inch 360Hz gaming monitor with NVIDIA G-SYNC technology.",
+    "price": "15000000.00",
+    "discount": 10,
+    "stockQuantity": 18,
+    "category": "Gaming",
+    "brand": "Alienware",
+    "createdAt": "2025-04-20T15:13:19",
+    "listMedia": [
+      "http://localhost:8080/products/media/f928ef56-c73d-4e50-bc00-7c5b7b611036.jpg"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Razer BlackWidow V3",
+    "description": "Mechanical keyboard with green switches, RGB backlighting, and media controls.",
+    "price": "2399000.00",
+    "discount": 12,
+    "stockQuantity": 23,
+    "category": "Gaming",
+    "brand": "Razer",
+    "createdAt": "2025-04-20T15:49:26",
+    "listMedia": [
+      "http://localhost:8080/products/media/412f9db5-cb8b-451a-8b98-4a0f22e426bf.jpg"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "MSI GE76 Raider",
+    "description": "17.3-inch laptop with Intel i9-12900HK, RTX 3080, 32GB RAM, 1TB SSD.",
+    "price": "51990000.00",
+    "discount": 11,
+    "stockQuantity": 10,
+    "category": "Laptop",
+    "brand": "MSI",
+    "createdAt": "2025-04-20T15:51:08",
+    "listMedia": [
+      "http://localhost:8080/products/media/23315dc0-7f6c-4a94-838d-5b67c95d0354.jpg"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Samsung Odyssey G9",
+    "description": "49-inch QLED ultra-wide gaming monitor with 240Hz and HDR1000.",
+    "price": "37990000.00",
+    "discount": 22,
+    "stockQuantity": 8,
+    "category": "TV",
+    "brand": "Samsung",
+    "createdAt": "2025-04-20T15:52:34",
+    "listMedia": [
+      "http://localhost:8080/products/media/9aed60ae-f923-42d1-b38b-c55633a3ed17.jpg"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "ASUS TUF Gaming A15",
+    "description": "15.6-inch laptop with Ryzen 7, RTX 3050 Ti, 16GB RAM, 512GB SSD.",
+    "price": "17990000.00",
+    "discount": 5,
+    "stockQuantity": 12,
+    "category": "Laptop",
+    "brand": "ASUS",
+    "createdAt": "2025-04-20T15:53:14",
+    "listMedia": [
+      "http://localhost:8080/products/media/ad6e606c-b184-49bf-bf05-b7a92f052362.webp"
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Xiaomi Mi 2K Gaming Monitor",
+    "description": "27-inch monitor with 165Hz refresh rate and 2K resolution.",
+    "price": "6600000.00",
+    "stockQuantity": 21,
+    "category": "TV",
+    "brand": "Xiaomi",
+    "createdAt": "2025-04-20T15:54:35",
+    "listMedia": [
+      "http://localhost:8080/products/media/d16b9316-e7b8-4d26-934d-8d984ce90f85.jpg"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "test",
+    "description": "Đây là test mô tả",
+    "price": "1000.00",
+    "stockQuantity": 20,
+    "category": "TV",
+    "brand": "test",
+    "createdAt": "2025-04-24T00:01:14",
+    "listMedia": [
+      "http://localhost:8080/products/media/8fa07fd9-2a65-458c-8fd9-6ec66bcfcc62.jpg"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "TEST01",
+    "description": "\u003Cp\u003EĐây là phần test mô tả\u003C/p\u003E\u003Cfigure class=\"image\"\u003E\u003Cimg style=\"aspect-ratio:1098/750;\" src=\"http://localhost:8080/products/detail_image/4d08cacd-6e8d-4153-9a4d-bc06fb7c141a.png\" width=\"1098\" height=\"750\"\u003E\u003C/figure\u003E",
+    "price": "5000.00",
+    "stockQuantity": 10,
+    "category": "Audio",
+    "brand": "Test",
+    "createdAt": "2025-05-15T16:31:06",
+    "listMedia": [
+      "http://localhost:8080/products/media/2051c74f-f59c-4ce0-a5f4-3ea1ee4e19c8.png"
+    ]
+  }
+]
