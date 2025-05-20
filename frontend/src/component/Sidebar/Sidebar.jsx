@@ -41,7 +41,7 @@ function Sidebar() {
                 {categorie.map((category, index) => (
                     <li key={index} className=" fw-bold">
                         <Link
-                            className={`d-flex align-items-center justify-content-between text-decoration-none text-dark  py-2 px-4 ${menu === category.name.toLowerCase() ? 'active' : ''}`}
+                            className={`d-flex align-items-center justify-content-between text-decoration-none text-white  py-2 px-4 ${menu === category.name.toLowerCase() ? 'active' : ''}`}
                             to={category.path}
                             onClick={() => setMenu(category.name.toLowerCase())}
                         >
@@ -49,7 +49,7 @@ function Sidebar() {
                                 <span className="category-icon me-3">{category.icon}</span>
                                 <span className="category-name">{category.name}</span>
                             </div>
-                            <ChevronRight className="text-muted" />
+                            <ChevronRight className="text-white" />
                         </Link>
                     </li>
                 ))}

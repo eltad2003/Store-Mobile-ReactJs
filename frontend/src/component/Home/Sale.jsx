@@ -1,11 +1,11 @@
 import { ArrowLeft, ArrowRight, Loyalty } from '@mui/icons-material';
 import React from 'react'
 import { Carousel } from 'react-bootstrap';
-import CartItem from './CartItem/CartItem';
+import CartItem from '../CartItem/CartItem';
 
 function Sale({ products }) {
     const popularProducts = products.filter(product => product.discount > 0);
-    const chunkSize = 4;
+    const chunkSize = 5;
     const productChunks = [];
 
     for (let i = 0; i < popularProducts.length; i += chunkSize) {
@@ -24,7 +24,7 @@ function Sale({ products }) {
                         <Carousel.Item >
                             <div className='row'>
                                 {chunk.map(item => (
-                                    <div className="col-6 col-md-3 my-3" key={index} style={{ minHeight: '400px' }}>
+                                    <div className="col-6 col-md-3 my-3 col-12d5" key={index} style={{ minHeight: '400px' }}>
                                         <CartItem item={item} />
                                     </div>
                                 ))}

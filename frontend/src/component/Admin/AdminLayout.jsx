@@ -40,40 +40,40 @@ function AdminLayout() {
                         />
                         <p className='fw-semibold mt-3'>{user.user.fullName}</p>
                     </div>
-                    <h3 className='mt-5'>Quản lý</h3>
-                    <ul className="list-unstyled fw-semibold p-2 mt-2">
-                        <li className="my-4 d-flex align-items-center">
+                    <h3 className='my-5'>Quản lý</h3>
+                    <ul className="list-unstyled fw-semibold gap-4 d-flex flex-column px-2">
+                        <li className=" align-items-center">
                             <Dashboard className="me-2" />
                             <Link className="text-decoration-none text-white" to="/admin"  >DashBoard</Link>
                         </li>
-                        <li className="my-4 d-flex align-items-center">
+                        <li className=" align-items-center">
                             <People className="me-2" />
                             <Link className="text-decoration-none text-white" to="/admin/users"  >Quản lý người dùng</Link>
                         </li>
-                        <li className="my-4 d-flex align-items-center">
+                        <li className=" align-items-center">
                             <ShoppingCart className="me-2" />
                             <Link className="text-decoration-none text-white" to="/admin/products"  >Quản lý Sản Phẩm</Link>
                         </li>
-                        <li className="my-4 d-flex align-items-center">
+                        <li className=" align-items-center">
                             <Category className="me-2" />
                             <Link className="text-decoration-none text-white" to="/admin/categories"  >Quản lý Danh mục</Link>
                         </li>
-                        <li className="my-4 d-flex align-items-center">
+                        <li className=" align-items-center">
                             <LocalShipping className="me-2" />
                             <Link className="text-decoration-none text-white" to="/admin/orders"  >Quản lý Đơn Hàng</Link>
                         </li>
-                        <li className="my-4 d-flex align-items-center">
+                        <li className=" align-items-center">
                             <ViewCarousel className="me-2" />
                             <Link className="text-decoration-none text-white" to='/admin/banner'  >Quản lý Banner</Link>
                         </li>
-                        <li className="my-4 d-flex align-items-center">
+                        <li className=" align-items-center">
                             <Report className="me-2" />
                             <Link className="text-decoration-none text-white" to="/admin/reports"  >Báo cáo</Link>
                         </li>
                     </ul>
-                    <div className='mt-5'>
+                    <div className='mt-4'>
                         <button
-                            className='btn btn-danger w-100 d-flex align-items-center justify-content-center'
+                            className='btn btn-danger w-100  align-items-center justify-content-center'
                             onClick={handleLogout}
                         >
                             Đăng xuất <Logout className="ms-2" />

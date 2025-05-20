@@ -2,22 +2,17 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import "./Home.css"
-import { blogs, services } from './Service'
-import { ArrowLeft, ArrowRight, ArrowUpward, Email, Send } from "@mui/icons-material"
-import clockBanner from '../asset/dong-ho-thong-minh-huawei-watch-gt-5-milanese-13-02-home.webp'
-import s25Banner from "../asset/s25-mo-ban-moi-23-1-25.webp"
-import xiaomi15Banner from '../asset/xiaomi-15-ultra-home-dkntt.webp'
-import { Carousel } from "react-bootstrap"
+import { blogs } from './Service'
+import { ArrowLeft, ArrowRight, ArrowUpward } from "@mui/icons-material"
 import { useEffect, useState } from "react"
-import Sidebar from "../Sidebar/Sidebar"
 import CartItem from "../CartItem/CartItem"
 import Footer from "../Footer/Footer"
-import Sale from "../Sale"
+import Sale from "./Sale"
 import { Link } from "react-router-dom"
 import Chatbot from "../Chatbot/Chatbot"
 import { urlBE } from "../../baseUrl"
 import Banner from "./Banner"
-
+import zaloIcon from '../asset/zaloIcon.png'
 
 function Home() {
    const [products, setProducts] = useState([])
@@ -146,6 +141,7 @@ function Home() {
          <div>
             <a href='#top' className="up-to-top rounded-pill p-2 bg text-white"> <ArrowUpward /></a>
             <Chatbot />
+            <Link to='https://zalo.me/0329732322' target="_blank"><img src={zaloIcon} alt="zalo icon" className="position-fixed end-0 bottom-0" /></Link>
          </div>
          <Footer />
       </div>

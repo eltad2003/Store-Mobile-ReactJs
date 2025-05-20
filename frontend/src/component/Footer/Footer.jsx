@@ -5,7 +5,7 @@ import { Facebook, GitHub, Google, Instagram, LinkedIn, Twitter } from '@mui/ico
 
 const Footer = () => {
     return (
-        <footer className="bg-dark text-white mt-5">
+        <footer className="bg text-white mt-5">
             <div className="container py-5">
                 <div className="row g-4">
                     {/* About Us Column */}
@@ -15,10 +15,10 @@ const Footer = () => {
                             Chúng tôi là đơn vị chuyên cung cấp các sản phẩm công nghệ chính hãng với giá cả cạnh tranh và dịch vụ chăm sóc khách hàng tốt nhất.
                         </p>
                         <div className="d-flex gap-3 mt-4">
-                            <a href="#" className="text-white"><Facebook /></a>
+                            <a href="https://web.facebook.com/hoang.dat1410/" className="text-white"><Facebook /></a>
                             <a href="#" className="text-white"><Instagram /></a>
                             <a href="#" className="text-white"><Twitter /></a>
-                            <a href="#" className="text-white"><LinkedIn /></a>
+                            <a href="https://github.com/eltad2003/Store-Mobile-ReactJs" className="text-white"><GitHub /></a>
                         </div>
                     </div>
 
@@ -37,10 +37,10 @@ const Footer = () => {
                     <div className="col-lg-3 col-md-6">
                         <h5 className="text-uppercase mb-4">Thông tin liên hệ</h5>
                         <ul className="list-unstyled text-white">
-                            <li className="mb-2">Địa chỉ: 123 Đường ABC, Quận XYZ</li>
-                            <li className="mb-2">Email: contact@example.com</li>
-                            <li className="mb-2">Hotline: 1900 xxxx</li>
-                            <li className="mb-2">Giờ làm việc: 8:00 - 22:00</li>
+                            <li className="mb-2">Địa chỉ: Số 10, Nguyễn Trãi, Hà Đông</li>
+                            <li className="mb-2">Email: eltad2003@gmail.com</li>
+                            <li className="mb-2">Hotline: 0329732322</li>
+
                         </ul>
                     </div>
 
@@ -50,7 +50,7 @@ const Footer = () => {
                         <p className="text-white">Nhận thông tin khuyến mãi mới nhất</p>
                         <div className="input-group mb-3">
                             <input type="email" className="form-control" placeholder="Email của bạn" />
-                            <button className="btn btn-danger" type="button">Đăng ký</button>
+                            <button className="btn bg text-white" >Đăng ký</button>
                         </div>
                     </div>
                 </div>

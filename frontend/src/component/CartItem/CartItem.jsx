@@ -19,7 +19,7 @@ function CartItem({ item }) {
 
 
             {/* Ảnh */}
-            <div className="text-center h-100">
+            <div className="text-center h-100" style={{ minHeight: '150px' }}>
                 <Link
                     to={`/products/${item.id}`}
                     style={{ textDecoration: 'none' }}
@@ -30,15 +30,14 @@ function CartItem({ item }) {
                         alt={item.category}
                         width={150}
                         height={150}
-                        className='img-fluid h-100 img-hover'
-
+                        className='img-fluid img-hover '
                     />
                 </Link>
             </div>
 
             {/* Thông tin */}
             <div className="mt-2 px-2 py-3 h-100">
-                <h6 className="fw-semibold flex-wrap" title={item.name} >
+                <h6 className="fw-semibold flex-wrap" title={item.name} style={{ minHeight: '30px' }} >
                     <Link
                         to={`/products/${item.id}`}
                         className="text-decoration-none fw-bold fs-6 text-black"
@@ -46,9 +45,9 @@ function CartItem({ item }) {
                         {item.name}
                     </Link>
                 </h6>
-                <div>
+                <div className='flex-wrap'>
                     {item.discount ? (
-                        <div className="d-flex flex-wrap gap-1 align-items-center">
+                        <div className="d-flex gap-1 align-items-center">
                             <span className="text-success fw-bold me-1">{formatPrice(item.price)}</span>
                             <span className="text-muted text-decoration-line-through small">
                                 {formatPrice(Math.round(item.price * (1 + item.discount / 100)))}
@@ -58,7 +57,7 @@ function CartItem({ item }) {
                         <span className="text-danger fw-bold">{formatPrice(item.price)}</span>
                     )}
                 </div>
-                <div className="small text-muted mt-1 bg-light p-1 rounded-3">
+                <div className="small text-muted mt-1 bg-light rounded-3">
                     Không phí chuyển đổi khi trả góp 0%
                 </div>
             </div>

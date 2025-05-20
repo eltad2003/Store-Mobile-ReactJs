@@ -91,85 +91,92 @@ function Navbar() {
             </div>
             {/* Navbar */}
             <div className='bg-navbar position-sticky top-0 z-2 p-2'>
-                <nav className="navbar navbar-expand-lg navbar-dark">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-navbar position-sticky top-0 z-2 p-2">
                     <div className="container-fluid">
-                        <a className="mt-2 navbar-brand ms-3 text-white fw-bold" href="/"><img src={logo} alt='Logo' width={50} height={50} className='img-fluid' />INFINITYSHOP</a>
+                        <Link className="navbar-brand d-flex align-items-center text-white fw-bold" to="/">
+                            <img src={logo} alt="Logo" width={50} height={50} className="img-fluid me-2" />
+                            INFINITYSHOP
+                        </Link>
+
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                             <span className="navbar-toggler-icon"></span>
                         </button>
+
                         <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="navbar-nav me-lg-3  me-5 d-flex flex-row align-items-center">
+                            {/* Left links */}
+                            <ul className="navbar-nav me-auto d-flex align-items-lg-center">
                                 <li className="nav-item me-3">
-                                    <button className="nav-link text-white">Danh mục</button>
+                                    <Link className="nav-link text-white" to="/contact">
+                                        <Person className="me-1" /> Liên hệ
+                                    </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link text-white" href="/viewOrder">Tra cứu đơn hàng</a>
+                                <li className="nav-item me-3">
+                                    <Link className="nav-link text-white" to="/viewOrder">
+                                        <ComputerIcon className="me-1" /> Tra cứu đơn hàng
+                                    </Link>
                                 </li>
+                                {user?.user.role === 'ADMIN' && (
+                                    <li className="nav-item me-3">
+                                        <Link to="/admin" className="nav-link text-white">
+                                            Quản lý
+                                        </Link>
+                                    </li>
+                                )}
                             </ul>
 
-                            <div className="d-flex flex-grow-1 mx-5">
-                                <div className="input-group">
+                            {/* Search */}
+                            <div className="d-flex flex-grow-1 justify-content-center my-2 my-lg-0">
+                                <div className="input-group w-75 w-lg-50">
                                     <input
                                         className="form-control rounded-pill"
                                         type="search"
                                         placeholder="Bạn tìm gì.."
                                         value={search}
-                                        onChange={(e) => { setSearch(e.target.value); setShowSuggestions(true) }}
+                                        onChange={(e) => {
+                                            setSearch(e.target.value);
+                                            setShowSuggestions(true);
+                                        }}
                                     />
                                 </div>
                             </div>
 
-                            <ul className="navbar-nav ms-lg-3 d-flex flex-row align-items-center">
-                                {user && user.user.role === 'ADMIN' && (
-                                    <li className='nav-item me-3'>
-                                        <Link to={'/admin'} className='text-white text-decoration-none'>Quản lý</Link>
-                                    </li>
-                                )}
+                            {/* Right icons */}
+                            <ul className="navbar-nav ms-auto d-flex flex-row align-items-center">
                                 <li className="nav-item me-3">
-                                    <Link to={'/cart'} className="position-relative" style={{ color: 'white' }}>
+                                    <Link to="/cart" className="position-relative text-white">
                                         <ShoppingCart />
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-danger">
                                             {cartItems.length}
                                         </span>
                                     </Link>
                                 </li>
-                                <li className="nav-item dropdown ms-2">
+                                <li className="nav-item dropdown">
                                     <Link
-                                        style={{ color: 'white' }}
+                                        className="nav-link text-white"
                                         onClick={() => setIsOpen(!isOpen)}
-
+                                        role="button"
                                     >
                                         <AccountCircle />
                                     </Link>
                                     {isOpen && (
-                                        <>
-
-                                            <div className="dropdown-menu show end-0  mt-2">
-                                                {user ? (
-                                                    <div>
-                                                        <p className='dropdown-item fw-bolder'>Hello, {user.user.fullName}</p>
-                                                        <Link to={'/profile'} className='dropdown-item'><p>Hồ sơ</p></Link>
-                                                        <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>
-                                                            Đăng xuất
-                                                        </Link>
-                                                    </div>
-                                                ) : (
-                                                    <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)} >
-                                                        Đăng nhập
-                                                    </Link>
-                                                )}
-                                            </div>
-                                        </>
+                                        <div className="dropdown-menu show end-0 mt-2">
+                                            {user ? (
+                                                <>
+                                                    <p className="dropdown-item fw-bold">Hello, {user.user.fullName}</p>
+                                                    <Link to="/profile" className="dropdown-item">Hồ sơ</Link>
+                                                    <Link className="dropdown-item" onClick={() => { handleLogout(); setIsOpen(false) }}>Đăng xuất</Link>
+                                                </>
+                                            ) : (
+                                                <Link className="dropdown-item" to="/login" onClick={() => setIsOpen(false)}>Đăng nhập</Link>
+                                            )}
+                                        </div>
                                     )}
-
                                 </li>
-
                             </ul>
-
-
                         </div>
                     </div>
                 </nav>
+
                 {showSuggestions && (
                     <>
                         <div
