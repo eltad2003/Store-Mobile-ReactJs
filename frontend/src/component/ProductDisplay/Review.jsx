@@ -84,7 +84,7 @@ function Review({ productId }) {
                             <p className='fw-bold'>{rating}</p>
                             <Star className="text-warning" />
                             <div className='ms-3 mt-1 progress w-50'>
-                                <div className={`progress-bar bg-danger w-${rating * 20}`}></div>
+                                <div className={`progress-bar bg w-${rating * 20}`}></div>
                             </div>
                         </div>
                     ))}
@@ -93,15 +93,15 @@ function Review({ productId }) {
 
             <div className='my-2 text-center'>
                 <p>Bạn nghĩ sao về sản phẩm này</p>
-                <button className='btn btn-danger' data-bs-toggle="modal" data-bs-target="#modal-review">Đánh giá ngay</button>
+                <button className='btn bg text-white' data-bs-toggle="modal" data-bs-target="#modal-review">Đánh giá ngay</button>
             </div>
 
             {/* Modal Review */}
             <div className="modal fade" id='modal-review' tabIndex="-1">
                 <div className="modal-dialog modal-dialog-centered scrollable">
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title bg-light fw-bold">Đánh giá và nhận xét</h5>
+                        <div className="modal-header bg text-white">
+                            <h5 className="modal-title ">Đánh giá và nhận xét</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div className="modal-body">
@@ -115,7 +115,7 @@ function Review({ productId }) {
 
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" onClick={handleReviewSubmit} data-bs-dismiss="modal">
+                            <button type="button" className="btn bg text-white" onClick={handleReviewSubmit} data-bs-dismiss="modal">
                                 Gửi đánh giá
                             </button>
                         </div>

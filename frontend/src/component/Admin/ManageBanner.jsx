@@ -8,6 +8,7 @@ function ManageBanner() {
     const [isLoading, setIsLoading] = useState(false)
     const [banners, setBanners] = useState([])
     const [images, setImages] = useState([])
+
     const [newBanner, setNewBanner] = useState({
         title: '',
         link: '',
@@ -18,6 +19,7 @@ function ManageBanner() {
         link: '',
         isActive: false
     })
+
 
     const fetchBaners = async () => {
         setIsLoading(true)
@@ -42,6 +44,7 @@ function ManageBanner() {
             setIsLoading(false)
         }
     }
+
     const handleAddBanner = async () => {
         setIsLoading(true)
         const formData = new FormData()
@@ -154,7 +157,31 @@ function ManageBanner() {
         }
 
     }
+    const handleChangeActive = async (id, changeIsActive) => {
+        setIsLoading(true)
+        try {
+            const res = await fetch(`${urlBE}/admin/banners/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({ isActive: changeIsActive })
+            })
+            if (res.ok) {
+                alert('Cập nhật trạng thái hiển thị thành công')
+                fetchBaners()
+            }
+            else {
+                alert('Cập nhật trạng thái hiển thị thất bại')
+            }
+        } catch (error) {
+            console.log('Lỗi server', error);
 
+        } finally {
+            setIsLoading(false)
+        }
+    }
     useEffect(() => {
         fetchBaners()
     }, [])
@@ -370,8 +397,16 @@ function ManageBanner() {
                                             <td className=''>
                                                 <a href={banner.link}>{banner.link}</a>
                                             </td>
-                                            <td className=''>
-                                                {banner.isActive ? <span className='text-success'>Đang hiển thị</span> : <span className='text-danger'>Không hiển thị</span>}
+                                            <td className='text-nowrap'>
+                                                <select
+                                                    className={`form-select ${banner.isActive ? 'text-success' : 'text-danger'} `}
+                                                    value={banner.isActive ? "true" : "false"}
+                                                    onChange={(e) => handleChangeActive(banner.id, (e.target.value === 'true'))}
+
+                                                >
+                                                    <option value='true' style={{ color: 'black' }}>Đang hiển thị</option>
+                                                    <option value='false' style={{ color: 'black' }}>Không hiển thị</option>
+                                                </select>
                                             </td>
                                             <td >
                                                 <div className='d-flex justify-content-center align-items-center gap-2'>

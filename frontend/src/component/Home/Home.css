@@ -34,6 +34,7 @@
 }
 
 .bg {
-    /* background: linear-gradient(to right, #fecede, #fbcbae) */
-    background: linear-gradient(rgb(255, 108, 131), rgb(255, 108, 131))
+    background: linear-gradient(to right, #870000, #190a05)
+        /* background: linear-gradient(rgb(255, 99, 114), rgb(248, 56, 100), rgb(252, 54, 54)) */
 }
+

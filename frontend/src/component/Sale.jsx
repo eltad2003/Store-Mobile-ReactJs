@@ -13,8 +13,8 @@ function Sale({ products }) {
     }
     return (
         <div className='p-3'>
-            <h3 className='fw-bold text-white'>HOT SALE <Loyalty className="mb-1 fs-1 " /></h3>
-            <div className='card shadow rounded-4 p-3' style={{ minHeight: '450px' }}>
+            <h3 className='fw-bold text-white ms-5'>HOT SALE <Loyalty className="mb-1 fs-1 " /></h3>
+            <div className='h-100 rounded-4' >
                 <Carousel indicators={false} controls={true}
                     prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
                     nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
@@ -24,7 +24,7 @@ function Sale({ products }) {
                         <Carousel.Item >
                             <div className='row'>
                                 {chunk.map(item => (
-                                    <div className="col-6 col-md-3 my-3" key={index} >
+                                    <div className="col-6 col-md-3 my-3" key={index} style={{ minHeight: '400px' }}>
                                         <CartItem item={item} />
                                     </div>
                                 ))}

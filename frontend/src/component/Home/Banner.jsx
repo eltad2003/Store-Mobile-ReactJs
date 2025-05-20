@@ -23,12 +23,14 @@ function Banner() {
         fetchBanner()
     }, [])
     return (
-        <div className="container p-5">
-            <div className="">
-
+        <div className="container py-5">
+            <div className="row">
+                <div className="col-md-2 d-none d-md-block">
+                    <Sidebar />
+                </div>
                 {/* Carousel - Show on all screens */}
-                <div className="col-12 mt-3 h-100">
-                    <div className="card border-0 shadow-sm rounded-4" >
+                <div className="col-12 col-md-10  h-100">
+                    <div className="card border-0 shadow-lg rounded-4" >
                         <Carousel
                             activeIndex={index}
                             onSelect={(selectedIndex) => setIndex(selectedIndex)}

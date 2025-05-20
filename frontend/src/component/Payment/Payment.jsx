@@ -51,7 +51,7 @@ function Payment() {
           <div className="row justify-content-center">
             <div className="col-md-8">
               <div className="card shadow">
-                <div className="card-header bg-danger text-white">
+                <div className="card-header bg text-white">
                   <h3 className="mb-0">Xác minh phương thức thanh toán</h3>
                 </div>
                 <div className="card-body">
@@ -82,7 +82,7 @@ function Payment() {
                     <div className="d-grid gap-2">
                       <button
                         type="submit"
-                        className="btn btn-danger btn-lg"
+                        className="btn bg text-white btn-lg"
                         disabled={isLoading}
                       >
                         {isLoading ? (
@@ -106,7 +106,7 @@ function Payment() {
         </div>
       ) : (
         <div className="position-absolute top-50 start-50 translate-middle">
-          <h1 className='bg-danger text-white rounded-pill fw-bolder'>Error 404</h1>
+          <h1 className='bg text-white rounded-pill fw-bolder'>Error 404</h1>
         </div>
       )}
     </>

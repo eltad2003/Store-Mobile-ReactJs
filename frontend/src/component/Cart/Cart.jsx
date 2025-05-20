@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ArrowBack, RemoveShoppingCart } from '@mui/icons-material';
 import { AuthContext } from '../AuthProvider';
 import formatPrice from '../../formatPrice';
+import './Cart.css'
 
 function Cart() {
     const { cartItems, removeFromCart, increaseItem, decreaseItem, selectedItems, toggleSelectItem, selectAllItems, updateQuantity } = useContext(CartContext);
@@ -29,13 +30,13 @@ function Cart() {
                     <h4 className='fw-bold mb-3'> Giỏ hàng trống</h4>
                     <RemoveShoppingCart className='w-100 h-50 text-danger' />
                     <p className='text-muted'>Không có sản phẩm nào trong giỏ hàng.</p>
-                    <Link to={'/'}><button className='btn btn-danger w-100'>Tiếp tục mua sắm</button></Link>
+                    <Link to={'/'}><button className='btn bg text-white w-100'>Tiếp tục mua sắm</button></Link>
                 </div>
             ) : (
                 <div className="row">
                     <div className="col-lg-8">
                         <div className="card border-0 shadow-sm mb-4  position-sticky top-0">
-                            <div className="card-header bg-white py-3">
+                            <div className="card-header bg-cart text-white py-3">
                                 <div className="d-flex align-items-center">
                                     <Link to="/" className="text-decoration-none text-dark me-3">
                                         <ArrowBack />
@@ -90,7 +91,7 @@ function Cart() {
                                                             <span className="text-decoration-line-through text-muted me-2">
                                                                 {formatPrice(Math.round(product.price * (1 + product.discount / 100)))}
                                                             </span>
-                                                            <span className="badge bg-danger me-2">-{product.discount}%</span>
+                                                            <span className="badge bg-cart me-2">-{product.discount}%</span>
                                                             <span className="text-success fw-bold">{formatPrice(product.price)}</span>
                                                         </div>
                                                     ) : (
@@ -140,7 +141,7 @@ function Cart() {
 
                     <div className="col-lg-4">
                         <div className="card border-0 shadow position-sticky top-0" style={{ top: '20px' }}>
-                            <div className="card-header bg-danger text-white py-3 ">
+                            <div className="card-header bg-cart text-white py-3 ">
                                 <h5 className="mb-0">Thông tin đơn hàng</h5>
                             </div>
                             <div className="card-body">
@@ -164,13 +165,13 @@ function Cart() {
 
                                 {user ? (
                                     <Link to="/order" onClick={handleCheckout} className="text-decoration-none">
-                                        <button className="btn btn-danger w-100 py-2">
+                                        <button className="btn bg text-white w-100 py-2">
                                             Thanh toán
                                         </button>
                                     </Link>
                                 ) : (
                                     <Link to="/login" onClick={() => alert("Bạn cần đăng nhập để thanh toán")} className="text-decoration-none">
-                                        <button className="btn btn-danger w-100 py-2">
+                                        <button className="btn bg text-white w-100 py-2">
                                             Đăng nhập để thanh toán
                                         </button>
                                     </Link>

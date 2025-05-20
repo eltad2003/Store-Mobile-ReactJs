@@ -66,18 +66,14 @@ function Home() {
 
          {/* sản phẩm hot */}
          <div className="container">
-            <div className="row">
-               <div className="col-md-3 d-none d-md-block">
-                  <Sidebar />
-               </div>
-               <div className="col-md-9 p-3 bg-danger rounded-4">
-                  <Sale products={products} />
-               </div>
+            <div className="bg rounded-4">
+               <Sale products={products} />
             </div>
          </div>
 
+
          {/* Tất cả sản phẩm */}
-         <div className="container p-5" id="top">
+         <div className="container py-5" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
             <div className="row mt-3">
                {products.slice(firstItemIndx, lastItemIndx).map((item) => (
@@ -88,7 +84,7 @@ function Home() {
             </div>
             {/* pagination */}
             <div className=" mt-4 d-flex justify-content-center">
-               {/* <button className="btn btn-danger"
+               {/* <button className="btn text-white bg"
                      onClick={() => {
                         setCurrentPage(currentPage - 1)
                         document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -98,7 +94,7 @@ function Home() {
                   </button> */}
                {pages.map((page, index) => (
                   <div key={index}>
-                     <button className={page === currentPage && currentPage > 0 ? "btn pw-bold btn-danger mx-2 active" : "btn"}
+                     <button className={page === currentPage && currentPage > 0 ? "btn pw-bold text-white bg mx-2 active" : "btn"}
                         onClick={() => {
                            setCurrentPage(page)
                            document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -108,7 +104,7 @@ function Home() {
                      </button>
                   </div>
                ))}
-               <button className="btn btn-danger"
+               <button className="btn text-white bg"
                   onClick={() => {
                      setCurrentPage(currentPage + 1);
                      document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -122,10 +118,10 @@ function Home() {
          </div>
 
          {/* forum */}
-         <div className="container p-5">
+         <div className="container py-5">
             <div className="d-flex justify-content-between align-items-center my-4">
                <h2 className="fw-bold text-uppercase">Bài Viết Mới Nhất</h2>
-               <button className="btn btn-danger rounded-pill px-4">Xem Tất Cả</button>
+               <button className="btn text-white bg rounded-pill px-4">Xem Tất Cả</button>
             </div>
             <div className="row">
                {blogs.map((blog, index) => (
@@ -148,7 +144,7 @@ function Home() {
 
          {/* lên đầu và chat */}
          <div>
-            <a href='#top' className="up-to-top rounded-pill p-2 bg-danger text-white"> <ArrowUpward /></a>
+            <a href='#top' className="up-to-top rounded-pill p-2 bg text-white"> <ArrowUpward /></a>
             <Chatbot />
          </div>
          <Footer />

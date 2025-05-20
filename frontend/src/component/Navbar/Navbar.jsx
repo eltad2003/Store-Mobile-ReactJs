@@ -8,6 +8,7 @@ import ComputerIcon from '@mui/icons-material/Computer';
 import { CartContext } from '../CartProvider'
 import formatPrice from '../../formatPrice'
 import { urlBE, urlSocket } from '../../baseUrl'
+import logo from '../asset/logo.png'
 function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false)
@@ -89,10 +90,10 @@ function Navbar() {
                 </div>
             </div>
             {/* Navbar */}
-            <div className='bg-dark position-sticky top-0 z-2 p-2'>
+            <div className='bg-navbar position-sticky top-0 z-2 p-2'>
                 <nav className="navbar navbar-expand-lg navbar-dark">
                     <div className="container-fluid">
-                        <a className="navbar-brand ms-3 text-white fw-bold" href="/"><ComputerIcon style={{ color: 'yellow' }} /> SHOP888</a>
+                        <a className="mt-2 navbar-brand ms-3 text-white fw-bold" href="/"><img src={logo} alt='Logo' width={50} height={50} className='img-fluid' />INFINITYSHOP</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                             <span className="navbar-toggler-icon"></span>
                         </button>

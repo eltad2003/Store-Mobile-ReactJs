@@ -69,7 +69,7 @@ function Chatbot() {
                     </div>
                     <div className="me-5 mb-3 position-fixed end-0 bottom-0 z-3">
                         <div className="card shadow-lg border-0 rounded-3" style={{ width: "420px", height: "500px" }}>
-                            <div className='card-header bg-primary d-flex'>
+                            <div className='card-header bg d-flex'>
                                 <p className="fw-bold fs-5  text-white" >Chat với shop</p>
                                 <button onClick={() => setShowChat(false)} className='btn btn-close ms-auto mt-2'></button>
                             </div>

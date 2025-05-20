@@ -10,3 +10,7 @@
 .sidebar {
     transition: all 0.3s ease;
 }
+
+.bg-sidebar {
+    background: linear-gradient(rgb(134, 76, 213), rgb(230, 159, 218), rgb(217, 128, 228), )
+}

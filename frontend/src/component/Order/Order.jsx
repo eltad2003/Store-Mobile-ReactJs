@@ -198,7 +198,7 @@ function Order() {
                         <div className="row justify-content-center">
                             <div className="col-md-8">
                                 <div className="card">
-                                    <div className="card-header bg-danger text-white">
+                                    <div className="card-header bg text-white">
                                         <h3 className="mb-0">Phương thức thanh toán</h3>
                                     </div>
                                     <div className="card-body">
@@ -266,7 +266,7 @@ function Order() {
                                 </h4>
                             </div>
                             <button
-                                className="btn btn-danger w-100 py-2"
+                                className="btn bg text-white w-100 py-2"
                                 onClick={handleOrder}
                             >
                                 Tiếp tục thanh toán

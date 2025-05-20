@@ -209,7 +209,7 @@ function Product() {
                             <div className='d-flex flex-wrap'>
                                 <h4 className='text-decoration-line-through '>${Math.round(product.price * (1 + product.discount / 100))}</h4>
                                 <h3 className="text-success fw-bold ms-2">{formatPrice(product.price)}</h3>
-                                <p className='ms-2 text-white bg-danger px-1 rounded-pill'>{product.discount}% off</p>
+                                <p className='ms-2 text-white bg px-1 rounded-pill'>{product.discount}%</p>
                             </div>
                         ) : (
                             <h5 className="text-danger fw-bold">{formatPrice(product.price)}</h5>
@@ -220,7 +220,7 @@ function Product() {
                         </ul>
 
                         {product.stockQuantity > 0 ? (
-                            <button className="btn btn-danger w-100" onClick={() => addToCart(product)}><AddShoppingCart /> Thêm vào giỏ hàng </button>
+                            <button className="btn text-white bg w-100" onClick={() => addToCart(product)}><AddShoppingCart /> Thêm vào giỏ hàng </button>
                         ) : (
                             <button className="btn btn-danger w-100" disabled><AddShoppingCart /> Hết hàng </button>
                         )}
@@ -283,7 +283,7 @@ function Product() {
                 />
 
                 <div className='d-flex justify-content-center z-2 mt-3' >
-                    <button className="btn shadow fw-bold " onClick={() => setShowFullDesc(!showFullDesc)} >
+                    <button className="btn bg text-white shadow fw-bold " onClick={() => setShowFullDesc(!showFullDesc)} >
                         {showFullDesc ? 'Ẩn bớt' : 'Xem thêm'} <ExpandMore />
                     </button>
                 </div>
@@ -305,6 +305,7 @@ function Product() {
 
             {/* Review and Rating */}
             <Review productId={product.id} />
+
             {/* Chatbot */}
             <Chatbot />
 
