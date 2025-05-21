@@ -71,7 +71,7 @@ function CartItem({ item }) {
                 </div>
                 <div className="text-muted small d-flex align-items-center">
                     <Link className="ms-1 " style={{ color: 'red' }}><FavoriteBorder /></Link>
-                    <span className="d-none d-sm-inline me-1">Yêu thích</span>
+                    <span className="d-none d-md-none d-lg-block me-1">Yêu thích</span>
                 </div>
             </div>
         </div>

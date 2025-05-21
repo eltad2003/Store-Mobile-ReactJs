@@ -18,12 +18,18 @@ function Home() {
    const [products, setProducts] = useState([])
 
    const [currentPage, setCurrentPage] = useState(1)
-   const [itemPerpage, setItemPerPage] = useState(15)
+   const [itemPerpage, setItemPerPage] = useState(20)
 
 
    const fetchProducts = async () => {
       try {
-         const response = await fetch(`${urlBE}/products`)
+         const response = await fetch(`${urlBE}/products`, {
+            method: 'GET',
+            headers: {
+               "Content-Type": "application/json",
+            },
+            credentials: 'include'
+         })
          const data = await response.json()
          setProducts(data)
       } catch (error) {
@@ -60,7 +66,7 @@ function Home() {
          <Banner />
 
          {/* sản phẩm hot */}
-         <div className="container">
+         <div className="container-lg container-md-fluid">
             <div className="bg rounded-4">
                <Sale products={products} />
             </div>
@@ -68,11 +74,11 @@ function Home() {
 
 
          {/* Tất cả sản phẩm */}
-         <div className="container py-5" id="top">
+         <div className="container-md-fluid container-lg py-lg-5 p-md-5" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
-            <div className="row mt-3">
+            <div className="row mt-3 d-md-flex justify-content-center">
                {products.slice(firstItemIndx, lastItemIndx).map((item) => (
-                  <div className="col col-12d5 col-6 col-md-4 my-3" key={item.id}>
+                  <div className="col-12d5 col-6 col-md-3 my-3" key={item.id}>
                      <CartItem item={item} />
                   </div>
                ))}

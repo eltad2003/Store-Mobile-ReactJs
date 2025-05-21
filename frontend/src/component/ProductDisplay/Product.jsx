@@ -182,7 +182,7 @@ function Product() {
 
     return (
 
-        <div className='container mt-3'>
+        <div className='container-lg container-md-fluid p-md-5 mt-3'>
 
             {/* Breadcrumb */}
             <div className='p-3'>

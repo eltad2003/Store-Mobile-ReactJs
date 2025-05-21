@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import { Facebook, GitHub, Google, Instagram, LinkedIn, Twitter } from '@mui/icons-material';
+import { Facebook, GitHub } from '@mui/icons-material';
 
 const Footer = () => {
     return (
@@ -16,8 +15,6 @@ const Footer = () => {
                         </p>
                         <div className="d-flex gap-3 mt-4">
                             <a href="https://web.facebook.com/hoang.dat1410/" className="text-white"><Facebook /></a>
-                            <a href="#" className="text-white"><Instagram /></a>
-                            <a href="#" className="text-white"><Twitter /></a>
                             <a href="https://github.com/eltad2003/Store-Mobile-ReactJs" className="text-white"><GitHub /></a>
                         </div>
                     </div>
@@ -26,10 +23,10 @@ const Footer = () => {
                     <div className="col-lg-2 col-md-6">
                         <h5 className="text-uppercase mb-4">Liên kết nhanh</h5>
                         <ul className="list-unstyled">
-                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Trang chủ</a></li>
-                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Sản phẩm</a></li>
-                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Khuyến mãi</a></li>
-                            <li className="mb-2"><a href="#" className="text-white text-decoration-none">Tin tức</a></li>
+                            <li className="mb-2"><a href="/" className="text-white text-decoration-none">Trang chủ</a></li>
+                            <li className="mb-2"><a href="/" className="text-white text-decoration-none">Sản phẩm</a></li>
+                            <li className="mb-2"><a href="/" className="text-white text-decoration-none">Khuyến mãi</a></li>
+                            <li className="mb-2"><a href="/" className="text-white text-decoration-none">Tin tức</a></li>
                         </ul>
                     </div>
 
@@ -58,7 +55,7 @@ const Footer = () => {
 
             {/* Copyright */}
             <div className="text-center py-3 border-top border-secondary">
-                <p className="mb-0">© 2025 Copyright: LE HOANG DAT-B21DCC212</p>
+                <p className="mb-0">© 2025 Copyright: LE HOANG DAT-B21DCCN212</p>
             </div>
         </footer>
     )

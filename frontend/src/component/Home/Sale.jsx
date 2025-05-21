@@ -66,9 +66,9 @@ function Sale({ products }) {
                 >
                     {productChunks.map((chunk, index) => (
                         <Carousel.Item key={index} >
-                            <div className='row'>
+                            <div className='row d-md-flex justify-content-center'>
                                 {chunk.map((item, i) => (
-                                    <div className="col-6 col-md-3 my-3 col-12d5" key={i} style={{ minHeight: '400px' }}>
+                                    <div className="my-3 col-12d5" key={i} style={{ minHeight: '400px' }}>
                                         <CartItem item={item} />
                                     </div>
                                 ))}

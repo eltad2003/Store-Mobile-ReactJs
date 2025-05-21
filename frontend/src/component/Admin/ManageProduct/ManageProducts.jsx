@@ -231,7 +231,7 @@ function ManageProducts() {
             </div>
           ) : (
             <div >
-              <table className="table table-hover align-middle">
+              <table className="table table-hover align-middle " >
                 <thead className="table-light">
                   <tr>
                     <th className='scope'>STT</th>

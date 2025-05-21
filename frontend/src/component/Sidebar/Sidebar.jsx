@@ -35,7 +35,7 @@ function Sidebar() {
     ]
 
     return (
-        <div className="sidebar bg-sidebar rounded-4 py-5 shadow-lg h-100">
+        <div className="sidebar bg-sidebar rounded-4 py-5 shadow-lg h-100 " >
 
             <ul className="d-flex flex-column gap-4 list-unstyled ">
                 {categorie.map((category, index) => (

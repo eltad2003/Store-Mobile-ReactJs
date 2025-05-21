@@ -11,7 +11,10 @@ function Banner() {
 
     const fetchBanner = async () => {
         try {
-            const response = await fetch(`${urlBE}/banners`)
+            const response = await fetch(`${urlBE}/banners`, {
+                method: 'GET',
+                headers: { "Content-Type": "application/json", }
+            })
             const data = await response.json()
             setBanners(data)
         } catch (error) {
@@ -23,9 +26,9 @@ function Banner() {
         fetchBanner()
     }, [])
     return (
-        <div className="container py-5">
-            <div className="row">
-                <div className="col-md-2 d-none d-md-block">
+        <div className="container-lg container-md-fluid py-5">
+            <div className="row d-flex justify-content-center">
+                <div className="col-md-2 d-none d-md-none d-lg-block">
                     <Sidebar />
                 </div>
                 {/* Carousel - Show on all screens */}

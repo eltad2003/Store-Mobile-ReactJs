@@ -25,7 +25,10 @@ function Navbar() {
 
     const fetchProducts = async (type = search) => {
         try {
-            const res = await fetch(`${urlBE}/products?search=${type}`);
+            const res = await fetch(`${urlBE}/products?search=${type}`, {
+                method: 'GET',
+                headers: { 'content-type': 'application/json' }
+            });
             if (res.ok) {
                 const data = await res.json()
                 setProducts(data)
@@ -125,7 +128,7 @@ function Navbar() {
                             <div className="d-flex flex-grow-1 justify-content-center my-2 my-lg-0">
                                 <div className="input-group w-75 w-lg-50">
                                     <input
-                                        className="form-control rounded-pill"
+                                        className="form-control rounded-pill d-none d-lg-block"
                                         type="search"
                                         placeholder="Bạn tìm gì.."
                                         value={search}
