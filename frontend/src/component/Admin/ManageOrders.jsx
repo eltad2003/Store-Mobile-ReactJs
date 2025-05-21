@@ -7,11 +7,16 @@ function ManageOrders() {
   const [orders, setOrders] = useState([])
   const token = JSON.parse(localStorage.getItem('user')).token
   const [statusShipping, setStatusShipping] = useState('')
+  const [searchByEmail, setSearchByEmail] = useState('')
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
 
-  const fetchOrders = async () => {
+  const fetchOrders = async (search = searchByEmail, start = startDate, end = endDate) => {
     try {
-      const res = await fetch(`${urlBE}/orders/all`, {
+      let url = `${urlBE}/orders/all?email=${search}`
+      if (start && end) url += `&start=${start}&end=${end}`
+      const res = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -80,8 +85,8 @@ function ManageOrders() {
   };
 
   useEffect(() => {
-    fetchOrders()
-  }, [])
+    fetchOrders(searchByEmail, startDate, endDate)
+  }, [searchByEmail, startDate, endDate])
 
   const handleUpdateStatus = async (orderId) => {
     try {
@@ -124,8 +129,41 @@ function ManageOrders() {
   return (
     <div className='container'>
 
-      <div className='my-5'>
-        <h3 className='fw-bold'>Quản lý Các Đơn hàng</h3>
+      <div className='py-5'>
+        {/* search orders */}
+        <div className='p-2 d-flex justify-content-between gap-3'>
+          <h3 className='fw-bold'>Quản lý Các Đơn hàng</h3>
+          <div>
+            <i className="bi bi-search me-2"></i>
+            <input
+              type="text"
+              value={searchByEmail}
+              placeholder='Tìm kiếm theo email....'
+              className='rounded-3'
+              style={{ width: '500px' }}
+              onChange={(e) => setSearchByEmail(e.target.value)}
+            />
+          </div>
+          <div className='d-flex gap-2'>
+            <input
+              type="date"
+              value={startDate}
+              className='rounded-3'
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            <span>→</span>
+            <input
+              type="date"
+              value={endDate}
+              className='rounded-3'
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+            <button className='btn btn-primary btn-sm' onClick={() => { setStartDate(''); setEndDate('') }}>
+              <i className="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+        </div>
+
         <div className='card shadow p-3 mt-3'>
           <table class="table align-middle table-hover mb-0">
             <thead class="table-light">

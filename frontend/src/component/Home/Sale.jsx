@@ -6,15 +6,24 @@ import CartItem from '../CartItem/CartItem';
 function Sale({ products }) {
 
     // Countdown timer logic
-    const [timeLeft, setTimeLeft] = useState(12 * 60 * 60); //  seconds
+    const getEndTime = () => {
+        const saved = localStorage.getItem('saleEndTime');
+        if (saved) return parseInt(saved, 10);
+        const end = Date.now() + 1 * 60 * 60 * 1000; // 24h từ bây giờ
+        localStorage.setItem('saleEndTime', end);
+        return end;
+    };
+
+    const [endTime] = useState(getEndTime());
+    const [timeLeft, setTimeLeft] = useState(Math.max(0, Math.floor((endTime - Date.now()) / 1000)));
 
     useEffect(() => {
         if (timeLeft <= 0) return;
         const timer = setInterval(() => {
-            setTimeLeft(prev => prev - 1);
+            setTimeLeft(Math.max(0, Math.floor((endTime - Date.now()) / 1000)));
         }, 1000);
         return () => clearInterval(timer);
-    }, [timeLeft]);
+    }, [endTime, timeLeft]);
 
     // Format time as HH:MM:SS
     const formatTime = (secs) => {

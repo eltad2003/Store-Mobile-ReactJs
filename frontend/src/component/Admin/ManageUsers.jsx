@@ -7,6 +7,7 @@ function ManageUsers() {
   const [listUsers, setListUsers] = useState([])
   const { user } = useContext(AuthContext)
   const [userAddresses, setUserAddresses] = useState({})
+  const [searchUser, setSearchUser] = useState('')
   const [newUser, setNewUser] = useState({
     fullName: "",
     email: "",
@@ -16,9 +17,9 @@ function ManageUsers() {
   })
 
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (search = searchUser) => {
     try {
-      const response = await fetch(`${urlBE}/users`, {
+      const response = await fetch(`${urlBE}/users?key=${search}`, {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
@@ -53,8 +54,9 @@ function ManageUsers() {
   }
 
   useEffect(() => {
-    fetchUsers()
-  }, [])
+    fetchUsers(searchUser)
+
+  }, [searchUser])
 
   const handleDeleteUser = async (userId) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
@@ -101,11 +103,19 @@ function ManageUsers() {
 
   return (
     <div className='container'>
-
-
       <div className='my-5'>
-        <div className="d-flex">
-          <h3 className='fw-bold'>Quản lý người dùng</h3>
+        <h3 className='fw-bold'>Quản lý người dùng</h3>
+        <div className="d-flex justify-content-between">
+          <div className='ms-3 mt-1'>
+            <i className="bi bi-search me-2"></i>
+            <input
+              type="text"
+              className='rounded-3'
+              onChange={(e) => setSearchUser(e.target.value)}
+              style={{ width: '500px' }}
+              value={searchUser}
+            />
+          </div>
           <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddUser">Thêm người dùng</button>
         </div>
         <div className="card shadow p-3 mt-3">
@@ -140,10 +150,9 @@ function ManageUsers() {
                     <div className="form-group">
                       <label>Vai trò</label>
                       <select name="role" className='form-select' onChange={e => setNewUser({ ...newUser, [e.target.name]: e.target.value })}>
-                        <option selected value="">-Chọn vai trò-</option>
+                        <option value="">-Chọn vai trò-</option>
                         <option value="ADMIN">ADMIN</option>
                         <option value="CUSTOMER">CUSTOMER</option>
-
                       </select>
                     </div>
                   </div>
@@ -203,17 +212,18 @@ function ManageUsers() {
                   </td>
                   <td className="text-center">{listUser.phone}</td>
                   <td >
-                    {userAddresses[listUser.id] ? (
-                      <div className="small" title={userAddresses[listUser.id].address}>
+                    {userAddresses[listUser.id] ? userAddresses[listUser.id].map((userAddress, indx) => (
+                      <div className="small" title={userAddress.address} key={indx}>
                         <div className="text-truncate" style={{ maxWidth: '200px' }}>
                           <i className="bi bi-geo-alt me-1"></i>
-                          {userAddresses[listUser.id].address}
+                          {userAddress.address}
                         </div>
+                   
                         <div className="text-muted">
-                          {userAddresses[listUser.id].city}, {userAddresses[listUser.id].country}
+                          {userAddress.city}, {userAddress.country}
                         </div>
                       </div>
-                    ) : (
+                    )) : (
                       <span className="text-muted small">Chưa có địa chỉ</span>
                     )}
                   </td>

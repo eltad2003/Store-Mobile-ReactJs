@@ -74,9 +74,9 @@ function Home() {
 
 
          {/* Tất cả sản phẩm */}
-         <div className="container-md-fluid container-lg py-lg-5 p-md-5" id="top">
+         <div className="container-md-fluid container-lg py-lg-5 p-md-5 p-lg-1" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
-            <div className="row mt-3 d-md-flex justify-content-center">
+            <div className="row mt-3 d-md-flex">
                {products.slice(firstItemIndx, lastItemIndx).map((item) => (
                   <div className="col-12d5 col-6 col-md-3 my-3" key={item.id}>
                      <CartItem item={item} />

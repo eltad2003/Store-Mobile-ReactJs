@@ -13,6 +13,7 @@ load_dotenv()
 
 client = OpenAI(api_key=os.getenv('API_KEY'))
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     # Trong production nên thay bằng domain cụ thể
@@ -21,7 +22,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Session storage tạm thời trong RAM
 sessions = {}
 
@@ -66,8 +66,7 @@ def chat_endpoint(request: ChatRequest):
             "Hãy luôn giữ thái độ nhiệt tình, lễ phép, giống như một nhân viên bán hàng tận tâm của cửa hàng đồ điện tử hiện đại"
         )
         intro = s + "Dưới đây là tất cả sản phẩm của shop (đường dẫn là: http://localhost:3000/):\n" + product_data + \
-            "Khi người dùng hỏi về sản phẩm thì hãy thêm đường link với mẫu:👉http://localhost:3000/products/{product_id}, nếu nhiều sản phẩm thì mỗi sản phẩm đều thêm đường link" + \
-            "Khi người dùng hỏi liên quan đến danh mục sản phẩm thì thêm đường link với mẫu:👉http://localhost:3000/name_category/, nếu nhiều sản phẩm thì mỗi sản phẩm đều thêm đường link"
+            "Khi người dùng hỏi về sản phẩm thì hãy thêm đường link với mẫu:👉http://localhost:3000/products/{product_id}, nếu nhiều sản phẩm thì mỗi sản phẩm đều thêm đường link" 
         sessions[userId] = [{"role": "system", "content": intro}]
 
     # Thêm tin nhắn người dùng
