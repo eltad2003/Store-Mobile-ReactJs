@@ -9,7 +9,7 @@ function Sale({ products }) {
     const getEndTime = () => {
         const saved = localStorage.getItem('saleEndTime');
         if (saved) return parseInt(saved, 10);
-        const end = Date.now() + 1 * 60 * 60 * 1000; // 24h từ bây giờ
+        const end = Date.now() + 3 * 60 * 60 * 1000; // 3h từ bây giờ
         localStorage.setItem('saleEndTime', end);
         return end;
     };

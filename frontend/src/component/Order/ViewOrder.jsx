@@ -298,7 +298,7 @@ function ViewOrder() {
                                             Chi tiết
                                         </Button>
 
-                                        {order.status !== 'CANCELLED' && order.status !== 'DELIVERED' && (
+                                        {order.status !== 'CANCELLED' && order.status !== 'DELIVERED' && order.paymentStatus !== 'PAID' && (
                                             <Button
                                                 variant='danger'
                                                 size='sm'

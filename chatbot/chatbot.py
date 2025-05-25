@@ -17,7 +17,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     # Trong production nên thay bằng domain cụ thể
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://172.11.88.54:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -65,8 +65,8 @@ def chat_endpoint(request: ChatRequest):
             "Nếu không chắc chắn thông tin, hãy nói rõ rằng bạn cần kiểm tra thêm hoặc mời khách hàng liên hệ trực tiếp với nhân viên hỗ trợ. "
             "Hãy luôn giữ thái độ nhiệt tình, lễ phép, giống như một nhân viên bán hàng tận tâm của cửa hàng đồ điện tử hiện đại"
         )
-        intro = s + "Dưới đây là tất cả sản phẩm của shop (đường dẫn là: http://localhost:3000/):\n" + product_data + \
-            "Khi người dùng hỏi về sản phẩm thì hãy thêm đường link với mẫu:👉http://localhost:3000/products/{product_id}, nếu nhiều sản phẩm thì mỗi sản phẩm đều thêm đường link" 
+        intro = s + "Dưới đây là tất cả sản phẩm của shop (đường dẫn là: http://172.11.88.54:3000/):\n" + product_data + \
+            "Khi người dùng hỏi về sản phẩm thì hãy thêm đường link với mẫu:👉http://172.11.88.54:3000/products/{product_id}, nếu nhiều sản phẩm thì mỗi sản phẩm đều thêm đường link"
         sessions[userId] = [{"role": "system", "content": intro}]
 
     # Thêm tin nhắn người dùng

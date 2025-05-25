@@ -268,7 +268,7 @@ function Profile() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    name='country'
+
                                     value={editAddress.country || ''}
                                     onChange={(e) => setEditAddress({ ...editAddress, country: e.target.value })}
                                 />
@@ -412,7 +412,7 @@ function Profile() {
                             <button className='btn form-control btn-outline-danger' data-bs-target="#changePasswordModal" data-bs-toggle='modal'>Đổi mật khẩu</button>
                         </div>
                         <div className='my-3'>
-                            <button className='btn btn-danger w-100' onClick={() => handleUpdateInfo()}>Cập nhật thông tin</button>
+                            <button className='btn bg text-white w-100' onClick={() => handleUpdateInfo()}>Cập nhật thông tin</button>
                         </div>
                     </div>
                     {showAddressModal && modalEditAddress()}

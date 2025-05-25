@@ -194,7 +194,7 @@ function Login() {
                     </div>
                     <div className="mb-3">
                         <ReCAPTCHA
-                            sitekey='6LdC_TArAAAAAGmaz1ra2JHjkKd66Ip7qx5NDLbR'
+                            sitekey='6LehoyorAAAAAPD3Z0LvRCpIvQNSw3gRztEzvGFz'
 
                             onChange={(value) => setCapcha(value)}
                         />

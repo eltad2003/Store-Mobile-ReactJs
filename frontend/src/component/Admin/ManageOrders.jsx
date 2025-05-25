@@ -101,7 +101,8 @@ function ManageOrders() {
       if (res.ok) {
         alert('Cập nhật trạng thái đơn hàng thành công')
         setStatusShipping('')
-        fetchOrders()
+
+        fetchOrders(searchByEmail, startDate, endDate)
 
       }
       else {
