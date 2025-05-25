@@ -16,12 +16,13 @@ import zaloIcon from '../asset/zaloIcon.png'
 
 function Home() {
    const [products, setProducts] = useState([])
-
+   const [isLoading, setIsLoading] = useState(false)
    const [currentPage, setCurrentPage] = useState(1)
    const [itemPerpage, setItemPerPage] = useState(20)
 
 
    const fetchProducts = async () => {
+      setIsLoading(true)
       try {
          const response = await fetch(`${urlBE}/products`, {
             method: 'GET',
@@ -34,6 +35,8 @@ function Home() {
          setProducts(data)
       } catch (error) {
          console.log("Loi ket noi API: ", error);
+      } finally {
+         setIsLoading(false)
       }
    }
 
@@ -77,11 +80,24 @@ function Home() {
          <div className="container-md-fluid container-lg py-lg-5 p-md-5 p-lg-1" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
             <div className="row mt-3 d-md-flex">
-               {products.slice(firstItemIndx, lastItemIndx).map((item) => (
-                  <div className="col-12d5 col-6 col-md-3 my-3" key={item.id}>
-                     <CartItem item={item} />
+               {isLoading ? (
+                  <div className="text-center">
+                     <div className="spinner-border text-danger" role="status">
+                     </div>
+                     <p>Đang tải dữ liệu...</p>
                   </div>
-               ))}
+               ) : (
+                  <>
+                     {
+                        products.slice(firstItemIndx, lastItemIndx).map((item) => (
+                           <div className="col-12d5 col-6 col-md-3 my-3" key={item.id}>
+                              <CartItem item={item} />
+                           </div>
+                        ))
+                     }
+                  </>
+               )}
+
             </div>
             {/* pagination */}
             <div className=" mt-4 d-flex justify-content-center">

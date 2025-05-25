@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
 import { Google } from '@mui/icons-material'
 import ReCAPTCHA from 'react-google-recaptcha'
-import { urlBE } from '../../baseUrl'
+import { keyCaptcha, keyCaptchaLocalhost, urlBE } from '../../baseUrl'
 
 
 function Login() {
@@ -194,7 +194,7 @@ function Login() {
                     </div>
                     <div className="mb-3">
                         <ReCAPTCHA
-                            sitekey='6LehoyorAAAAAPD3Z0LvRCpIvQNSw3gRztEzvGFz'
+                            sitekey={keyCaptcha}
 
                             onChange={(value) => setCapcha(value)}
                         />
