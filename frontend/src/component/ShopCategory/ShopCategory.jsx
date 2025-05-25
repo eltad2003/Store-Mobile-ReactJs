@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
-import { ArrowBack, FavoriteBorder, Star } from '@mui/icons-material'
+import { ArrowBack } from '@mui/icons-material'
 
 import CartItem from '../CartItem/CartItem'
 import { urlBE } from '../../baseUrl'

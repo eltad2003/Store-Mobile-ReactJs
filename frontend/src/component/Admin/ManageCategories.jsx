@@ -6,20 +6,27 @@ function ManageCategories() {
     const [categories, setCategories] = useState([])
     const [editCate, setEditCate] = useState('')
     const [newCate, setNewCate] = useState('')
-
+    const [isLoading, setIsLoading] = useState(false)
 
     const fetchCategory = async () => {
+        setIsLoading(true)
         try {
             const response = await fetch(`${urlBE}/categories`, {
-                method: "GET"
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
             })
             const data = await response.json()
             setCategories(data)
         } catch (error) {
             console.log("Lỗi APi: ", error)
+        } finally {
+            setIsLoading(false)
         }
     }
     const handleAddCate = async () => {
+        setIsLoading(true)
         try {
             const response = await fetch(`${urlBE}/categories`, {
                 method: "POST",
@@ -40,6 +47,8 @@ function ManageCategories() {
             }
         } catch (error) {
             console.log("Lỗi APi: ", error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -109,62 +118,83 @@ function ManageCategories() {
                         </div>
 
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-success" onClick={() => handleAddCate()} data-bs-dismiss="modal">Thêm</button>
+                            <button type="button" className="btn btn-success" onClick={() => handleAddCate()} disabled={isLoading}>
+                                {isLoading ? (
+                                    <>
+                                        <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                        Đang xử lý...
+                                    </>
+                                ) : (
+                                    'Thêm'
+                                )}
+                            </button>
                         </div>
 
                     </div>
                 </div>
             </div>
 
-            <div className="card shadow     p-3 mt-3">
-                <table className='table align-middle'>
-                    <thead className='table-light'>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên Danh mục</th>
-                            <th>Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {categories.length ? categories.map((category, index) => (
-                            <tr>
-                                <td>{index + 1}</td>
+            <div className="card shadow p-3 mt-3">
+                {isLoading ? (
+                    <div className="text-center p-5">
+                        <div className="spinner-border text-danger" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <p className="mt-2">Đang tải dữ liệu...</p>
+                    </div>
+                ) : (
+                    <div>
+                        <table className='table align-middle'>
+                            <thead className='table-light'>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên Danh mục</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {categories.length ? categories.map((category, index) => (
+                                    <tr>
+                                        <td>{index + 1}</td>
 
-                                <td>{category.name}</td>
-                                <td>
-                                    <button className='btn btn-sm btn-primary ms-1' data-bs-target="#modalUpdateCate" data-bs-toggle="modal">Sửa</button>
-                                    <div className='modal fade' id='modalUpdateCate' tabIndex={-1}>
-                                        <div className="modal-dialog modal-dialog-scrollable">
-                                            <div className="modal-content">
-                                                <div className="modal-header bg-primary text-white">
-                                                    <h4 className="modal-title">Sửa danh mục</h4>
-                                                    <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
+                                        <td>{category.name}</td>
+                                        <td>
+                                            <button className='btn btn-sm btn-primary ms-1' data-bs-target="#modalUpdateCate" data-bs-toggle="modal">Sửa</button>
+                                            <div className='modal fade' id='modalUpdateCate' tabIndex={-1}>
+                                                <div className="modal-dialog modal-dialog-scrollable">
+                                                    <div className="modal-content">
+                                                        <div className="modal-header bg-primary text-white">
+                                                            <h4 className="modal-title">Sửa danh mục</h4>
+                                                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                                                        </div>
 
-                                                <div className="modal-body">
-                                                    <div className="form-group">
-                                                        <label>Tên danh mục</label>
-                                                        <input type="text" className="form-control" value={newCate} onChange={e => setNewCate(e.target.value)} />
+                                                        <div className="modal-body">
+                                                            <div className="form-group">
+                                                                <label>Tên danh mục</label>
+                                                                <input type="text" className="form-control" value={newCate} onChange={e => setNewCate(e.target.value)} />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="modal-footer">
+                                                            <button type="button" className="btn btn-primary" onClick={() => handleUpdateCate(category.id)} data-bs-dismiss="modal">Sửa</button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
-
-                                                <div className="modal-footer">
-                                                    <button type="button" className="btn btn-primary" onClick={() => handleUpdateCate(category.id)} data-bs-dismiss="modal">Sửa</button>
-                                                </div>
-
                                             </div>
-                                        </div>
-                                    </div>
-                                    <button className='btn btn-sm btn-danger ms-1' onClick={() => handleDeleteCate(category.id)}>Xóa </button>
+                                            <button className='btn btn-sm btn-danger ms-1' onClick={() => handleDeleteCate(category.id)}>Xóa </button>
 
 
-                                </td>
-                            </tr>
-                        )) : (
-                            <td>Bạn không có danh mục nào</td>
-                        )}
-                    </tbody>
-                </table>
+                                        </td>
+                                    </tr>
+                                )) : (
+                                    <td>Bạn không có danh mục nào</td>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
             </div>
         </div>
 
