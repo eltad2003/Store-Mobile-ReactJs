@@ -32,7 +32,7 @@ import ManageBanner from './component/Admin/ManageBanner'
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/Store-Mobile-ReactJs">
         <CartProvider>
           <Routes>
             {/* Các route của User */}
