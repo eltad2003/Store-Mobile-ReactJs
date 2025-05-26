@@ -16,7 +16,7 @@ function Payment() {
     setIsLoading(true)
 
     try {
-      if (selectedPayment === 'payos') {
+      if (selectedPayment === 'PAYOS') {
         // Call payment API for PayOS
         const response = await fetch(`${urlBE}/orders/${orderId}/payment`, {
           method: "POST",
@@ -62,12 +62,12 @@ function Payment() {
                           className="form-check-input"
                           type="radio"
                           name="paymentMethod"
-                          id="payos"
-                          value="payos"
-                          checked={selectedPayment === 'payos'}
+                          id="PAYOS"
+                          value="PAYOS"
+                          checked={selectedPayment === 'PAYOS'}
                           onChange={(e) => setSelectedPayment(e.target.value)}
                         />
-                        <label className="form-check-label" htmlFor="payos">
+                        <label className="form-check-label" htmlFor="PAYOS">
                           <div className="d-flex align-items-center">
                             <i className="fas fa-credit-card me-2"></i>
                             <div>

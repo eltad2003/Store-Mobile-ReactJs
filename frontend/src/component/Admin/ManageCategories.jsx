@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthProvider'
 import { urlBE } from '../../baseUrl'
+import { Loading } from '../Loading'
 
 function ManageCategories() {
     const [categories, setCategories] = useState([])
@@ -136,12 +137,7 @@ function ManageCategories() {
 
             <div className="card shadow p-3 mt-3">
                 {isLoading ? (
-                    <div className="text-center p-5">
-                        <div className="spinner-border text-danger" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                        <p className="mt-2">Đang tải dữ liệu...</p>
-                    </div>
+                    <Loading />
                 ) : (
                     <div>
                         <table className='table align-middle'>

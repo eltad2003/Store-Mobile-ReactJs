@@ -8,8 +8,9 @@ import { urlBE } from '../../baseUrl'
 function Banner() {
     const [banners, setBanners] = useState([])
     const [index, setIndex] = useState(0);
-
+    const [isLoading, setIsLoading] = useState(false)
     const fetchBanner = async () => {
+        setIsLoading(true)
         try {
             const response = await fetch(`${urlBE}/banners`, {
                 method: 'GET',
@@ -19,6 +20,8 @@ function Banner() {
             setBanners(data)
         } catch (error) {
             console.log("Loi ket noi API: ", error);
+        } finally {
+            setIsLoading(false)
         }
     }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import formatPrice from '../../formatPrice'
 import { Badge } from 'react-bootstrap'
 import { urlBE } from '../../baseUrl'
+import { Loading } from '../Loading'
 
 function ManageOrders() {
   const [orders, setOrders] = useState([])
@@ -10,9 +11,10 @@ function ManageOrders() {
   const [searchByEmail, setSearchByEmail] = useState('')
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchOrders = async (search = searchByEmail, start = startDate, end = endDate) => {
+    setIsLoading(true)
     try {
       let url = `${urlBE}/orders/all?email=${search}`
       if (start && end) url += `&start=${start}&end=${end}`
@@ -44,6 +46,9 @@ function ManageOrders() {
       }
     } catch (error) {
       console.error('Error fetching orders:', error)
+    }
+    finally {
+      setIsLoading(false)
     }
   }
 
@@ -101,7 +106,6 @@ function ManageOrders() {
       if (res.ok) {
         alert('Cập nhật trạng thái đơn hàng thành công')
         setStatusShipping('')
-
         fetchOrders(searchByEmail, startDate, endDate)
 
       }
@@ -132,8 +136,8 @@ function ManageOrders() {
 
       <div className='py-5'>
         {/* search orders */}
-        <div className='p-2 d-flex justify-content-between gap-3'>
-          <h3 className='fw-bold'>Quản lý Các Đơn hàng</h3>
+        <h3 className='fw-bold'>Quản lý Các Đơn hàng</h3>
+        <div className='d-flex justify-content-between gap-3'>
           <div>
             <i className="bi bi-search me-2"></i>
             <input
@@ -165,61 +169,68 @@ function ManageOrders() {
           </div>
         </div>
 
-        <div className='card shadow p-3 mt-3'>
-          <table class="table align-middle table-hover mb-0">
-            <thead class="table-light">
-              <tr>
-                <th scope="col" className='text-nowrap'>STT</th>
-                <th scope="col" className='text-nowrap'>Thời gian</th>
-                <th scope="col" className='text-nowrap'>Thông tin khách hàng</th>
-                <th scope="col" className='text-nowrap'>Sản phẩm</th>
-                <th scope="col" className='text-nowrap'>Tổng thanh toán</th>
-                <th scope="col" className='text-nowrap'>Trạng thái</th>
-                <th scope="col" className='text-nowrap'>Hoạt động</th>
+        <div className='mt-5'>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              <table class="table table align-middle table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col" className='text-nowrap'>STT</th>
+                    <th scope="col" className='text-nowrap'>Thời gian</th>
+                    <th scope="col" className='text-nowrap'>Thông tin khách hàng</th>
+                    <th scope="col" className='text-nowrap'>Sản phẩm</th>
+                    <th scope="col" className='text-nowrap'>Tổng thanh toán</th>
+                    <th scope="col" className='text-nowrap'>Trạng thái</th>
+                    <th scope="col" className='text-nowrap'>Hoạt động</th>
 
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, index) => (
-                <tr>
-                  <td className='text-center'>{index + 1}</td>
-                  <td className='text-nowrap'>{new Date(order.createdAt).toLocaleString()}</td>
-                  <td className='text-nowrap' title={order.shippingAddress || "Chưa có địa chỉ"}>
-                    <div >{order.userDetails?.fullName || 'N/A'}</div>
-                    <div>{order.userDetails?.email || 'N/A'}</div>
-                    <div>{order.userDetails?.phone || 'N/A'}</div>
-                    <div className='text-muted text-truncate fst-italic' style={{ maxWidth: 200 }}>{order.shippingAddress}</div>
-                  </td>
-                  <td className='w-25 text-nowrap'>
-                    {order.items.map(item => (
-                      <div key={item.productId}>
-                        <div><span className='text-primary'>{item.productDetails?.name || 'N/A'}</span> <span className='text-muted fst-italic ms-1'>SL: {item.quantity}</span></div>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order, index) => (
+                    <tr>
+                      <td className='text-center'>{index + 1}</td>
+                      <td className='text-nowrap'>{new Date(order.createdAt).toLocaleString()}</td>
+                      <td className='text-nowrap' title={order.shippingAddress || "Chưa có địa chỉ"}>
+                        <div >{order.userDetails?.fullName || 'N/A'}</div>
+                        <div>{order.userDetails?.email || 'N/A'}</div>
+                        <div>{order.userDetails?.phone || 'N/A'}</div>
+                        <div className='text-muted text-truncate fst-italic' style={{ maxWidth: 200 }}>{order.shippingAddress}</div>
+                      </td>
+                      <td className='w-25 text-nowrap'>
+                        {order.items.map(item => (
+                          <div key={item.productId}>
+                            <div><span className='text-primary'>{item.productDetails?.name || 'N/A'}</span> <span className='text-muted fst-italic ms-1'>SL: {item.quantity}</span></div>
 
-                      </div>
-                    ))}
-                  </td>
-                  <td className='fw-bold'>{formatPrice(order.totalPrice)}</td>
-                  <td >{getStatusBadge(order.status)}</td>
+                          </div>
+                        ))}
+                      </td>
+                      <td className='fw-bold'>{formatPrice(order.totalPrice)}</td>
+                      <td >{getStatusBadge(order.status)}</td>
 
-                  <td>
-                    <select class="form-select form-select-sm" onChange={(e) => setStatusShipping(e.target.value)}>
-                      <option>--Trạng thái--</option>
-                      <option value="PENDING">Đang chờ xử lí</option>
-                      <option value="CONFIRMED">Đã nhận đơn</option>
-                      <option value="SHIPPED">Đang vận chuyển</option>
-                      <option value="DELIVERED">Giao hàng thành công</option>
-                      <option value="CANCELLED">Hủy đơn</option>
-                    </select>
-                  </td>
-                  {order.status === "DELIVERED" || order.status === "CANCELLED" ? (
-                    <td><button className="btn btn-primary btn-sm  disabled">Cập nhật</button></td>
-                  ) : (
-                    <td><button className="btn btn-primary btn-sm" onClick={() => handleUpdateStatus(order.id)}>Cập nhật</button></td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      <td>
+                        <select class="form-select form-select-sm" onChange={(e) => setStatusShipping(e.target.value)}>
+                          <option>--Trạng thái--</option>
+                          <option value="PENDING">Đang chờ xử lí</option>
+                          <option value="CONFIRMED">Đã nhận đơn</option>
+                          <option value="SHIPPED">Đang vận chuyển</option>
+                          <option value="DELIVERED">Giao hàng thành công</option>
+                          <option value="CANCELLED">Hủy đơn</option>
+                        </select>
+                      </td>
+                      {order.status === "DELIVERED" || order.status === "CANCELLED" ? (
+                        <td><button className="btn btn-primary btn-sm  disabled">Cập nhật</button></td>
+                      ) : (
+                        <td><button className="btn btn-primary btn-sm" onClick={() => handleUpdateStatus(order.id)}>Cập nhật</button></td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
+
         </div>
 
       </div>

@@ -4,3 +4,9 @@
     font-weight: bold;
     margin-right: 8px;
 }
+
+@media (max-width: 768px) {
+    .position-sticky {
+        position: relative !important;
+    }
+}

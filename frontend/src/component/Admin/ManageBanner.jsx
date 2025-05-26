@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { urlBE } from '../../baseUrl'
 import { AuthContext } from '../AuthProvider'
+import { Loading } from '../Loading'
 
 
 function ManageBanner() {
@@ -363,12 +364,7 @@ function ManageBanner() {
                 {modalAddBanner()}
                 <div className="card shadow p-3 mt-3">
                     {isLoading ? (
-                        <div className="text-center p-5">
-                            <div className="spinner-border text-primary" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                            <p className="mt-2">Đang tải dữ liệu...</p>
-                        </div>
+                        <Loading />
                     ) : (
                         <table className='table align-middle mb-0'>
                             <thead className='table-light'>

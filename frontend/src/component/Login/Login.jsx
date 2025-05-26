@@ -23,6 +23,7 @@ function Login() {
     }, [user])
 
     const handleLogin = async (e) => {
+        setIsLoading(true)
         e.preventDefault();
         if (!capcha) {
             alert('Vui lòng xác minh không phải Robot');
@@ -44,9 +45,11 @@ function Login() {
         if (result.user.role === "ADMIN") {
             navigate('/admin');
             alert('ADMIN đăng nhập thành công');
+            setIsLoading(false)
         } else {
             navigate('/');
             alert('Khách hàng đăng nhập thành công');
+            setIsLoading(false)
         }
     };
 
@@ -195,7 +198,6 @@ function Login() {
                     <div className="mb-3">
                         <ReCAPTCHA
                             sitekey={keyCaptcha}
-
                             onChange={(value) => setCapcha(value)}
                         />
                     </div>
@@ -239,8 +241,16 @@ function Login() {
                             type="submit"
                             className="btn bg text-white w-100 rounded-3 mt-2 fw-semibold"
                             onClick={handleLogin}
+                            disabled={isLoading}
                         >
-                            Đăng nhập
+                            {isLoading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                    Đang đăng nhập...
+                                </>
+                            ) : (
+                                'Đăng nhập'
+                            )}
                         </button>
                     )}
                 </div>

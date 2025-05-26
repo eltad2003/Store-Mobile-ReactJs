@@ -5,6 +5,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Link } from 'react-router-dom';
 import { urlBE } from '../../../baseUrl';
 import formatPrice from '../../../formatPrice';
+import { Loading } from '../../Loading';
 
 
 
@@ -54,11 +55,8 @@ function MyCustomUploadAdapterPlugin(editor) {
 function ManageProducts() {
   const { user } = useContext(AuthContext)
   const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState([])
-  const [images, setImages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-
   const [search, setSearch] = useState('')
   const [sortOrder, setSortOrder] = useState(null)
   const [limit, setLimit] = useState(10)
@@ -108,25 +106,9 @@ function ManageProducts() {
     }
   };
 
-  const fetchCategory = async () => {
-    try {
-      const response = await fetch(`${urlBE}/categories`, {
-        method: 'GET',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setCategories(data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-      setError('Failed to load categories. Please try again later.');
-    }
-  };
 
   useEffect(() => {
     fetchProducts(sortOrder, page, limit);
-    fetchCategory();
 
   }, [sortOrder, page, limit, search, sortBy]);
 
@@ -223,12 +205,7 @@ function ManageProducts() {
         </div>
         <div className="card shadow p-3 mt-3">
           {isLoading ? (
-            <div className="text-center p-5">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-              <p className="mt-2">Đang tải dữ liệu...</p>
-            </div>
+            <Loading />
           ) : (
             <div >
               <table className="table table-hover align-middle " >

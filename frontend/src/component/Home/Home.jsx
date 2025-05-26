@@ -13,6 +13,7 @@ import Chatbot from "../Chatbot/Chatbot"
 import { urlBE } from "../../baseUrl"
 import Banner from "./Banner"
 import zaloIcon from '../asset/zaloIcon.png'
+import Skeleton from "../Skeleton/Skeleton"
 
 function Home() {
    const [products, setProducts] = useState([])
@@ -81,16 +82,15 @@ function Home() {
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
             <div className="row mt-3 d-md-flex">
                {isLoading ? (
-                  <div className="text-center">
-                     <div className="spinner-border text-danger" role="status">
-                     </div>
-                     <p>Đang tải dữ liệu...</p>
+                  <div className="col-12d5">
+                     <Skeleton />
+
                   </div>
                ) : (
                   <>
                      {
                         products.slice(firstItemIndx, lastItemIndx).map((item) => (
-                           <div className="col-12d5 col-6 col-md-3 my-3" key={item.id}>
+                           <div className="col-12d5 col-6 col-md-6 my-3" key={item.id}>
                               <CartItem item={item} />
                            </div>
                         ))

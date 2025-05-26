@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthProvider';
 import { urlBE } from '../../baseUrl';
+import { Loading } from '../Loading';
 
 
 function ManageUsers() {
@@ -8,6 +9,7 @@ function ManageUsers() {
   const { user } = useContext(AuthContext)
   const [userAddresses, setUserAddresses] = useState({})
   const [searchUser, setSearchUser] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [newUser, setNewUser] = useState({
     fullName: "",
     email: "",
@@ -18,6 +20,7 @@ function ManageUsers() {
 
 
   const fetchUsers = async (search = searchUser) => {
+    setIsLoading(true)
     try {
       const response = await fetch(`${urlBE}/users?key=${search}`, {
         method: 'GET',
@@ -31,6 +34,8 @@ function ManageUsers() {
       data.forEach(user => fetchUserAddress(user.id))
     } catch (error) {
       console.error('Error fetching users:', error);
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -105,18 +110,19 @@ function ManageUsers() {
     <div className='container'>
       <div className='my-5'>
         <h3 className='fw-bold'>Quản lý người dùng</h3>
-        <div className="d-flex justify-content-between">
-          <div className='ms-3 mt-1'>
+        <div className="d-flex justify-content-between align-items-center gap-3">
+          <div>
             <i className="bi bi-search me-2"></i>
             <input
               type="text"
               className='rounded-3'
+              placeholder='Tìm kiếm theo email...'
               onChange={(e) => setSearchUser(e.target.value)}
               style={{ width: '500px' }}
               value={searchUser}
             />
           </div>
-          <button type='button' className='btn btn-success ms-auto me-5' data-bs-toggle="modal" data-bs-target="#modalAddUser">Thêm người dùng</button>
+          <button type='button' className='btn btn-success ms-auto' data-bs-toggle="modal" data-bs-target="#modalAddUser">Thêm người dùng</button>
         </div>
         <div className="card shadow p-3 mt-3">
 
@@ -166,79 +172,85 @@ function ManageUsers() {
             </div>
           </div>
           <p>Tổng người dùng: {listUsers.length}</p>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              <table className="table table-hover align-middle">
+                <thead className="table-light">
+                  <tr>
+                    <th scope="col" className="text-center" style={{ width: '5%' }}>STT</th>
 
-          <table className="table table-hover align-middle">
-            <thead className="table-light">
-              <tr>
-                <th scope="col" className="text-center" style={{ width: '5%' }}>STT</th>
+                    <th scope="col" style={{ width: '15%' }}>Tên</th>
+                    <th scope="col" className="text-center" style={{ width: '10%' }}>Ảnh</th>
+                    <th scope="col" style={{ width: '15%' }}>Email</th>
+                    <th scope="col" className="text-center" style={{ width: '10%' }}>Vai trò</th>
+                    <th scope="col" className="text-center" style={{ width: '10%' }}>Số điện thoại</th>
+                    <th scope="col" style={{ width: '15%' }}>Địa chỉ</th>
+                    <th scope="col" className="text-center" style={{ width: '10%' }}>Trạng thái</th>
+                    <th scope="col" className="text-center" style={{ width: '10%' }}>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listUsers.map((listUser, index) => (
+                    <tr key={listUser.id}>
+                      <td className="text-center">{index + 1}</td>
 
-                <th scope="col" style={{ width: '15%' }}>Tên</th>
-                <th scope="col" className="text-center" style={{ width: '10%' }}>Ảnh</th>
-                <th scope="col" style={{ width: '15%' }}>Email</th>
-                <th scope="col" className="text-center" style={{ width: '10%' }}>Vai trò</th>
-                <th scope="col" className="text-center" style={{ width: '10%' }}>Số điện thoại</th>
-                <th scope="col" style={{ width: '15%' }}>Địa chỉ</th>
-                <th scope="col" className="text-center" style={{ width: '10%' }}>Trạng thái</th>
-                <th scope="col" className="text-center" style={{ width: '10%' }}>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listUsers.map((listUser, index) => (
-                <tr key={listUser.id}>
-                  <td className="text-center">{index + 1}</td>
-
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="fw-medium">{listUser.fullName}</span>
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <img
-                      src={listUser.avatarUrl}
-                      alt=""
-                      className="rounded-circle"
-                      style={{ width: '40px', height: '40px', objectFit: 'cover' }}
-                    />
-                  </td>
-                  <td>
-                    <div className="text-truncate" style={{ maxWidth: '200px' }}>
-                      {listUser.email}
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <span className={`badge ${listUser.role === 'ADMIN' ? 'bg-danger' : 'bg-primary'}`}>
-                      {listUser.role}
-                    </span>
-                  </td>
-                  <td className="text-center">{listUser.phone}</td>
-                  <td >
-                    {userAddresses[listUser.id] ? userAddresses[listUser.id].map((userAddress, indx) => (
-                      <div className="small" title={userAddress.address} key={indx}>
+                      <td>
+                        <div className="d-flex align-items-center">
+                          <span className="fw-medium">{listUser.fullName}</span>
+                        </div>
+                      </td>
+                      <td className="text-center">
+                        <img
+                          src={listUser.avatarUrl}
+                          alt=""
+                          className="rounded-circle"
+                          style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                        />
+                      </td>
+                      <td>
                         <div className="text-truncate" style={{ maxWidth: '200px' }}>
-                          <i className="bi bi-geo-alt me-1"></i>
-                          {userAddress.address}
+                          {listUser.email}
                         </div>
-                   
-                        <div className="text-muted">
-                          {userAddress.city}, {userAddress.country}
-                        </div>
-                      </div>
-                    )) : (
-                      <span className="text-muted small">Chưa có địa chỉ</span>
-                    )}
-                  </td>
-                  <td>
-                    {listUser.isVerified ? (
-                      <span className="badge bg-success">Đã xác thực</span>
-                    ) : (
-                      <span className="badge bg-warning">Chưa xác thực</span>
-                    )}
-                  </td>
-                  <td><button className='ms-1 btn btn-sm btn-danger' onClick={() => handleDeleteUser(listUser.id)}><i className="bi bi-trash"></i></button></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      </td>
+                      <td className="text-center">
+                        <span className={`badge ${listUser.role === 'ADMIN' ? 'bg-danger' : 'bg-primary'}`}>
+                          {listUser.role}
+                        </span>
+                      </td>
+                      <td className="text-center">{listUser.phone}</td>
+                      <td >
+                        {userAddresses[listUser.id] ? userAddresses[listUser.id].map((userAddress, indx) => (
+                          <div className="small" title={userAddress.address} key={indx}>
+                            <div className="text-truncate" style={{ maxWidth: '200px' }}>
+                              <i className="bi bi-geo-alt me-1"></i>
+                              {userAddress.address}
+                            </div>
+
+                            <div className="text-muted">
+                              {userAddress.city}, {userAddress.country}
+                            </div>
+                          </div>
+                        )) : (
+                          <span className="text-muted small">Chưa có địa chỉ</span>
+                        )}
+                      </td>
+                      <td>
+                        {listUser.isVerified ? (
+                          <span className="badge bg-success">Đã xác thực</span>
+                        ) : (
+                          <span className="badge bg-warning">Chưa xác thực</span>
+                        )}
+                      </td>
+                      <td><button className='ms-1 btn btn-sm btn-danger' onClick={() => handleDeleteUser(listUser.id)}><i className="bi bi-trash"></i></button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
+
         </div>
       </div>
     </div >

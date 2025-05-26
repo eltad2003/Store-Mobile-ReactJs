@@ -4,14 +4,12 @@ import "./Product.css"
 import { Link } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home';
 import { CartContext } from '../CartProvider';
-import { Rating } from '@mui/material';
-import { AccountCircle, AddShoppingCart, ArrowLeft, ArrowRight, ExpandMore, Star } from '@mui/icons-material'
+import { AddShoppingCart, ArrowLeft, ArrowRight, ExpandMore } from '@mui/icons-material'
 import CartItem from '../CartItem/CartItem';
 import Review from './Review';
 import Chatbot from '../Chatbot/Chatbot';
 import { Carousel } from 'react-bootstrap';
 import formatPrice from '../../formatPrice';
-import { services } from '../Home/Service';
 import { urlBE } from '../../baseUrl';
 
 
@@ -123,12 +121,12 @@ function Product() {
                     prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
                     nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
                     interval={null}
-                    className="w-100"
-                    style={{ maxWidth: 450, margin: "0 auto" }}
+                    className="w-100 card shadow"
+                    style={{ maxWidth: '100%' }}
                 >
                     {mediaList.map((url, idx) => (
                         <Carousel.Item key={idx}>
-                            <div style={{ width: "100%", height: 400, display: "flex", alignItems: "center", justifyContent: "center", background: "#fafafa", borderRadius: 8 }}>
+                            <div style={{ width: "100%", height: 500, display: "flex", alignItems: "center", justifyContent: "center", background: "#fafafa", borderRadius: 8 }}>
                                 {isVideo(url) ? (
                                     <video controls style={{ maxWidth: "100%", maxHeight: 380 }}>
                                         <source src={url} />
@@ -138,7 +136,7 @@ function Product() {
                                     <img
                                         src={url}
                                         alt={name}
-                                        style={{ maxWidth: "100%", maxHeight: 400, objectFit: "contain" }}
+                                        style={{ maxWidth: "100%", maxHeight: 400, objectFit: "cover" }}
                                     />
                                 )}
                             </div>
@@ -156,7 +154,8 @@ function Product() {
                                 borderRadius: 6,
                                 padding: 2,
                                 cursor: 'pointer',
-                                background: '#fff'
+                                background: '#fff',
+
                             }}
                         >
                             {isVideo(url) ? (
@@ -182,22 +181,23 @@ function Product() {
 
     return (
 
-        <div className='container-lg container-md-fluid p-md-5 mt-3'>
+        <div className=' container py-4'>
 
             {/* Breadcrumb */}
-            <div className='p-3'>
-                <ol className="breadcrumb fs-5">
-                    <li className="breadcrumb-item fw-bold"><HomeIcon /><Link to={"/"} className='text-decoration-none text-black'>Trang chủ</Link></li>
-                    <li className="breadcrumb-item fw-bold"><Link to={`/${product.category}`} className='text-decoration-none text-black text-uppercase'>{product.category}</Link></li>
-                    <li className="breadcrumb-item active " >{product.name}</li>
+            <div className='mb-3'>
+                <ol className="breadcrumb bg rounded-3 p-3">
+                    <li className="breadcrumb-item fw-bold text-white"><HomeIcon /><Link to={"/"} className='text-decoration-none text-white'>Trang chủ</Link></li>
+                    <li className="breadcrumb-item fw-bold"><Link to={`/${product.category}`} className='text-decoration-none text-white text-uppercase'>{product.category}</Link></li>
+                    <li className="breadcrumb-item active text-white fst-italic" >{product.name}</li>
                 </ol>
             </div>
 
 
             {/* Product Details */}
-            <div className='row min-vh-100 border-0 p-3 '>
+
+            <div className='row min-vh-100 border-0 '>
                 <div className='col-12 col-lg-6 mt-3 d-flex align-items-start'>
-                    <div className='card border-0 d-flex align-items-center position-sticky top-0 p-3 w-100'>
+                    <div className=' position-sticky w-100' style={{ top: '20px' }}>
                         <MediaCarousel mediaList={product.listMedia} name={product.name} />
                     </div>
                 </div>
@@ -206,18 +206,43 @@ function Product() {
                     <div className='card shadow p-4'>
                         <h4 className='fw-bold mb-3'>{product.name}</h4>
                         {product.discount ? (
-                            <div className='d-flex flex-wrap'>
-                                <h4 className='text-decoration-line-through '>${Math.round(product.price * (1 + product.discount / 100))}</h4>
-                                <h3 className="text-success fw-bold ms-2">{formatPrice(product.price)}</h3>
-                                <p className='ms-2 text-white bg px-1 rounded-pill'>{product.discount}%</p>
-                            </div>
+                            <>
+                                <div className='d-flex align-items-center flex-wrap'>
+                                    <h4 className='text-decoration-line-through  '>${Math.round(product.price * (1 + product.discount / 100))}</h4>
+                                    <h3 className="text-success fw-bold ms-2">{formatPrice(product.price)}</h3>
+                                    <p className='ms-2 text-white bg px-1 rounded-pill' >{product.discount}%</p>
+                                </div>
+                                <p className="badge bg-danger bg-opacity-10 text-danger" style={{ maxWidth: 'fit-content' }}>
+                                    Tiết kiệm {formatPrice(Math.round(product.price * product.discount / 100))}
+                                </p>
+                            </>
                         ) : (
                             <h5 className="text-danger fw-bold">{formatPrice(product.price)}</h5>
                         )}
-                        <ul className="list-unstyled text-uppercase">
-                            <li className='text-danger'>Còn lại: {product.stockQuantity} sản phẩm</li>
-                            <li>Hãng: {product.brand}</li>
-                        </ul>
+
+                        <div className='row g-3 mb-4'>
+                            <div className='col-6'>
+                                <div className='d-flex align-items-center'>
+                                    <i className="bi bi-box-seam text-primary me-2"></i>
+                                    <div>
+                                        <small className='text-muted d-block'>Còn lại</small>
+                                        <span className={`fw-bold ${product.stockQuantity > 20 ? 'text-success' : product.stockQuantity > 10 ? 'text-warning' : 'text-danger'}`}>
+                                            {product.stockQuantity} sản phẩm
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col-6'>
+                                <div className='d-flex align-items-center'>
+                                    <i className="bi bi-building text-primary me-2"></i>
+                                    <div>
+                                        <small className='text-muted d-block'>Thương hiệu</small>
+                                        <span className='fw-bold text-dark'>{product.brand}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                         {product.stockQuantity > 0 ? (
                             <button className="btn text-white bg w-100" onClick={() => addToCart(product)}><AddShoppingCart /> Thêm vào giỏ hàng </button>
@@ -261,12 +286,10 @@ function Product() {
                             <li>Liên hệ B2B để được tư vấn giá tốt nhất cho khách hàng doanh nghiệp khi mua số lượng nhiều</li>
                         </ul>
                     </div>
-
-
-
                 </div>
                 <hr className='shadow-lg' />
             </div>
+
 
             {/* Product Description */}
             <div className="shadow rounded-3 my-5 bg-light">

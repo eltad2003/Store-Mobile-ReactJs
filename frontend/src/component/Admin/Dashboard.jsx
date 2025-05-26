@@ -18,6 +18,7 @@ import { AuthContext } from '../AuthProvider';
 import formatPrice from '../../formatPrice';
 import { Link } from "react-router-dom";
 import { urlBE, urlSocket } from "../../baseUrl";
+import { Loading } from "../Loading";
 
 
 // Đăng ký các thành phần của Chart.js
@@ -182,7 +183,7 @@ const Dashboard = () => {
 
 
     // Loading
-    if (loading) return <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 400 }}><div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div></div>;
+    if (loading) return <Loading />
 
     return (
         <div className="container bg-light my-5">

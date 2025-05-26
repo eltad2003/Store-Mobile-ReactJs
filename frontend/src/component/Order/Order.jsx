@@ -14,7 +14,7 @@ function Order() {
     const [shippingAddress, setShippingAddress] = useState('')
     const [paymentMethod, setPaymentMethod] = useState('')
     const [note, setNote] = useState('')
-
+    const [isLoading, setIsLoading] = useState(false)
     const [order, setOrder] = useState(() => {
         const storage = JSON.parse(localStorage.getItem('order'))
         return storage ?? []
@@ -22,6 +22,7 @@ function Order() {
     const selectedProducts = cartItems.filter(item => selectedItems.includes(item.id));
 
     const handleOrder = async () => {
+        setIsLoading(true)
         try {
             const orderItems = selectedProducts.map(product => ({
                 productId: product.id,
@@ -45,7 +46,7 @@ function Order() {
                 const data = await res.json()
                 setOrder(data)
                 localStorage.setItem('order', JSON.stringify(data))
-                if (paymentMethod === "payos") {
+                if (paymentMethod === "PAYOS") {
                     alert('Tạo đơn hàng thành công, chuyển tới thanh toán')
                     navigate('/order/payment')
                 } else {
@@ -55,10 +56,13 @@ function Order() {
 
             } else {
                 alert("Tạo đơn hàng thất bại")
+                throw new Error('Failed to fetch order')
             }
         } catch (error) {
             alert("Lỗi kết nối server")
             console.error("Lỗi kết nối API: ", error);
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -161,6 +165,7 @@ function Order() {
                                         type="email"
                                         className="form-control"
                                         defaultValue={user.user.email}
+                                        disabled
                                     />
                                 </div>
                             </div>
@@ -209,9 +214,9 @@ function Order() {
                                                         className="form-check-input"
                                                         type="radio"
                                                         name="paymentMethod"
-                                                        id="cod"
-                                                        value="cod"
-                                                        checked={paymentMethod === 'cod'}
+                                                        id="COD"
+                                                        value="COD"
+                                                        checked={paymentMethod === 'COD'}
                                                         onChange={(e) => setPaymentMethod(e.target.value)}
                                                     />
                                                     <label className="form-check-label" htmlFor="cod">
@@ -230,12 +235,12 @@ function Order() {
                                                         className="form-check-input"
                                                         type="radio"
                                                         name="paymentMethod"
-                                                        id="payos"
-                                                        value="payos"
-                                                        checked={paymentMethod === 'payos'}
+                                                        id="PAYOS"
+                                                        value="PAYOS"
+                                                        checked={paymentMethod === 'PAYOS'}
                                                         onChange={(e) => setPaymentMethod(e.target.value)}
                                                     />
-                                                    <label className="form-check-label" htmlFor="payos">
+                                                    <label className="form-check-label" htmlFor="PAYOS">
                                                         <div className="d-flex align-items-center">
                                                             <i className="fas fa-credit-card me-2"></i>
                                                             <div>
@@ -268,8 +273,16 @@ function Order() {
                             <button
                                 className="btn bg text-white w-100 py-2"
                                 onClick={handleOrder}
+                                disabled={isLoading || selectedItems.length === 0 || !shippingAddress || !paymentMethod}
                             >
-                                Tiếp tục thanh toán
+                                {isLoading ? (
+                                    <>
+                                        <span className='spinner-border me-1' role='status'></span>
+                                        ...Đang xử lý
+                                    </>
+                                ) : (
+                                    ' Xác nhận đặt hàng'
+                                )}
                             </button>
                         </div>
                     </div>
