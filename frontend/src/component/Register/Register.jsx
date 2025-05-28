@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { data, Link, useNavigate } from 'react-router-dom'
 import { urlBE } from '../../baseUrl'
+import { LoadingButton } from '../Loading'
 
 
 function Register() {
@@ -18,6 +19,7 @@ function Register() {
 
 
     const handleRegister = async (e) => {
+        setIsLoading(true)
         e.preventDefault()
         if (password !== confirmPassword) {
             alert('Mật khẩu không khớp')
@@ -48,12 +50,14 @@ function Register() {
                 alert(await res.text())
             }
         } catch (error) {
-
             alert(error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
     const handleOTP = async () => {
+        setIsLoading(true)
         try {
             const res = await fetch(`${urlBE}/otp/verify`, {
                 method: 'POST',
@@ -72,6 +76,8 @@ function Register() {
             }
         } catch (error) {
             console.log("Lỗi api", error);
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -112,14 +118,27 @@ function Register() {
                         <label htmlFor="otp" className='form-label'>Nhập OTP</label>
                         <input type="text" className='form-control' value={otp} onChange={(e) => setOtp(e.target.value)} />
                     </div>
-                    <div className="mt-3">
+                    <div className="mt-2">
                         {show === 'd-block' ?
-                            <button type="submit" className="btn bg text-white  w-100 rounded-3 fw-semibold" onClick={handleRegister}>Đăng ký</button>
+                            <button type="submit" className="btn bg text-white  w-100 rounded-3 fw-semibold" onClick={handleRegister} disabled={isLoading}>
+                                {isLoading ? (
+                                    <LoadingButton />
+                                ) : (
+                                    'Đăng ký'
+                                )}
+                            </button>
                             :
-                            <button type="submit" className="btn bg text-white  w-100 rounded-3 fw-semibold" onClick={handleOTP}>Xác nhận</button>
+                            <button type="submit" className="btn bg text-white  w-100 rounded-3 fw-semibold" onClick={handleOTP} disabled={isLoading}>
+                                {isLoading ? (
+                                    <LoadingButton />
+                                ) : (
+                                    'Xác nhận'
+                                )}
+                            </button>
                         }
                     </div>
                     <div className="text-center mt-3">
+                        <i className="bi bi-check-circle-fill text-success me-1"></i>
                         <span>Bạn đã có tài khoản?</span>
                         <Link to="/login" className="d-block mt-2">
                             <button className="btn bg text-white w-100 rounded-3 fw-semibold">Đăng nhập</button>

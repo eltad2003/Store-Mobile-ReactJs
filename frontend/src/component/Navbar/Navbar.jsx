@@ -4,7 +4,6 @@ import { HelpOutline, Notifications, Person, ShoppingCart } from '@mui/icons-mat
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import "./Navbar.css"
 import { AuthContext } from '../AuthProvider'
-import ComputerIcon from '@mui/icons-material/Computer';
 import { CartContext } from '../CartProvider'
 import formatPrice from '../../formatPrice'
 import { urlBE, urlSocket } from '../../baseUrl'
@@ -22,7 +21,6 @@ function Navbar() {
     const [toastMessage, setToastMessage] = useState(null);
     const [showToast, setShowToast] = useState(false)
     const [products, setProducts] = useState([])
-    const [showOffcanvas, setShowOffcanvas] = useState(false);
     const [showMobileSearch, setShowMobileSearch] = useState(false)
 
     const fetchProducts = async (type = search) => {
@@ -73,12 +71,12 @@ function Navbar() {
     }, [userId])
 
     useEffect(() => {
-        fetchProducts()
+        fetchProducts(search)
     }, [search])
 
     const UserDropdown = ({ user, onClose, onLogout, isMobile }) => (
         <div
-            className={`dropdown-menu show position-fixed shadow-lg border-0 end-0 me-2 ${isMobile ? 'bottom-0 translate-middle-x mb-5 ' : ''}`}
+            className={`dropdown-menu show position-fixed shadow border-0 end-0 me-1 ${isMobile ? 'bottom-0 translate-middle-x mb-5 ' : ''}`}
             style={{
                 zIndex: 1050,
                 minWidth: '250px',
@@ -146,9 +144,8 @@ function Navbar() {
     const canvas = () => {
         return (
 
-            <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasLeft" aria-labelledby="offcanvasRightLabel">
-                <div className="offcanvas-header ">
-
+            <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasLeft" aria-labelledby="offcanvasRightLabel" style={{ width: '250px' }}>
+                <div className="offcanvas-header bg">
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body ">
@@ -160,21 +157,20 @@ function Navbar() {
     return (
         <>
             {/* Thông báo toast */}
-            <div>
-                <div className={`toast shadow bg-dark position-fixed z-3 top-0 end-0 mt-5  ${showToast ? "show" : ""}`} role="alert" aria-live="assertive" aria-atomic="true">
-                    <div className="toast-header">
-                        <Notifications className="text-danger" />
-                        <strong className="me-auto">Thông báo</strong>
-                        <small>Vừa xong</small>
-                        <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div className="toast-body text-white" >
-                        {toastMessage}
-                    </div>
+
+            <div className={`toast shadow bg-dark position-fixed z-3 top-0 end-0 mt-5  ${showToast ? "show" : ""}`} role="alert" aria-live="assertive" aria-atomic="true">
+                <div className="toast-header">
+                    <Notifications className="text-danger" />
+                    <strong className="me-auto">Thông báo</strong>
+                    <small>Vừa xong</small>
+                    <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div className="toast-body text-white" >
+                    {toastMessage}
                 </div>
             </div>
-            {/* Navbar */}
-            {/* Desktop & Tablet Navbar */}
+
+            {/* Desktop Navbar */}
             <div className='bg-navbar shadow-sm position-sticky top-0 z-3 py-2' >
                 <nav className="navbar navbar-expand-lg ">
                     <div className="container-fluid px-3">
@@ -207,8 +203,8 @@ function Navbar() {
                                         className="nav-link text-white d-flex align-items-center"
                                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft"
                                     >
-                                        <i className="bi bi-headset me-2"></i>
-                                        <span className="d-none d-xl-inline">danh mục</span>
+                                        <i class="bi bi-layout-three-columns me-2"></i>
+                                        <span className="d-none d-xl-inline">Danh mục</span>
                                     </Link>
                                 </li>
 

@@ -18,34 +18,65 @@ import Skeleton from "../Skeleton/Skeleton"
 function Home() {
    const [products, setProducts] = useState([])
    const [isLoading, setIsLoading] = useState(false)
-   const [currentPage, setCurrentPage] = useState(1)
-   const [itemPerpage, setItemPerPage] = useState(20)
+   const [page, setPage] = useState(1)
+   const [limit, setLimit] = useState(15)
+   const [sortBy, setSortBy] = useState('')
+   const [totalCount, setTotalCount] = useState()
+   const [sortOrder, setSortOrder] = useState(null)
 
-
-   const fetchProducts = async () => {
-      setIsLoading(true)
+   const fetchProducts = async (order = null, pageNum = page, limitNum = limit, sortType = sortBy) => {
+      setIsLoading(true);
       try {
-         const response = await fetch(`${urlBE}/products`, {
-            method: 'GET',
-            headers: {
-               "Content-Type": "application/json",
-            },
-            credentials: 'include'
-         })
-         const data = await response.json()
-         setProducts(data)
-      } catch (error) {
-         console.log("Loi ket noi API: ", error);
-      } finally {
-         setIsLoading(false)
-      }
-   }
+         let url = `${urlBE}/products?page=${pageNum}&limit=${limitNum}`;
+         if (order) {
+            url += `&sortBy=${sortType}&order=${order}`;
+         }
+         console.log(url);
 
+         const [productsRes, productCountRes] = await Promise.all([
+            fetch(url, {
+               method: 'GET',
+               headers: {
+                  'Content-Type': 'application/json',
+               }
+            }),
+            fetch(`${urlBE}/products/count`, {
+               method: 'GET',
+               headers: {
+                  'Content-Type': 'application/json',
+               }
+            })
+         ]);
+         if (!productsRes.ok || !productCountRes.ok) {
+            throw new Error(`HTTP error! status: ${productsRes.status} ${productCountRes.status}`);
+         }
+
+         const productsData = await productsRes.json();
+         const productCountData = await productCountRes.json();
+
+         setProducts(productsData);
+         setTotalCount(productCountData);
+
+      } catch (error) {
+         console.error('Error fetching products:', error);
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   const handlePrevPage = () => {
+      if (page > 1) setPage(page - 1);
+   };
+
+   const handleNextPage = () => {
+      setPage(page + 1);
+   };
+   const totalPages = Math.ceil(totalCount / limit);
 
    useEffect(() => {
-      fetchProducts()
-
-   }, [])
+      window.scrollTo(0, 0)
+      fetchProducts(sortOrder, page, limit, sortBy)
+   }, [sortOrder, page, limit, sortBy])
 
    if (!products) {
       return (
@@ -57,12 +88,7 @@ function Home() {
    }
 
 
-   const lastItemIndx = currentPage * itemPerpage
-   const firstItemIndx = lastItemIndx - itemPerpage
-   const pages = []
-   for (let i = 1; i <= Math.ceil(products.length / itemPerpage); i++) {
-      pages.push(i)
-   }
+
 
    return (
       <div className="bg-light">
@@ -72,7 +98,7 @@ function Home() {
          {/* sản phẩm hot */}
          <div className="container-lg container-md-fluid">
             <div className="bg rounded-4">
-               <Sale products={products} />
+               <Sale />
             </div>
          </div>
 
@@ -82,14 +108,18 @@ function Home() {
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
             <div className="row mt-3 d-md-flex">
                {isLoading ? (
-                  <div className="col-12d5">
-                     <Skeleton />
+                  <div className="row">
+                     <div className="col">  <Skeleton /></div>
+                     <div className="col">  <Skeleton /></div>
+                     <div className="col">  <Skeleton /></div>
+                     <div className="col">  <Skeleton /></div>
+                     <div className="col">  <Skeleton /></div>
 
                   </div>
                ) : (
                   <>
                      {
-                        products.slice(firstItemIndx, lastItemIndx).map((item) => (
+                        products.map((item) => (
                            <div className="col-12d5 col-6 col-md-6 my-3" key={item.id}>
                               <CartItem item={item} />
                            </div>
@@ -100,39 +130,21 @@ function Home() {
 
             </div>
             {/* pagination */}
-            <div className=" mt-4 d-flex justify-content-center">
-               {/* <button className="btn text-white bg"
-                     onClick={() => {
-                        setCurrentPage(currentPage - 1)
-                        document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
-                     }}
-                  >
-                     <ArrowLeft />
-                  </button> */}
-               {pages.map((page, index) => (
-                  <div key={index}>
-                     <button className={page === currentPage && currentPage > 0 ? "btn pw-bold text-white bg mx-2 active" : "btn"}
-                        onClick={() => {
-                           setCurrentPage(page)
-                           document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
-                        }}
-                     >
-                        {page}
-                     </button>
-                  </div>
-               ))}
-               <button className="btn text-white bg"
-                  onClick={() => {
-                     setCurrentPage(currentPage + 1);
-                     document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
-                  }}
+            <div className='d-flex justify-content-center d-flex align-items-center gap-2 ms-auto py-3'>
+               <button className="btn btn-sm bg text-white" onClick={handlePrevPage} disabled={page === 1}>
+                  <i class="bi bi-chevron-left"></i>
+               </button>
+               <span><input value={page} onChange={(e) => setPage(e.target.value)} style={{ width: 30 }} /> / {totalPages}</span>
+               <button
+                  className="btn btn-sm bg text-white"
+                  onClick={handleNextPage}
+                  disabled={products.length < limit}
                >
-                  <ArrowRight />
+                  <i class="bi bi-chevron-right"></i>
                </button>
             </div>
-
-
          </div>
+
 
          {/* forum */}
          <div className="container py-5">

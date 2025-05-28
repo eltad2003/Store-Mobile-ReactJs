@@ -2,14 +2,35 @@ import { AccessTime, ArrowLeft, ArrowRight, Loyalty } from '@mui/icons-material'
 import React, { useEffect, useState } from 'react'
 import { Carousel } from 'react-bootstrap';
 import CartItem from '../CartItem/CartItem';
+import { urlBE } from '../../baseUrl';
+import Skeleton from '../Skeleton/Skeleton';
 
-function Sale({ products }) {
 
+function Sale() {
+    const [products, setProducts] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    const fetchProducts = async () => {
+        setIsLoading(true)
+        try {
+            const res = await fetch(`${urlBE}/products`, {
+                method: 'GET',
+                headers: { "Content-Type": "application/json" }
+            })
+            const data = await res.json()
+            setProducts(data)
+
+        } catch (error) {
+            console.log('Loi ket noi server', error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
     // Countdown timer logic
     const getEndTime = () => {
         const saved = localStorage.getItem('saleEndTime');
         if (saved) return parseInt(saved, 10);
-        const end = Date.now() + 3 * 60 * 60 * 1000; // 3h từ bây giờ
+        const end = Date.now() + 24 * 60 * 60 * 1000; // 24h từ bây giờ
         localStorage.setItem('saleEndTime', end);
         return end;
     };
@@ -18,12 +39,18 @@ function Sale({ products }) {
     const [timeLeft, setTimeLeft] = useState(Math.max(0, Math.floor((endTime - Date.now()) / 1000)));
 
     useEffect(() => {
+
         if (timeLeft <= 0) return;
         const timer = setInterval(() => {
             setTimeLeft(Math.max(0, Math.floor((endTime - Date.now()) / 1000)));
         }, 1000);
         return () => clearInterval(timer);
+
     }, [endTime, timeLeft]);
+
+    useEffect(() => {
+        fetchProducts()
+    }, [])
 
     // Format time as HH:MM:SS
     const formatTime = (secs) => {
@@ -33,12 +60,16 @@ function Sale({ products }) {
         return `${h}:${m}:${s}`;
     };
     const popularProducts = products.filter(product => product.discount > 0);
+
     const chunkSize = 5;
     const productChunks = [];
 
     for (let i = 0; i < popularProducts.length; i += chunkSize) {
         productChunks.push(popularProducts.slice(i, i + chunkSize));
     }
+
+
+
     return (
         <div className='p-3'>
             <div className="d-flex">
@@ -67,26 +98,40 @@ function Sale({ products }) {
                 </div>
 
             </div>
-            <div className='h-100 rounded-4' >
-                <Carousel indicators={false} controls={true}
-                    prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
-                    nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
-
-                >
-                    {productChunks.map((chunk, index) => (
-                        <Carousel.Item key={index} >
-                            <div className='row d-md-flex justify-content-center'>
-                                {chunk.map((item, i) => (
-                                    <div className="my-3 col-12d5" key={i} style={{ minHeight: '400px' }}>
-                                        <CartItem item={item} />
-                                    </div>
-                                ))}
+            <div className='h-100 rounded-4'>
+                {isLoading ? (
+                    <div className="row">
+                        <div className="col"> <Skeleton /></div>
+                        <div className="col"> <Skeleton /></div>
+                        <div className="col"> <Skeleton /></div>
+                        <div className="col"> <Skeleton /></div>
+                        <div className="col"> <Skeleton /></div>
+                    </div>
+                ) : (
+                    <Carousel indicators={false} controls={true}
+                        prevIcon={<ArrowLeft style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
+                        nextIcon={<ArrowRight style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '50%', padding: '10px' }} />}
+                    >
+                        {productChunks.map((chunk, index) => (
+                            <Carousel.Item key={index}>
+                                <div className='row d-md-flex justify-content-center'>
+                                    {chunk.map((item, i) => (
+                                        <div className="my-3 col-12d5" key={i} style={{ minHeight: '400px' }}>
+                                            <CartItem item={item} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </Carousel.Item>
+                        ))}
+                        {productChunks.length === 0 && (
+                            <div className='fw-bold text-center text-white'>
+                                Chưa có sản phẩm được sale
                             </div>
-                        </Carousel.Item>
-                    ))}
-                </Carousel>
+                        )}
+                    </Carousel>
+                )}
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -4,6 +4,7 @@ import { AuthContext } from '../AuthProvider'
 import { Google } from '@mui/icons-material'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { keyCaptcha, keyCaptchaLocalhost, urlBE } from '../../baseUrl'
+import { LoadingButton } from '../Loading'
 
 
 function Login() {
@@ -34,9 +35,11 @@ function Login() {
 
         if (!result.success) {
             alert(result.message || 'Đăng nhập thất bại');
+            setIsLoading(false)
             if (result.user && result.user.isVerified === false) {
                 setShow(true);
                 setShowForm('d-none');
+
             }
             return;
         }
@@ -233,8 +236,13 @@ function Login() {
                             type="button"
                             className="btn btn-warning w-100 rounded-3 mt-2 fw-semibold"
                             onClick={handleOTP}
+                            disabled={isLoading}
                         >
-                            Xác nhận OTP
+                            {isLoading ? (
+                                <LoadingButton />
+                            ) : (
+                                'Xác nhận OTP'
+                            )}Xác nhận OTP
                         </button>
                     ) : (
                         <button
