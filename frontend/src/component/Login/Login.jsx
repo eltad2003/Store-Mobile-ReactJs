@@ -171,9 +171,8 @@ function Login() {
                     <h2 className="text-center  mb-4 fw-bold">Đăng nhập</h2>
                 </div>
 
-                <form className={`${showForm} p-4`}>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label fw-semibold">Email</label>
+                <form className={`${showForm} p-4 card-body`}>
+                    <div className="form-floating mb-3">
                         <input
                             type="email"
                             className="form-control form-control-lg rounded-3"
@@ -184,9 +183,9 @@ function Login() {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+                        <label htmlFor="email" className="form-label fw-semibold">Email</label>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label fw-semibold">Mật khẩu</label>
+                    <div className="form-floating mb-3">
                         <input
                             type="password"
                             className="form-control form-control-lg rounded-3"
@@ -197,6 +196,7 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+                        <label htmlFor="password" className="form-label fw-semibold">Mật khẩu</label>
                     </div>
                     <div className="mb-3">
                         <ReCAPTCHA
@@ -217,7 +217,7 @@ function Login() {
                                 'Gửi mã xác minh'
                             )}
                         </Link>
-                        <div className="mb-3">
+                        <div className="form-floating mb-3">
                             <label htmlFor="otp" className="form-label">Nhập mã OTP</label>
                             <input
                                 type="text"
@@ -230,7 +230,7 @@ function Login() {
                 )}
 
                 {/* Nút chính tùy theo trạng thái */}
-                <div className='p-4'>
+                <div className='px-4'>
                     {show ? (
                         <button
                             type="button"
@@ -247,7 +247,7 @@ function Login() {
                     ) : (
                         <button
                             type="submit"
-                            className="btn bg text-white w-100 rounded-3 mt-2 fw-semibold"
+                            className="btn bg text-white w-100 rounded-3 fw-semibold"
                             onClick={handleLogin}
                             disabled={isLoading}
                         >
@@ -263,7 +263,7 @@ function Login() {
                     )}
                 </div>
                 <div className="p-4">
-                    <div className="d-flex align-items-center my-3">
+                    <div className="d-flex align-items-center mb-2">
                         <hr className="flex-grow-1" />
                         <span className="mx-2 text-muted">Hoặc</span>
                         <hr className="flex-grow-1" />

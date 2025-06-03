@@ -144,7 +144,7 @@ function Product() {
                     ))}
                 </Carousel>
                 {/* Thumbnails */}
-                <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 8, margin: '16px', flexWrap: 'wrap' }}>
                     {mediaList.map((url, idx) => (
                         <div
                             key={idx}
@@ -296,17 +296,22 @@ function Product() {
                 <h4 className='p-3 fw-bold'>Mô tả sản phẩm</h4>
                 <div
                     dangerouslySetInnerHTML={{ __html: processDescriptionImages(product.description) }}
-                    className='p-5'
+                    className='p-3'
                     style={{
-                        maxHeight: showFullDesc ? 2000 : 400,
+                        maxHeight: showFullDesc ? '100%' : '350px',
                         overflow: 'hidden',
-                        position: 'relative',
-                        transition: 'max-height 1s ease',
+
                     }}
                 />
 
-                <div className='d-flex justify-content-center z-2 mt-3' >
-                    <button className="btn bg text-white shadow fw-bold " onClick={() => setShowFullDesc(!showFullDesc)} >
+                <div className='text-center' >
+                    <button
+                        className="btn bg text-white shadow"
+                        onClick={() => setShowFullDesc(!showFullDesc)}
+                        style={{
+                            position: 'relative',
+                            top: '20px',
+                        }}>
                         {showFullDesc ? 'Ẩn bớt' : 'Xem thêm'} <ExpandMore />
                     </button>
                 </div>

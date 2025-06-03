@@ -38,7 +38,7 @@ function Cart() {
                         <div className="card border-0 shadow-sm mb-4  position-sticky top-0">
                             <div className="card-header bg-cart text-white py-3">
                                 <div className="d-flex align-items-center">
-                                    <Link to="/" className="text-decoration-none text-dark me-3">
+                                    <Link to="/" className="text-decoration-none text-white me-3">
                                         <ArrowBack />
                                     </Link>
                                     <h5 className="mb-0">Giỏ hàng của bạn ({cartItems.length} sản phẩm)</h5>

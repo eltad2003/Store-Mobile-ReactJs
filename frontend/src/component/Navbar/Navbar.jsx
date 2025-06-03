@@ -172,7 +172,7 @@ function Navbar() {
 
             {/* Desktop Navbar */}
             <div className='bg-navbar shadow-sm position-sticky top-0 z-3 py-2' >
-                <nav className="navbar navbar-expand-lg ">
+                <nav className="navbar navbar-expand-md ">
                     <div className="container-fluid px-3">
                         {/* Brand */}
                         <Link className="navbar-brand d-flex align-items-center text-white fw-bold" to="/">
@@ -203,7 +203,7 @@ function Navbar() {
                                         className="nav-link text-white d-flex align-items-center"
                                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft"
                                     >
-                                        <i class="bi bi-layout-three-columns me-2"></i>
+                                        <i className="bi bi-layout-three-columns me-2"></i>
                                         <span className="d-none d-xl-inline">Danh mục</span>
                                     </Link>
                                 </li>

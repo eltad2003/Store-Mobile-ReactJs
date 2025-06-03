@@ -38,7 +38,7 @@ function Banner() {
                 </div>
                 {/* Carousel - Show on all screens */}
                 <div className="col-12 col-md-10  h-100">
-                    <div className="card border-0 shadow-lg rounded-4" >
+                    <div className="card border-0 shadow rounded-4" >
                         {isLoading ? (
                             <Skeleton />
                         ) : (
@@ -71,11 +71,11 @@ function Banner() {
                             Array.from({ length: 5 }).map((_, idx) => (
                                 <div
                                     key={idx}
-                                    className='gap-2 p-2 border-3'
-                                    style={{ cursor: 'pointer', background: '#fff', minWidth: '20%', boxSizing: 'border-box', height: '150px' }}
+                                    className='gap-3 p-2 border-3 '
+                                    style={{ cursor: 'pointer', minWidth: '20%', boxSizing: 'border-box', height: '150px' }}
                                 >
-                                    <div style={{ width: '100%', height: '50px', background: '#eee', borderRadius: '4px', marginBottom: '8px' }}></div>
-                                    <div style={{ width: '100%', height: '10px', background: '#eee', borderRadius: '2px' }}></div>
+                                    <div className='bg-secondary bg-opacity-25 ' style={{ width: '100%', height: '50px', borderRadius: '4px', marginBottom: '8px' }}></div>
+                                    <div className='bg-secondary bg-opacity-25 ' style={{ width: '100%', height: '10px', borderRadius: '2px' }}></div>
                                 </div>
                             ))
                         ) : (

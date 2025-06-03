@@ -89,36 +89,35 @@ function Register() {
                 <div className="bg text-white card-header">
                     <h2 className="text-center mb-4 fw-bold">Đăng ký</h2>
                 </div>
-                <form className={`${show} p-4`}>
-                    <div className="mb-3">
-                        <label htmlFor="fullName" className="form-label fw-semibold">Tên đầy đủ</label>
+                <form className={`${show} p-4 card-body`}>
+                    <div className="form-floating mb-3">
                         <input required type="text" className="form-control form-control-lg rounded-3" name='fullName' id="fullName" value={fullName} placeholder="Nhập họ tên..." onChange={(e) => setfullName(e.target.value)} />
+                        <label htmlFor="fullName" className="form-label fw-semibold">Tên đầy đủ</label>
+                        <div className="invalid-feedback">Vui long nhap </div>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label fw-semibold">Email</label>
+                    <div className="form-floating mb-3">
                         <input required type="email" className="form-control form-control-lg rounded-3" name='email' id="email" value={email} placeholder="Nhập email..." onChange={(e) => setEmail(e.target.value)} />
+                        <label htmlFor="email" className="form-label fw-semibold">Email</label>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="phone" className="form-label fw-semibold">Số điện thoại</label>
+                    <div className="form-floating mb-3">
                         <input required type="text" className="form-control form-control-lg rounded-3" name='phone' id="phone" value={phone} placeholder="Nhập số điện thoại..." onChange={(e) => setPhone(e.target.value)} />
+                        <label htmlFor="phone" className="form-label fw-semibold">Số điện thoại</label>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label fw-semibold">Mật khẩu</label>
+                    <div className="form-floating mb-3">
                         <input required type="password" className="form-control form-control-lg rounded-3" name='password' id="password" value={password} placeholder="Nhập mật khẩu..." onChange={(e) => setPassword(e.target.value)} />
+                        <label htmlFor="password" className="form-label fw-semibold">Mật khẩu</label>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="confirmPassword" className="form-label fw-semibold">Xác nhận mật khẩu</label>
+                    <div className="form-floating">
                         <input required type="password" className="form-control form-control-lg rounded-3" name='confirmPassword' id="confirmPassword" value={confirmPassword} placeholder="Nhập lại mật khẩu..." onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <label htmlFor="confirmPassword" className="form-label fw-semibold">Xác nhận mật khẩu</label>
                     </div>
-
-
                 </form>
-                <div className="p-4">
-                    <div className={showOtp}>
+                <div className="px-4">
+                    <div className={`${showOtp} p-3`}>
                         <label htmlFor="otp" className='form-label'>Nhập OTP</label>
                         <input type="text" className='form-control' value={otp} onChange={(e) => setOtp(e.target.value)} />
                     </div>
-                    <div className="mt-2">
+                    <div className="">
                         {show === 'd-block' ?
                             <button type="submit" className="btn bg text-white  w-100 rounded-3 fw-semibold" onClick={handleRegister} disabled={isLoading}>
                                 {isLoading ? (
@@ -137,7 +136,7 @@ function Register() {
                             </button>
                         }
                     </div>
-                    <div className="text-center mt-3">
+                    <div className="text-center py-4">
                         <i className="bi bi-check-circle-fill text-success me-1"></i>
                         <span>Bạn đã có tài khoản?</span>
                         <Link to="/login" className="d-block mt-2">

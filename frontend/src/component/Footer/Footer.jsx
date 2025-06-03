@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <footer className="bg text-white mt-5">
             <div className="container py-5">
-                <div className="row g-4">
+                <div className="row ">
                     {/* About Us Column */}
                     <div className="col-lg-4 col-md-6">
                         <h5 className="text-uppercase mb-4">Về chúng tôi</h5>

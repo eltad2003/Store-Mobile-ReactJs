@@ -36,7 +36,7 @@ function ShopCategory({ category }) {
 
   return (
 
-    <div className='container-fluid p-5 '>
+    <div className='container mt-3 '>
       <div className='d-flex'>
         <Link to={"/"} className='text-black mt-1'><ArrowBack /></Link>
         <p className='fw-bold fs-4 ms-2'>Danh mục {category.toUpperCase()}</p>
@@ -46,8 +46,9 @@ function ShopCategory({ category }) {
           .filter(item => item.category === category)
           .map(item => (
             <div
-              className=" col-12d5 my-3"
+              className="my-3 col-12d5 col-6"
               key={item.id}
+
             >
               <CartItem item={item} />
             </div>

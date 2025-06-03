@@ -1,3 +1,5 @@
+
+
 .up-to-top {
     position: fixed;
     bottom: 120px;
@@ -12,11 +14,20 @@
 
 }
 
-
-
 .col-12d5 {
     flex: 0 0 20%;
+    width: 100%;
 }
+
+@media (max-width: 500px) {
+    .col-12d5 {
+        flex: 0 0 50%;
+        width: 100%;
+    }
+
+}
+
+
 
 @keyframes pulse {
     0% {
@@ -32,9 +43,3 @@
         opacity: 0
     }
 }
-
-.bg {
-    background: linear-gradient(to right, #870000, #190a05)
-        /* background: linear-gradient(rgb(255, 99, 114), rgb(248, 56, 100), rgb(252, 54, 54)) */
-}
-

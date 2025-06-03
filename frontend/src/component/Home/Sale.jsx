@@ -61,7 +61,7 @@ function Sale() {
     };
     const popularProducts = products.filter(product => product.discount > 0);
 
-    const chunkSize = 5;
+    const chunkSize = 10;
     const productChunks = [];
 
     for (let i = 0; i < popularProducts.length; i += chunkSize) {
@@ -114,7 +114,7 @@ function Sale() {
                     >
                         {productChunks.map((chunk, index) => (
                             <Carousel.Item key={index}>
-                                <div className='row d-md-flex justify-content-center'>
+                                <div className='row d-flex justify-content-center'>
                                     {chunk.map((item, i) => (
                                         <div className="my-3 col-12d5" key={i} style={{ minHeight: '400px' }}>
                                             <CartItem item={item} />

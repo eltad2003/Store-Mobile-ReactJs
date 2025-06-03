@@ -19,7 +19,7 @@ function Home() {
    const [products, setProducts] = useState([])
    const [isLoading, setIsLoading] = useState(false)
    const [page, setPage] = useState(1)
-   const [limit, setLimit] = useState(15)
+   const [limit, setLimit] = useState(20)
    const [sortBy, setSortBy] = useState('')
    const [totalCount, setTotalCount] = useState()
    const [sortOrder, setSortOrder] = useState(null)
@@ -96,7 +96,7 @@ function Home() {
          <Banner />
 
          {/* sản phẩm hot */}
-         <div className="container-lg container-md-fluid">
+         <div className="container">
             <div className="bg rounded-4">
                <Sale />
             </div>
@@ -104,11 +104,11 @@ function Home() {
 
 
          {/* Tất cả sản phẩm */}
-         <div className="container-md-fluid container-lg py-lg-5 p-md-5 p-lg-1" id="top">
+         <div className="container" id="top">
             <h3 className='mt-3 fw-bold'>TẤT CẢ SẢN PHẨM</h3>
-            <div className="row mt-3 d-md-flex">
+            <div className="row mt-3">
                {isLoading ? (
-                  <div className="row">
+                  <div className="row ">
                      <div className="col">  <Skeleton /></div>
                      <div className="col">  <Skeleton /></div>
                      <div className="col">  <Skeleton /></div>
@@ -120,7 +120,7 @@ function Home() {
                   <>
                      {
                         products.map((item) => (
-                           <div className="col-12d5 col-6 col-md-6 my-3" key={item.id}>
+                           <div className="my-3 col-12d5" key={item.id} >
                               <CartItem item={item} />
                            </div>
                         ))
@@ -132,7 +132,7 @@ function Home() {
             {/* pagination */}
             <div className='d-flex justify-content-center d-flex align-items-center gap-2 ms-auto py-3'>
                <button className="btn btn-sm bg text-white" onClick={handlePrevPage} disabled={page === 1}>
-                  <i class="bi bi-chevron-left"></i>
+                  <i className="bi bi-chevron-left"></i>
                </button>
                <span><input value={page} onChange={(e) => setPage(e.target.value)} style={{ width: 30 }} /> / {totalPages}</span>
                <button
@@ -140,7 +140,7 @@ function Home() {
                   onClick={handleNextPage}
                   disabled={products.length < limit}
                >
-                  <i class="bi bi-chevron-right"></i>
+                  <i className="bi bi-chevron-right"></i>
                </button>
             </div>
          </div>
@@ -178,7 +178,7 @@ function Home() {
             <Link to='https://zalo.me/0329732322' target="_blank"><img src={zaloIcon} alt="zalo icon" className="position-fixed end-0 bottom-0" /></Link>
          </div>
          <Footer />
-      </div>
+      </div >
 
    );
 }

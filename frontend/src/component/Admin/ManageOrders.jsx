@@ -169,7 +169,7 @@ function ManageOrders() {
           </div>
         </div>
 
-        <div className='mt-5'>
+        <div className='card shadow p-3 mt-5'>
           {isLoading ? (
             <Loading />
           ) : (
