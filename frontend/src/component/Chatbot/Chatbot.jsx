@@ -4,6 +4,7 @@ import { AuthContext } from '../AuthProvider'
 import { useNavigate } from 'react-router-dom'
 import ChatbotIcon from '../asset/ChatbotIcon.png'
 import { urlChat } from "../../baseUrl";
+import './Chatbot.css'
 function Chatbot() {
     const { user } = useContext(AuthContext)
     const userId = user?.user.id
@@ -37,19 +38,17 @@ function Chatbot() {
                 const data = await res.json()
                 const botMessage = { sender: 'bot', text: data.reply }
                 setMessages(prev => [...prev, botMessage])
-
             }
-
         } catch (error) {
             alert("Lỗi Server: ", error)
         } finally {
             setIsLoading(false)
         }
     }
+
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, [messages])
-
 
     const formatBotMessage = (text) => {
         const urlRegex = /https?:\/\/[^\s)]+/g;
@@ -62,30 +61,107 @@ function Chatbot() {
 
     return (
         <div>
-            <button className="btn respond rounded-pill small p-2 " onClick={() => setShowChat(!showChat)}> <img src={ChatbotIcon} alt="ChatBot" className='ms-5 img-fluid rounded-5' width={40} height={50} /> </button>
-            {showChat ? (
+            {/* Chatbot trigger button */}
+            <button
+                className="btn chatbot rounded-pill small p-2 position-fixed"
+                style={{
+                    bottom: '55px',
+                    right: '5px',
+                    zIndex: 999,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                }}
+                onClick={() => setShowChat(!showChat)}
+            >
+                <img
+                    src={ChatbotIcon}
+                    alt="ChatBot"
+                    className='img-fluid rounded-5'
+                    width={40}
+                    height={50}
+                />
+            </button>
+
+            {showChat && (
                 <>
-                    <div className="position-fixed top-0 start-0 h-100 w-100 bg-dark opacity-50" onClick={() => setShowChat(false)}>
-                    </div>
-                    <div className="me-5 mb-3 position-fixed end-0 bottom-0 z-3">
-                        <div className="card shadow-lg border-0 rounded-3" style={{ width: "420px", height: "500px" }}>
-                            <div className='card-header bg d-flex'>
-                                <p className="fw-bold fs-5  text-white" >Chat với shop</p>
-                                <button onClick={() => setShowChat(false)} className='btn btn-close ms-auto mt-2'></button>
+                    {/* Backdrop */}
+                    <div
+                        className="position-fixed top-0 start-0 h-100 w-100 bg-dark opacity-50"
+                        style={{ zIndex: 1000 }}
+                        onClick={() => setShowChat(false)}
+                    />
+
+                    {/* Chat window */}
+                    <div
+                        className="position-fixed end-0 bottom-0 p-3"
+                        style={{ zIndex: 1001 }}
+                    >
+                        <div
+                            className="card shadow-lg border-0 rounded-3"
+                            style={{
+                                width: 'min(420px, calc(100vw - 2rem))',
+                                height: 'min(500px, calc(100vh - 2rem))',
+                                maxWidth: '100%'
+                            }}
+                        >
+                            {/* Header */}
+                            <div className='card-header bg d-flex align-items-center'>
+                                <p className="fw-bold fs-5 text-white m-0">Chat với shop</p>
+                                <button
+                                    onClick={() => setShowChat(false)}
+                                    className='btn btn-close btn-close-white ms-auto'
+                                    aria-label="Close chat"
+                                />
                             </div>
-                            <div className="flex-grow-1 mb-2" style={{ height: "300px", overflowY: "auto", backgroundColor: "#f7f7f7", padding: "10px", borderRadius: "10px" }}>
+
+                            {/* Messages container */}
+                            <div
+                                className="flex-grow-1 p-2 p-md-3"
+                                style={{
+                                    overflowY: "auto",
+                                    backgroundColor: "#f7f7f7",
+                                    minHeight: '200px'
+                                }}
+                            >
                                 {messages.map((msg, idx) => (
-                                    <div key={idx} className={`d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-2`} >
-                                        {msg.sender === 'bot' && <img src={ChatbotIcon} alt="ChatBot" className='rounded-circle me-1' width={30} height={30} />}
-                                        <div className={`px-3 py-2 rounded-4 ${msg.sender === 'user' ? 'bg-primary text-white' : 'bg-light text-dark'}`} style={{ maxWidth: '75%' }} dangerouslySetInnerHTML={{ __html: formatBotMessage(msg.text) }}>
-                                        </div>
+                                    <div
+                                        key={idx}
+                                        className={`d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'} mb-2`}
+                                    >
+                                        {msg.sender === 'bot' && (
+                                            <img
+                                                src={ChatbotIcon}
+                                                alt="ChatBot"
+                                                className='rounded-circle me-2 flex-shrink-0'
+                                                width={30}
+                                                height={30}
+                                            />
+                                        )}
+                                        <div
+                                            className={`px-2 px-md-3 py-2 rounded-4 ${msg.sender === 'user' ? 'bg-primary text-white' : 'bg-light text-dark'}`}
+                                            style={{
+                                                maxWidth: msg.sender === 'bot' ? 'calc(100% - 40px)' : '85%',
+                                                wordWrap: 'break-word',
+                                                fontSize: 'clamp(0.8rem, 2vw, 0.9rem)'
+                                            }}
+                                            dangerouslySetInnerHTML={{ __html: formatBotMessage(msg.text) }}
+                                        />
                                     </div>
                                 ))}
+
+                                {/* Loading indicator */}
                                 {isLoading && (
                                     <div className="d-flex justify-content-start mb-2">
-                                        <img src={ChatbotIcon} alt="ChatBot" className='rounded-circle me-1' width={30} height={30} />
-                                        {/* Loading chat */}
-                                        <div style={{ display: 'flex', alignItems: 'center', height: '32px' }}>
+                                        <img
+                                            src={ChatbotIcon}
+                                            alt="ChatBot"
+                                            className='rounded-circle me-2 flex-shrink-0'
+                                            width={30}
+                                            height={30}
+                                        />
+                                        <div
+                                            className="bg-light rounded-4 px-3 py-2"
+                                            style={{ display: 'flex', alignItems: 'center', minHeight: '36px' }}
+                                        >
                                             <span className="typing-dot" style={{
                                                 display: 'inline-block',
                                                 width: '8px',
@@ -113,29 +189,24 @@ function Chatbot() {
                                                 background: '#bbb',
                                                 animation: 'typingWave 1.2s 0.4s infinite'
                                             }} />
-                                            <style>
-                                                {`
-                                                @keyframes typingWave {
-                                                    0%, 60%, 100% {
-                                                        transform: translateY(0);
-                                                        opacity: 0.7;
-                                                    }
-                                                    30% {
-                                                        transform: translateY(-8px);
-                                                        opacity: 1;
-                                                    }
-                                                }
-                                                `}
-                                            </style>
                                         </div>
                                     </div>
                                 )}
                                 <div ref={chatEndRef} />
                             </div>
-                            {user ?
-                                <div className="d-flex p-3">
+
+                            {/* Input area */}
+                            {user ? (
+                                <div className="d-flex p-2 p-md-3 gap-2 border-top">
                                     <textarea
-                                        className="form-control"
+                                        className="form-control flex-grow-1"
+                                        style={{
+                                            resize: 'none',
+                                            minHeight: '38px',
+                                            maxHeight: '100px',
+                                            fontSize: 'clamp(0.8rem, 2vw, 0.9rem)'
+                                        }}
+                                        rows="1"
                                         value={content}
                                         placeholder='Nhập tin nhắn'
                                         onChange={(e) => setContent(e.target.value)}
@@ -146,26 +217,34 @@ function Chatbot() {
                                             }
                                         }}
                                         disabled={isLoading}
+                                    />
+                                    <button
+                                        className="btn text-primary btn-sm flex-shrink-0"
+                                        onClick={handleChat}
+                                        disabled={isLoading || !content.trim()}
+                                        style={{ minWidth: '40px' }}
                                     >
-                                    </textarea>
-                                    <button className="btn text-primary btn-sm" onClick={() => handleChat()} disabled={isLoading}><Send /></button>
+                                        <Send fontSize="small" />
+                                    </button>
                                 </div>
-                                : (
-                                    <div className='p-3'>
-                                        <button className='btn btn-primary w-100' onClick={() => { navigate('/login') }}>Vui lòng đăng nhập để tiếp tục</button>
-                                    </div>
-                                )
-                            }
+                            ) : (
+                                <div className='p-2 p-md-3 border-top'>
+                                    <button
+                                        className='btn btn-primary w-100'
+                                        onClick={() => navigate('/login')}
+                                        style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)' }}
+                                    >
+                                        Vui lòng đăng nhập để tiếp tục
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
-                </>
-            ) : (
-                <>
-                </>
-            )
-            }
-        </div >
 
+
+                </>
+            )}
+        </div>
     )
 }
 

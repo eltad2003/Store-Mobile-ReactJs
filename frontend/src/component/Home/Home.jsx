@@ -74,7 +74,7 @@ function Home() {
    const totalPages = Math.ceil(totalCount / limit);
 
    useEffect(() => {
-      window.scrollTo(0, 0)
+
       fetchProducts(sortOrder, page, limit, sortBy)
    }, [sortOrder, page, limit, sortBy])
 
@@ -131,13 +131,25 @@ function Home() {
             </div>
             {/* pagination */}
             <div className='d-flex justify-content-center d-flex align-items-center gap-2 ms-auto py-3'>
-               <button className="btn btn-sm bg text-white" onClick={handlePrevPage} disabled={page === 1}>
+               <button className="btn btn-sm bg text-white" onClick={() => {
+                  handlePrevPage();
+                  window.scrollTo({
+                     top: 0,
+                     behavior: 'smooth'
+                  })
+               }} disabled={page === 1}>
                   <i className="bi bi-chevron-left"></i>
                </button>
                <span><input value={page} onChange={(e) => setPage(e.target.value)} style={{ width: 30 }} /> / {totalPages}</span>
                <button
                   className="btn btn-sm bg text-white"
-                  onClick={handleNextPage}
+                  onClick={() => {
+                     handleNextPage();
+                     window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                     })
+                  }}
                   disabled={products.length < limit}
                >
                   <i className="bi bi-chevron-right"></i>
@@ -175,7 +187,14 @@ function Home() {
          <div>
             <a href='#top' className="up-to-top rounded-pill p-2 bg text-white"> <ArrowUpward /></a>
             <Chatbot />
-            <Link to='https://zalo.me/0329732322' target="_blank"><img src={zaloIcon} alt="zalo icon" className="position-fixed end-0 bottom-0" /></Link>
+            <Link to='https://zalo.me/0329732322' target="_blank"><img src={zaloIcon} alt="zalo icon"
+               style={{
+                  position: 'fixed',
+                  bottom: 0,
+                  right: '10px',
+               }}
+            />
+            </Link>
          </div>
          <Footer />
       </div >

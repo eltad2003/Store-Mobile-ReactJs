@@ -9,12 +9,13 @@ import './Cart.css'
 function Cart() {
     const { cartItems, removeFromCart, increaseItem, decreaseItem, selectedItems, toggleSelectItem, selectAllItems, updateQuantity } = useContext(CartContext);
     const { user } = useContext(AuthContext)
+    const [promotion, setPromotion] = useState(null)
     const navigation = useNavigate()
 
     // Tính tổng giá dựa trên sản phẩm đã chọn
     const totalPrice = cartItems
         .filter((item) => selectedItems.includes(item.id))
-        .reduce((sum, item) => sum + item.price * item.quantity, 0);
+        .reduce((sum, item) => sum + (Math.round(item.price * (1 - item.discount / 100))) * item.quantity, 0);
 
     const handleCheckout = (e) => {
         if (selectedItems.length === 0) {
@@ -35,7 +36,7 @@ function Cart() {
             ) : (
                 <div className="row">
                     <div className="col-lg-8">
-                        <div className="card border-0 shadow-sm mb-4  position-sticky top-0">
+                        <div className="card border-0 shadow-sm mb-4 h-100  position-sticky top-0">
                             <div className="card-header bg-cart text-white py-3">
                                 <div className="d-flex align-items-center">
                                     <Link to="/" className="text-decoration-none text-white me-3">
@@ -89,10 +90,10 @@ function Cart() {
                                                     {product.discount ? (
                                                         <div className="d-flex align-items-center mb-2">
                                                             <span className="text-decoration-line-through text-muted me-2">
-                                                                {formatPrice(Math.round(product.price * (1 + product.discount / 100)))}
+                                                                {formatPrice(product.price)}
                                                             </span>
                                                             <span className="badge bg-cart me-2">-{product.discount}%</span>
-                                                            <span className="text-success fw-bold">{formatPrice(product.price)}</span>
+                                                            <span className="text-success fw-bold">{formatPrice(Math.round(product.price * (1 - product.discount / 100)))}</span>
                                                         </div>
                                                     ) : (
                                                         <div className="mb-2">
@@ -155,7 +156,9 @@ function Cart() {
                                 </div>
                                 <div className="d-flex justify-content-between mb-3">
                                     <span className="text-muted">Khuyến mãi:</span>
-                                    <span className="text-success">-0đ</span>
+
+                                    <span className="text-success">0</span>
+
                                 </div>
                                 <hr />
                                 <div className="d-flex justify-content-between mb-4">

@@ -19,19 +19,14 @@ function CartItem({ item }) {
 
 
             {/* Ảnh */}
-            <div className="text-center h-100" style={{ maxHeight: '250px' }}>
-                <Link
-                    to={`/products/${item.id}`}
-                    style={{ textDecoration: 'none' }}
-                    className='p-2 '
-                >
+            <div className="h-100 d-flex align-items-center justify-content-center" >
+                <Link to={`/products/${item.id}`} style={{ textDecoration: 'none' }}>
                     <img
-                        src={item.listMedia[0] || "https://via.placeholder.com/150"}
+                        src={item.listMedia[0]}
                         alt={item.category}
-                        width={150}
-                        height={150}
-                        className='img-hover object-fit-cover img-fluid'
-
+                        width={160} height={160}
+                        className='img-hover img-fluid'
+                        style={{ objectFit: 'cover' }}
                     />
                 </Link>
             </div>
@@ -49,9 +44,10 @@ function CartItem({ item }) {
                 <div>
                     {item.discount ? (
                         <div className="d-flex gap-1 flex-wrap align-items-center">
-                            <span className="text-success fw-bold me-1">{formatPrice(item.price)}</span>
+                            <span className="text-success fw-bold me-1">{formatPrice(Math.round(item.price * (1 - item.discount / 100)))}</span>
                             <span className="text-muted text-decoration-line-through small">
-                                {formatPrice(Math.round(item.price * (1 + item.discount / 100)))}
+                                {formatPrice(item.price)}
+
                             </span>
 
                         </div>

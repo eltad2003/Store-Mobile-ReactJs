@@ -302,7 +302,7 @@ function Profile() {
 
     const modalChangePassword = () => {
         return (
-            <div className="modal fade" id="changePasswordModal" tabindex="-1">
+            <div className="modal fade" id="changePasswordModal" tabIndex="-1">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

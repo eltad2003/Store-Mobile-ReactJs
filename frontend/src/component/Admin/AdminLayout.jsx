@@ -27,7 +27,7 @@ function AdminLayout() {
                     className={`z-2 bg-dark text-white p-3 position-fixed h-100`}
                     style={{
                         left: isSidebarOpen ? 0 : '-250px',
-                        transition: 'left 0.4s ease',
+                        transition: 'left 0.5s ease',
 
                     }}
                 >

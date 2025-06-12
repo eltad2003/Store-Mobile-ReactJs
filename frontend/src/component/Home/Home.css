@@ -1,45 +1,35 @@
-
-
 .up-to-top {
     position: fixed;
     bottom: 120px;
-    right: 70px;
+    right: 10px
 }
 
-.respond {
-    position: fixed;
-    bottom: 60px;
-    right: 70px;
-    animation: pulse 1.5s infinite;
-
-}
 
 .col-12d5 {
     flex: 0 0 20%;
-    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .col-12d5 {
+        flex: 0 0 25%;
+    }
+}
+
+@media (max-width: 990px) {
+    .col-12d5 {
+        flex: 0 0 33.33%;
+    }
+}
+
+@media (max-width: 765px) {
+    .col-12d5 {
+        flex: 0 0 50%;
+    }
 }
 
 @media (max-width: 500px) {
     .col-12d5 {
         flex: 0 0 50%;
-        width: 100%;
-    }
-
-}
-
-
-
-@keyframes pulse {
-    0% {
-        transform: scale(1, 1);
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1.5);
-        opacity: 0
     }
 }
+

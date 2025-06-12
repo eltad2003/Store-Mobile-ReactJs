@@ -131,7 +131,7 @@ function Order() {
                                     />
                                     <div className="ms-3 flex-grow-1">
                                         <h6 className="mb-1">{product.name}</h6>
-                                        <p className="text-danger fw-bold mb-1">{formatPrice(product.price)}</p>
+                                        <p className="text-danger fw-bold mb-1">{formatPrice(Math.round(product.price * (1 - product.discount / 100)))}</p>
                                         <div className="d-flex align-items-center">
                                             <span className="text-muted">Số lượng:</span>
                                             <span className="ms-2 fw-semibold">{product.quantity}</span>
@@ -259,7 +259,7 @@ function Order() {
                     </div>
 
                     {/* Order Summary Section */}
-                    <div className="card shadow-sm">
+                    <div className="card shadow-sm position-sticky bottom-0">
                         <div className="card-body">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <div>
@@ -267,7 +267,7 @@ function Order() {
                                     <small className="text-muted">Chưa tính chiết khấu</small>
                                 </div>
                                 <h4 className="text-danger mb-0">
-                                    {formatPrice(selectedProducts.reduce((total, item) => total + (item.price * item.quantity), 0))}
+                                    {formatPrice(selectedProducts.reduce((total, item) => total + (Math.round(item.price * (1 - item.discount / 100)) * item.quantity), 0))}
                                 </h4>
                             </div>
                             <button

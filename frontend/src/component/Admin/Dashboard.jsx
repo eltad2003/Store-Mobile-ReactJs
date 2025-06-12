@@ -19,7 +19,9 @@ import formatPrice from '../../formatPrice';
 import { Link } from "react-router-dom";
 import { urlBE, urlSocket } from "../../baseUrl";
 import { Loading } from "../Loading";
-
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { CSVLink } from "react-csv";
 
 // Đăng ký các thành phần của Chart.js
 ChartJS.register(
@@ -74,7 +76,6 @@ const Dashboard = () => {
 
     // Fetch all data
     useEffect(() => {
-
         fetchData();
         // Thiết lập WebSocket với userId và role
         const userId = user?.user.id;
@@ -103,7 +104,7 @@ const Dashboard = () => {
         return () => {
             socket.close();
         };
-    }, [user]);
+    }, []);
 
     // Tính toán doanh thu theo tháng/năm
     const getMonthlyRevenue = () => {
@@ -185,8 +186,56 @@ const Dashboard = () => {
     // Loading
     if (loading) return <Loading />
 
+    // ...existing code...
+    const exportExcel = () => {
+        // Doanh thu theo tháng
+        const monthlySheet = [
+            ["Tháng", "Doanh thu"],
+            ...revenueData.labels.map((label, idx) => [label, revenueData.datasets[0].data[idx]])
+        ];
+        // Doanh thu theo ngày
+        const dailySheet = [
+            ["Ngày", "Doanh thu"],
+            ...dailyRevenueData.labels.map((label, idx) => [label, dailyRevenueData.datasets[0].data[idx]])
+        ];
+        // Trạng thái đơn hàng
+        const statusSheet = [
+            ["Trạng thái", "Số đơn hàng"],
+            ...orderStatusData.labels.map((label, idx) => [label, orderStatusData.datasets[0].data[idx]])
+        ];
+        // Top 10 sản phẩm bán chạy
+        const topProducts = products
+            .map(product => ({
+                ...product,
+                sold: orders.reduce((sum, order) => {
+                    if (order.status === 'DELIVERED') {
+                        return sum + (order.items.filter(item => item.productId === product.id).reduce((s, i) => s + i.quantity, 0));
+                    }
+                    return sum;
+                }, 0)
+            }))
+            .sort((a, b) => b.sold - a.sold)
+            .slice(0, 10);
+        const topProductsSheet = [
+            ["Tên sản phẩm", "Đã bán"],
+            ...topProducts.map(p => [p.name, p.sold])
+        ];
+
+        // Tạo workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(monthlySheet), "DoanhThuThang");
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dailySheet), "DoanhThuNgay");
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(statusSheet), "TrangThaiDonHang");
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(topProductsSheet), "TopSanPham");
+
+        // Xuất file
+        const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        saveAs(new Blob([wbout], { type: "application/octet-stream" }), "Thông Số.xlsx");
+    };
+
+
     return (
-        <div className="container bg-light my-5">
+        <div className="container my-5">
             <div className={`toast shadow position-fixed z-3 top-0 end-0 m-3  ${showToast ? "show" : ""}`} role="alert" aria-live="assertive" aria-atomic="true">
                 <div className="toast-header">
                     <Notifications className="text-danger" />
@@ -198,7 +247,22 @@ const Dashboard = () => {
                     {toastMessage}
                 </div>
             </div>
-            <h2 className="fw-bold mb-4">DASHBOARD</h2>
+            <div className="d-flex justify-content-between">
+                <h2 className="fw-bold mb-4">DASHBOARD</h2>
+                {/* <CSVLink
+                    data={products}
+                    filename="products.csv"
+                    className="btn btn-success mb-3"
+                    target="_blank"
+                
+                >
+                    Download me
+                </CSVLink> */}
+                <button className="btn btn-success mb-3" onClick={exportExcel}>
+                    <i class="bi bi-box-arrow-in-down"></i>
+                    Xuất dữ liệu
+                </button>
+            </div>
             <div className="row g-4 mb-4">
                 <div className="col-md-3">
                     <div className="card shadow border-0 p-3 d-flex flex-row align-items-center">

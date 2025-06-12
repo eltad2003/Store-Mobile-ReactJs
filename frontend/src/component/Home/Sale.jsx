@@ -73,7 +73,7 @@ function Sale() {
     return (
         <div className='p-3'>
             <div className="d-flex">
-                <h3 className='fw-bold text-white ms-5 d-md-block d-none'>HOT SALE <Loyalty className="mb-1 fs-1 " /></h3>
+                <h3 className='fw-bold text-white ms-5 d-md-block d-none'>HOT SALE <Loyalty className="mb-1 fs-1" /></h3>
 
                 <div className="ms-auto d-flex align-items-center ms-5 mb-3">
                     <AccessTime style={{ color: '#FFD600', fontSize: '2rem', marginRight: '8px' }} />
@@ -114,7 +114,7 @@ function Sale() {
                     >
                         {productChunks.map((chunk, index) => (
                             <Carousel.Item key={index}>
-                                <div className='row d-flex justify-content-center'>
+                                <div className='row'>
                                     {chunk.map((item, i) => (
                                         <div className="my-3 col-12d5" key={i} style={{ minHeight: '400px' }}>
                                             <CartItem item={item} />

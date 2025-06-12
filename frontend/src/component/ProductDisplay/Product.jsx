@@ -208,8 +208,8 @@ function Product() {
                         {product.discount ? (
                             <>
                                 <div className='d-flex align-items-center flex-wrap'>
-                                    <h4 className='text-decoration-line-through  '>${Math.round(product.price * (1 + product.discount / 100))}</h4>
-                                    <h3 className="text-success fw-bold ms-2">{formatPrice(product.price)}</h3>
+                                    <h4 className='text-decoration-line-through'>{formatPrice(product.price)}</h4>
+                                    <h3 className="text-success fw-bold ms-2">{Math.round(product.price * (1 - product.discount / 100))}</h3>
                                     <p className='ms-2 text-white bg px-1 rounded-pill' >{product.discount}%</p>
                                 </div>
                                 <p className="badge bg-danger bg-opacity-10 text-danger" style={{ maxWidth: 'fit-content' }}>
